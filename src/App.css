@@ -1,0 +1,40 @@
+.slide {
+  position: relative;
+}
+
+.img-carousel {
+  width: 100%; 
+}
+
+.text-carousel-centered {
+ position: absolute;
+ top: 50%;
+ left: 20%;
+ -webkit-transform: translate(-50%, -50%);
+ transform: translate(-50%, -50%);
+ color: white;
+ font-size: 46px;
+ -webkit-transition: all 300ms ease;
+ transition: all 300ms ease;
+ text-transform: uppercase;
+}
+
+.img-logo {
+  width: 200px
+}
+
+.mh-346 {
+  min-height: 346px;
+}
+
+.blog-photo {
+  max-height: 209px;
+}
+
+.blog-content {
+  height: 324px;
+}
+
+.themeioan_event .course-viewer {
+  min-height: 253px;
+}
