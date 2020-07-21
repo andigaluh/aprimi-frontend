@@ -59,9 +59,9 @@ const Navbar = () => {
               </li>
             </ul>
             <div className="header-cta">
-              <a href="contact.html" className="btn btn-1c">
-                Consulting
-              </a>
+                <Link to={"/contact"} className="btn btn-1c">
+                  Consulting
+                </Link>
             </div>
           </div>
         </div>

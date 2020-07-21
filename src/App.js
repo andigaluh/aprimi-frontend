@@ -7,7 +7,7 @@ import AuthService from "./services/auth.service";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Login from "./components/Public/Login/Login";
-import Register from "./components/Register";
+import Register from "./components/Public/Register/Register";
 import Home from "./components/Public/Home/Home";
 import About from "./components/Public/About/About";
 import WhatWeDo from "./components/Public/WhatWeDo/WhatWeDo";

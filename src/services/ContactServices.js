@@ -22,6 +22,10 @@ const create = (data) => {
     return http.post("/admin/contact", data, { headers: authHeader() });
 };
 
+const createMsg = (data) => {
+    return http.post("/contact", data);
+};
+
 const update = (id, data) => {
     return http.put(`/admin/contact/${id}`, data, { headers: authHeader() });
 };
@@ -37,4 +41,5 @@ export default {
     create,
     update,
     remove,
+    createMsg
 };

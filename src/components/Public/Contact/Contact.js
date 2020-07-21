@@ -1,6 +1,64 @@
-import React from "react"
+import React, { useState } from "react"
+import ContactService from "../../../services/ContactServices"
 
 const Contact = () => {
+  const initialState = {
+    id: null,
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+    is_read: 0
+  }
+
+  const [currentContact, setCurrentContact] = useState(initialState)
+  const [submitted, setSubmitted] = useState(false)
+  const [errorTitle, setErrorTitle] = useState(false)
+  const [errorTitleMsg, setErrorTitleMsg] = useState("")
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target
+    setCurrentContact({...currentContact, [name]: value})
+    setErrorTitle(false)
+  }
+
+  const newContact = () => {
+    setCurrentContact(initialState)
+    setSubmitted(false)
+  }
+
+  const saveContact = () => {
+    var data = {
+      name: currentContact.name,
+      email: currentContact.email,
+      subject: currentContact.subject,
+      message: currentContact.message,
+      is_read: 0
+    }
+
+    ContactService.createMsg(data).then(
+      (response) => {
+        setCurrentContact(initialState)
+        setErrorTitle(false)
+        setSubmitted(true)
+        console.log(response.data)
+      },
+      (error) => {
+        const _content =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+
+        //setCurrentContent(_content);
+        setErrorTitle(true)
+        setErrorTitleMsg(_content)
+        console.log(_content);
+        }
+    )
+  }
+
     return (
       <main>
         <div className="lernen_banner large bg-contact">
@@ -40,49 +98,72 @@ const Contact = () => {
                   className="themeioan-form-contact form"
                   id=""
                 >
+                  {submitted ? (
+                   <div>
+                      <h4>Your contact submitted successfully!</h4>
+                   </div> 
+                  ) : (
+                    <div></div>
+                  )}
                   <div>
                     <input
                       className="input-text required-field"
                       type="text"
-                      name="contactName"
-                      id="contactName"
+                      name="name"
+                      id="name"
                       placeholder="Name"
                       title="Your Full Name"
+                      required
+                      value={currentContact.name}
+                      onChange={handleInputChange}
                     />
+                    {errorTitle ? (
+                      <div><p>{errorTitleMsg}</p></div>
+                    ) : ( <div></div>)}
                   </div>
                   <div>
                     <input
                       className="input-text required-field email-field"
                       type="email"
-                      name="contactEmail"
-                      id="contactEmail"
+                      name="email"
+                      id="email"
                       placeholder="Email"
                       title="Your Email"
+                      required
+                      value={currentContact.email}
+                      onChange={handleInputChange}
                     />
                   </div>
                   <div>
                     <input
                       className="input-text required-field"
                       type="text"
-                      name="contactSubject"
-                      id="contactSubject"
+                      name="subject"
+                      id="subject"
                       placeholder="Subject"
                       title="Your Subject"
+                      required
+                      value={currentContact.subject}
+                      onChange={handleInputChange}
                     />
                   </div>
                   <div>
                     <textarea
                       className="input-text required-field"
-                      name="contactMessage"
-                      id="contactMessage"
+                      name="message"
+                      id="message"
                       placeholder="Message"
                       title="Your Message"
+                      required
+                      value={currentContact.message}
+                      onChange={handleInputChange}
                     ></textarea>
                   </div>
                   <input
                     className="color-two button"
-                    type="submit"
+                    type="button"
                     value="Send Message"
+                    onClick={saveContact}
                   />
                 </form>
               </div>
