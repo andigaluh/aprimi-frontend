@@ -131,6 +131,18 @@ const Register = (props) => {
         <div className="container">
           <div className="row">
             <div className="col-md-12 col-lg-12">
+              {message && (
+                <div className="form-group">
+                  <div
+                    className={
+                      successful ? "alert alert-success" : "alert alert-danger"
+                    }
+                    role="alert"
+                  >
+                    {message}
+                  </div>
+                </div>
+              )}
               <Form onSubmit={handleRegister} ref={form}>
                 {!successful && (
                   <div>
@@ -176,18 +188,7 @@ const Register = (props) => {
                   </div>
                 )}
 
-                {message && (
-                  <div className="form-group">
-                    <div
-                      className={
-                        successful ? "alert alert-success" : "alert alert-danger"
-                      }
-                      role="alert"
-                    >
-                      {message}
-                    </div>
-                  </div>
-                )}
+                
                 <CheckButton style={{ display: "none" }} ref={checkBtn} />
               </Form>
             </div>

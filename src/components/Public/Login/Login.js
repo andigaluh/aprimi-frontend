@@ -59,8 +59,8 @@ const Login = (props) => {
             error.message ||
             error.toString();
 
-          //setLoading(false);
-          //setMessage(resMessage);
+          setLoading(false);
+          setMessage(resMessage);
           console.log(resMessage)
         }
       );
@@ -86,7 +86,13 @@ const Login = (props) => {
         <div className="container">
           <div className="row">
               <div className="col-md-12 col-lg-12">
-                {/* <form className="themeioan-form-contact form" id="contact-us-form"> */}
+              
+              {message && (
+                <div className="alert alert-danger" role="alert">
+                  {message}
+                </div>
+              )}
+
               <Form onSubmit={handleLogin} ref={form} className="form" id="login">
                   <div className="form-group">
                     <Input
@@ -120,11 +126,7 @@ const Login = (props) => {
                     <span>Login</span>
                   </button>
 
-                {message && (
-                    <div className="alert alert-danger" role="alert">
-                      {message}
-                  </div>
-                )}
+                
                 <CheckButton style={{ display: "none" }} ref={checkBtn} />
 
                 </Form>

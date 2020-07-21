@@ -37,6 +37,9 @@ const Header = () => {
                                 )}
                                 {currentUser ? (
                                     <span>
+                                        <Link to={"/membership"}>
+                                            Membership
+                                        </Link>
                                         <Link to={"/profile"}>
                                             {currentUser.name}
                                         </Link>
@@ -46,6 +49,9 @@ const Header = () => {
                                     </span>
                                 ) : (
                                     <div>
+                                    <Link to={"/membership"}>
+                                        Membership
+                                    </Link>
                                     <Link to={"/login"}>
                                         Login
                                     </Link>
