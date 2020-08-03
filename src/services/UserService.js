@@ -24,6 +24,18 @@ const update = (id, data) => {
   });
 };
 
+const updateByMe = (data) => {
+  return http.put(`/users/me`, data, {
+    headers: authHeader(),
+  });
+}
+
+const updatePasswordByMe = (data) => {
+  return http.put(`/users/updatePassword`, data, {
+    headers: authHeader(),
+  });
+};
+
 const findByName = (params) => {
   /* return http.get(`/admin/users?name=${title}`, {
     headers: authHeader(),
@@ -44,6 +56,18 @@ const remove = (id) => {
   });
 };
 
+const checkPassword = (data) => {
+  return http.post(`/users/checkPassword`, data, {
+    headers: authHeader(),
+  });
+};
+
+const getByMe = () => {
+  return http.get(`/users/me`, {
+    headers: authHeader(),
+  });
+}
+
 export default {
   signin,
   getAll,
@@ -52,4 +76,8 @@ export default {
   findByName,
   create,
   remove,
+  updateByMe,
+  updatePasswordByMe,
+  checkPassword,
+  getByMe
 };

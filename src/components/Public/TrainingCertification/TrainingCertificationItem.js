@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import moment from "moment"
 import {
     //BrowserRouter as Router,
@@ -9,8 +9,18 @@ import {
     //useRouteMatch
 } from "react-router-dom";
 import "../../../App.css"
+import AuthService from "../../../services/auth.service"
 
 const TrainingCertificationItem = (props) => {
+    const [currentAuth, setCurrentAuth] = useState({})
+    console.table(props)
+    useEffect(()=> {
+        const auth = AuthService.getCurrentUser()
+        if (auth) {
+            setCurrentAuth(auth)
+        }
+    },[props])
+
     return (
         <div className="col-xs-12 col-sm-12 col-md-12 col-lg-4 course-single mb25">
             <div className="themeioan_event">
@@ -19,7 +29,7 @@ const TrainingCertificationItem = (props) => {
                         <div className="date">
                             <h4><span>{moment(props.date_event).format("DD")}</span>{moment(props.date_event).format("MMM, YYYY")}</h4>
                         </div>
-                        <Link to={"/trainingcertification/" + props.id + "/" + props.title.split(' ').join('-')}>
+                        <Link to={"/trainingcertification/detail/" + props.id + "/" + props.title.split(/[&\/\\#,+()$~%.'":*?<>{}\s]/g).join('-').toLowerCase()}>
                             {(props.thumbnail) ? (
                                 <img src={
                                     process.env.REACT_APP_API +
@@ -35,7 +45,7 @@ const TrainingCertificationItem = (props) => {
                     </div>
                     <div className="event-content">
                         <h5 className="title">
-                            <Link to={"/trainingcertification/" + props.id + "/" + props.title.split(' ').join('-')}>
+                            <Link to={"/trainingcertification/detail/" + props.id + "/" + props.title.split(/[&\/\\#,+()$~%.'":*?<>{}\s]/g).join('-').toLowerCase()}>
                                 {props.title}
                             </Link>
                         </h5>
@@ -47,9 +57,12 @@ const TrainingCertificationItem = (props) => {
                             <p>{props.headline}</p>
                         </div>
                         <div className="btn-section">
-                            <Link to={"/trainingcertification/" + props.id + "/" + props.title.split(' ').join('-')} className="button-light">
-                                <i className="fas fa-arrow-right"></i>Book Ticket
-                            </Link>
+                            {currentAuth.id && (
+                                <Link to={"/trainingcertification/registration/" + props.id + "/" + props.title.split(/[&\/\\#,+()$~%.'":*?<>{}\s]/g).join('-').toLowerCase()} className="button-light">
+                                    <i className="fas fa-arrow-right"></i>Book Ticket
+                                </Link>
+                            )}
+                                
                         </div>
                     </div>
                 </article>

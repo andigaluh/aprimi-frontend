@@ -16,6 +16,19 @@ const AdminGetAll = (params) => {
   });
 };
 
+const getAllByMe = (params) => {
+  return http.get("/news/list/me", {
+    headers: authHeader(),
+    params,
+  });
+};
+
+const createByMe = (data) => {
+  return http.post("/news/me", data , {
+    headers: authHeader(),
+  });
+};
+
 /* const create = (data) => {
   return http.post("/tutorials", data);
 };
@@ -40,6 +53,8 @@ export default {
   getAll,
   get,
   AdminGetAll,
+  getAllByMe,
+  createByMe
   /* create,
   update,
   remove,

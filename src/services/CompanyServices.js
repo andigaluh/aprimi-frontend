@@ -8,6 +8,12 @@ const getAll = (params) => {
     });
 };
 
+const getAllForPublic = () => {
+  return http.get("/membership", {
+    headers: authHeader()
+  });
+};
+
 const findByName = (title) => {
   return http.get(`/admin/membership?name=${title}`, {
     headers: authHeader(),
@@ -42,5 +48,6 @@ export default {
   create,
   get,
   update,
-  remove
+  remove,
+  getAllForPublic
 };

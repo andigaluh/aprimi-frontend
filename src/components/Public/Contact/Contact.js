@@ -87,7 +87,7 @@ const Contact = () => {
                   <img
                     src={
                       process.env.REACT_APP_API +
-                      "/uploads/news/thumbnail/default.jpg"
+                      "/uploads/news/thumbnail/default-2.jpg"
                     }
                     alt="Contact form"
                   />

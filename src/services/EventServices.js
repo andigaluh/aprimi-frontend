@@ -58,6 +58,34 @@ const uploadFiles = (id, file, onUploadProgress) => {
   });
 };
 
+const register = (id, data) => {
+  return http.post("/event/registration/me/"+id, data, { headers: authHeader() });
+};
+
+const myRegistration = () => {
+  return http.get("/event/registration/me", {
+    headers: authHeader()
+  })
+}
+
+
+const uploadConfirmation = (id, file, onUploadProgress) => {
+  let formData = new FormData();
+
+  formData.append("confirmation_image", file);
+
+  return http.post(`/event/confirmation/${id}/thumbnail`, formData, {
+    headers: authHeader(),
+    onUploadProgress,
+  });
+};
+
+const myRegistrationById = (id) => {
+  return http.get(`/event/registration/me/${id}`, {
+    headers: authHeader()
+  })
+}
+
 export default {
   getAll,
   get,
@@ -68,5 +96,9 @@ export default {
   uploadThumbnail,
   uploadFiles,
   getAllFeatured,
-  getAllPublished
+  getAllPublished,
+  register,
+  myRegistration,
+  uploadConfirmation,
+  myRegistrationById
 };

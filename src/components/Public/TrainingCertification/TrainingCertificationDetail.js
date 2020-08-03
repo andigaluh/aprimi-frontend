@@ -1,24 +1,28 @@
-import React, { useState, useEffect }from "react"
+import React, { useState, useEffect, useContext }from "react"
 import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
     useParams,
-    useRouteMatch
+    
 } from "react-router-dom";
 import EventService from "../../../services/EventServices"
-import moment from "moment"
+import AuthService from "../../../services/auth.service"
+import ItemRegistration from "./TrainingCertificationRegistration"
+import TrainingCertificationDetailItem from "./TrainingCertificationDetailItem";
+import TrainingCertificationBanner from "./TrainingCertificationBanner";
 
 const TrainingCertificationDetail = () => {
-    let { eventId, eventTitle } = useParams();
+    let { eventId, eventType } = useParams();
     const [itemDetail, setItemDetail] = useState({})
     const [createdUser, setCreatedUser] = useState({})
-    
+    const [currentAuth, setCurrentAuth] = useState({})
+
     useEffect(() => {
-        
+        const auth = AuthService.getCurrentUser()
+        if(auth){
+            setCurrentAuth(auth)
+        }
         retriveEvent(eventId)
         window.scrollTo(0, 0)
+        console.log(eventType)
     }, [eventId])
 
     const retriveEvent = (id) => {
@@ -26,63 +30,43 @@ const TrainingCertificationDetail = () => {
             (response) => {
                 setItemDetail(response.data)
                 setCreatedUser(response.data.created_user)
-                console.log(response.data)
+                //console.log(response.data)
             }
         )
     }
     
-
    return (
        <div>
-            <div className="lernen_banner large bg-events-detail">
-                <div className="container">
-                    <div className="row">
-                        <div className="lernen_banner_title">
-                            <h1>{itemDetail.title}</h1>
-                            <div className="lernen_breadcrumb">
-                                <div className="breadcrumbs">
-                                    <span className="first-item">
-                                        <a href="index.html">Homepage</a></span>
-                                    <span className="separator">&gt;</span><span className="first-item">
-                                        <a href="events.html">Events</a></span>
-                                    <span className="separator">&gt;</span>
-                                   <span className="last-item">{itemDetail.title}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-
+           <TrainingCertificationBanner 
+                title={itemDetail.title}
+           />
+            
             <div id="blog-detail" className="wrap-bg wrap-bg ">
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12 col-lg-8">
-                            <div className="blog-content">
-                                <div className="section-title">
-                                    <div>
-                                    <h3>{itemDetail.headline}</h3>
-                                    </div>
-                                        <div className="course-viewer">
-                                            <ul>
-                                           <li><i className="fas fa-user"></i> {createdUser.name}</li>
-                                            <li>
-                                                <i className="fas fa-calendar"></i>
-                                                {moment(itemDetail.date_event).format("D MMM, YYYY")}
-                                            </li>
-                                            <li>
-                                               <i className="fas fa-search-location"></i> {itemDetail.location}
-                                            </li>
-                                            </ul>
-                                        </div>
-                                </div>
-                               <div dangerouslySetInnerHTML={{ __html: itemDetail.content }}></div>
-                               
+                            {((eventType == "registration") && (currentAuth.id)) ? (
+                                
+                                <ItemRegistration 
+                                    headline={itemDetail.headline}
+                                    createdUser={createdUser.name}
+                                    date_event={itemDetail.date_event}
+                                    location={itemDetail.location}
+                                    id={itemDetail.id}
+                                />
 
-
-                            </div>
+                            ):(
+                                <TrainingCertificationDetailItem 
+                                    headline={itemDetail.headline}
+                                    createdUser={createdUser.name}
+                                    date_event={itemDetail.date_event}
+                                    location={itemDetail.location}
+                                    content={itemDetail.content}
+                                    id={itemDetail.id}
+                                    currentAuthId={currentAuth.id}
+                                />
+                            )}
+                            
                         </div>
                         <div class="col-md-12 col-lg-4">
                             

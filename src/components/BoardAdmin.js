@@ -34,28 +34,33 @@ import AdminLogo from "./Admin/Logo/AdminLogo";
 import AdminLogoAdd from "./Admin/Logo/AdminLogoAdd";
 import AdminLogoDetail from "./Admin/Logo/AdminLogoDetail";
 import AdminLogoThumbnail from "./Admin/Logo/AdminLogoThumbnail";
+import authService from "../services/auth.service";
 
 
-const BoardAdmin = () => {
+const BoardAdmin = (props) => {
   //const [content, setContent] = useState("");
 
   useEffect(() => {
-    UserService.getAdminBoard().then(
-      (response) => {
-        console.log(response.data);
-      },
-      (error) => {
-        const _content =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
+    const auth = authService.getCurrentUser()
 
-        console.log(_content);
-        console.log(`no user`);
-      }
-    );
+    
+      UserService.getAdminBoard().then(
+        (response) => {
+          console.log(response.data);
+        },
+        (error) => {
+          const _content =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+          
+          props.history.push("/user")
+          console.log(_content);
+          
+        }
+      );
   }, []);
 
   return (

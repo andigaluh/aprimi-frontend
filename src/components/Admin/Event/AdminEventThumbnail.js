@@ -4,20 +4,16 @@ import AuthService from "../../../services/auth.service";
 
 const AdminEventThumbnail = props => {
     
-    //const [auth, setAuth] = useState(undefined);
     const [selectedFiles, setSelectedFiles] = useState(undefined);
     const [currentFile, setCurrentFile] = useState(undefined);
     const [progress, setProgress] = useState(0);
     const [message, setMessage] = useState("");
-    //const [fileInfos, setFileInfos] = useState([]);
 
     useEffect(() => {
       const user = AuthService.getCurrentUser();
 
       if (user) {
-        //setAuth(user);
         EventService.get(props.match.params.id).then((response) => {
-          //setFileInfos(response.data);
           console.log(response.data)
         });
       }
@@ -43,10 +39,8 @@ const AdminEventThumbnail = props => {
           setMessage(response.data);
           console.log(response.data);
           props.history.push("/admin/event");
-          //return EventService.get(id);
         })
         .then((files) => {
-          //setFileInfos(files.data);
           console.log(files.data);
         })
         .catch((error) => {

@@ -1,8 +1,11 @@
 import http from "../http-common";
 import authHeader from "./auth-header";
 
-const getAll = () => {
-    return http.get("/media");
+const getAll = (params) => {
+    return http.get("/admin/media", {
+        headers: authHeader(),
+        params
+    });
 };
 
 const get = (id) => {

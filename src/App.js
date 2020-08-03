@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-/* import "bootstrap/dist/css/bootstrap.min.css"; */
-/* import "./App.css"; */
+import { UserContext } from "./UserContext"
+
 
 import AuthService from "./services/auth.service";
 import Header from "./components/Header";
@@ -15,15 +15,17 @@ import TrainingCertification from "./components/Public/TrainingCertification/Tra
 import Article from "./components/Public/Article/ArticleList";
 import Contact from "./components/Public/Contact/Contact";
 import Profile from "./components/Profile";
-import BoardUser from "./components/BoardUser";
+import BoardUser from "./components/UserBoard/BoardUser";
 import BoardModerator from "./components/BoardModerator";
 import BoardAdmin from "./components/BoardAdmin";
 import Membership from "./components/Public/Membership/Membership";
+import TrainingRegistration from "./components/Public/TrainingCertification/TrainingCertificationRegistration"
 
 const App = () => {
     const [showModeratorBoard, setShowModeratorBoard] = useState(false);
     const [showAdminBoard, setShowAdminBoard] = useState(false);
     const [currentUser, setCurrentUser] = useState(undefined);
+    const [userLogin, setUserLogin] = useState({})
 
     useEffect(() => {
         const user = AuthService.getCurrentUser();
@@ -32,21 +34,22 @@ const App = () => {
             setCurrentUser(user);
             setShowModeratorBoard(user.roles.includes("ROLE_MODERATOR"));
             setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
+            setUserLogin(user)
         }
     }, []);
 
-    const logOut = () => {
-        AuthService.logout();
-    };
+    const providerValue = useMemo(() => ({ userLogin, setUserLogin }), [userLogin, setUserLogin])
 
     return (
         <Router>
+            <UserContext.Provider value={providerValue}>
             <Header />
             <Switch>
                 <Route exact path={["/", "/home"]} component={Home} />
                 <Route path="/about" component={About} />
                 <Route path="/whatwedo" component={WhatWeDo} />
                 <Route path="/trainingcertification" component={TrainingCertification} />
+                <Route path="/trainingregistration" component={TrainingRegistration} />
                 <Route path="/article" component={Article} />
                 <Route path="/contact" component={Contact} />
                 <Route path="/login" component={Login} />
@@ -58,6 +61,7 @@ const App = () => {
                 <Route path="/membership" component={Membership} />
             </Switch>
             <Footer />
+            </UserContext.Provider>
         </Router>
     );
 };

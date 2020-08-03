@@ -58,15 +58,30 @@ const uploadFiles = (id, file, onUploadProgress) => {
     });
 };
 
+const createByMe = (data) => {
+  return http.post("/news/me", data, { headers: authHeader() });
+};
+
+const updateByMe = (id, data) => {
+    return http.put(`/news/${id}`, data, { headers: authHeader() });
+};
+
+const removeByMe = (id) => {
+    return http.delete(`/news/${id}`, { headers: authHeader() });
+};
+
 export default {
-    getAll,
-    getAllFeatured,
-    get,
-    AdminGetAll,
-    create,
-    update,
-    remove,
-    uploadThumbnail,
-    uploadFiles,
-    getAllPublished
+  getAll,
+  getAllFeatured,
+  get,
+  AdminGetAll,
+  create,
+  update,
+  remove,
+  uploadThumbnail,
+  uploadFiles,
+  getAllPublished,
+  createByMe,
+  updateByMe,
+  removeByMe
 };

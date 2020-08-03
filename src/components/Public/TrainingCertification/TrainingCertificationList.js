@@ -10,6 +10,8 @@ import {
     useRouteMatch
 } from "react-router-dom";
 import ItemDetail from "./TrainingCertificationDetail"
+import ItemRegistration from "./TrainingCertificationRegistration"
+import { Container, Row, Col } from "reactstrap";
 
 const TrainingCertificationList = () => {
 
@@ -73,7 +75,7 @@ const TrainingCertificationList = () => {
               </div>
             </div>
           </Route>
-          <Route path={`${path}/:eventId/:eventTitle`}>
+          <Route path={`${path}/:eventType/:eventId/:eventTitle`}>
             <ItemDetail />
           </Route>
         </Switch>

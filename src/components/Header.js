@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import AuthService from "../services/auth.service"
 import BoardAdmin from "../components/BoardAdmin";
+import { UserContext } from "../UserContext";
 
 const Header = () => {
     const [currentUser, setCurrentUser] = useState(undefined);
     const [showAdminBoard, setShowAdminBoard] = useState(false);
+    const [showUserBoard, setShowUserBoard] = useState(false);
+    const { userLogin, setUserLogin } = useContext(UserContext)
 
     useEffect(() => {
         const user = AuthService.getCurrentUser();
@@ -14,6 +17,7 @@ const Header = () => {
         if (user) {
             setCurrentUser(user);
             setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
+            setShowUserBoard(user.roles.includes("ROLE_USER"));
         }
     },[])
 
@@ -28,6 +32,13 @@ const Header = () => {
                     <div className="row">
                         <div className="col-lg-12 text-right">
                             <div className="custom-page-top">
+                                {showUserBoard && (
+                                    <span>
+                                        <Link to={"/user"}>
+                                            User Board
+                                        </Link>
+                                    </span>
+                                )}
                                 {showAdminBoard && (
                                     <span>
                                         <Link to={"/admin"}>
@@ -41,7 +52,7 @@ const Header = () => {
                                             Membership
                                         </Link>
                                         <Link to={"/profile"}>
-                                            {currentUser.name}
+                                            {userLogin.name}
                                         </Link>
                                         <a href="/login" onClick={logOut}>
                                             LogOut
