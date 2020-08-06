@@ -26,60 +26,45 @@ const Header = () => {
     };
 
     return (
-        <header id="header" className="transparent-header">
-            <div className="topheader top_header_light hidemobile">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-lg-12 text-right">
-                            <div className="custom-page-top">
-                                {showUserBoard && (
-                                    <span>
-                                        <Link to={"/user"}>
-                                            User Board
-                                        </Link>
-                                    </span>
-                                )}
-                                {showAdminBoard && (
-                                    <span>
-                                        <Link to={"/admin"}>
-                                            Admin Board
-                                        </Link>
-                                    </span>
-                                )}
-                                {currentUser ? (
-                                    <span>
-                                        <Link to={"/membership"}>
-                                            Membership
-                                        </Link>
-                                        <Link to={"/profile"}>
-                                            {userLogin.name}
-                                        </Link>
-                                        <a href="/login" onClick={logOut}>
-                                            LogOut
-                                        </a>
-                                    </span>
-                                ) : (
-                                    <div>
-                                    <Link to={"/membership"}>
-                                        Membership
-                                    </Link>
-                                    <Link to={"/login"}>
-                                        Login
-                                    </Link>
-                                    <Link to={"/register"} >
-                                        Register
-                                    </Link>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
+      <header id="header" className="transparent-header">
+        <div className="topheader top_header_light hidemobile">
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-12 text-right">
+                <div className="custom-page-top">
+                  {showUserBoard && (
+                    <span>
+                      <Link to={"/user"}>User Board</Link>
+                    </span>
+                  )}
+                  {showAdminBoard && (
+                    <span>
+                      <Link to={"/admin"}>Admin Board</Link>
+                    </span>
+                  )}
+                  {currentUser ? (
+                    <span>
+                      <Link to={"/membership"}>Membership</Link>
+                      <Link to={"/user"}>{userLogin.name}</Link>
+                      <a href="/login" onClick={logOut}>
+                        LogOut
+                      </a>
+                    </span>
+                  ) : (
+                    <div>
+                      <Link to={"/membership"}>Membership</Link>
+                      <Link to={"/register"}>Register</Link>
+                      <Link to={"/login"}>Login</Link>
                     </div>
+                  )}
                 </div>
+              </div>
             </div>
-            <Navbar />
-            
-        </header>
-    )
+          </div>
+        </div>
+        <Navbar />
+      </header>
+    );
 }
 
 export default Header;

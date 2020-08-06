@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CompanyService from "../../../services/CompanyServices";
 import AuthService from "../../../services/auth.service";
+import { Container, Row, Col, FormGroup, Label, UncontrolledAlert } from "reactstrap"
 
 const AdminMembershipAdd = () => {
     const [currentUser, setCurrentUser] = useState(undefined);
@@ -23,6 +24,8 @@ const AdminMembershipAdd = () => {
 
     const [currentCompany,setCurrentCompany] = useState(initialCompanyState);
     const [submitted, setSubmitted] = useState(false);
+    const [isLoading, setIsLoading] = useState(false)
+    const [message, setMessage] = useState("")
 
     useEffect(() => {
       const user = AuthService.getCurrentUser();
@@ -43,6 +46,7 @@ const AdminMembershipAdd = () => {
     };
 
     const saveCompany = () => {
+      setIsLoading(true)
       var data = {
         name: currentCompany.name,
         address: currentCompany.address,
@@ -79,7 +83,7 @@ const AdminMembershipAdd = () => {
             updated_user_id: response.data.updated_user_id,
           });
           setSubmitted(true);
-          console.log(response.data);
+          setIsLoading(false)
         },
         (error) => {
           const _content =
@@ -89,28 +93,34 @@ const AdminMembershipAdd = () => {
             error.message ||
             error.toString();
 
-          setCurrentCompany(_content);
-          console.log(_content);
+          setMessage(_content);
+          setIsLoading(false)
+          window.scrollTo(0, 500)
         }
       );
     };
     
     return (
-      <div className="list row">
-        <div className="col-md-12">
+      <Container>
+      <Row>
+        <Col>
           <div className="submit-form">
             {submitted ? (
               <div>
                 <h4>You submitted successfully!</h4>
-                <button className="btn btn-success" onClick={newCompany}>
+                <button className="btn-custom btn-success" onClick={newCompany}>
                   Add
                 </button>
               </div>
             ) : (
               <div>
                 <h4>Add Membership</h4>
-                <div className="form-group">
-                  <label htmlFor="name">Name</label>
+                <hr/>
+                {message && (
+                  <UncontrolledAlert color="danger">{message}</UncontrolledAlert>
+                )}
+                <FormGroup>
+                  <Label for="name">Name</Label>
                   <input
                     type="text"
                     className="form-control"
@@ -120,10 +130,10 @@ const AdminMembershipAdd = () => {
                     onChange={handleInputChange}
                     name="name"
                   />
-                </div>
+                  </FormGroup>
 
-                <div className="form-group">
-                  <label htmlFor="address">Address</label>
+                <FormGroup>
+                  <Label for="address">Address</Label>
                   <input
                     type="text"
                     className="form-control"
@@ -133,10 +143,10 @@ const AdminMembershipAdd = () => {
                     onChange={handleInputChange}
                     name="address"
                   />
-                </div>
+                </FormGroup>
 
-                <div className="form-group">
-                  <label htmlFor="phone">Phone</label>
+                <FormGroup>
+                  <Label for="phone">Phone</Label>
                   <input
                     type="text"
                     className="form-control"
@@ -146,10 +156,10 @@ const AdminMembershipAdd = () => {
                     onChange={handleInputChange}
                     name="phone"
                   />
-                </div>
+                </FormGroup>
 
-                <div className="form-group">
-                  <label htmlFor="fax">Fax</label>
+                <FormGroup>
+                  <Label for="fax">Fax</Label>
                   <input
                     type="text"
                     className="form-control"
@@ -159,12 +169,12 @@ const AdminMembershipAdd = () => {
                     onChange={handleInputChange}
                     name="fax"
                   />
-                </div>
+                </FormGroup>
 
-                <div className="form-group">
-                  <label htmlFor="contact_person_name">
+                <FormGroup>
+                  <Label for="contact_person_name">
                     Contact Person Name
-                  </label>
+                  </Label>
                   <input
                     type="text"
                     className="form-control"
@@ -174,12 +184,12 @@ const AdminMembershipAdd = () => {
                     onChange={handleInputChange}
                     name="contact_person_name"
                   />
-                </div>
+                </FormGroup>
 
-                <div className="form-group">
-                  <label htmlFor="contact_person_title">
+                <FormGroup>
+                  <Label for="contact_person_title">
                     Contact Person Title
-                  </label>
+                  </Label>
                   <input
                     type="text"
                     className="form-control"
@@ -189,12 +199,12 @@ const AdminMembershipAdd = () => {
                     onChange={handleInputChange}
                     name="contact_person_title"
                   />
-                </div>
+                </FormGroup>
 
-                <div className="form-group">
-                  <label htmlFor="contact_person_phone">
+                <FormGroup>
+                  <Label for="contact_person_phone">
                     Contact Person Phone
-                  </label>
+                  </Label>
                   <input
                     type="text"
                     className="form-control"
@@ -204,12 +214,12 @@ const AdminMembershipAdd = () => {
                     onChange={handleInputChange}
                     name="contact_person_phone"
                   />
-                </div>
+                </FormGroup>
 
-                <div className="form-group">
-                  <label htmlFor="contact_person_email">
+                <FormGroup>
+                  <Label for="contact_person_email">
                     Contact Person Email
-                  </label>
+                  </Label>
                   <input
                     type="text"
                     className="form-control"
@@ -219,10 +229,10 @@ const AdminMembershipAdd = () => {
                     onChange={handleInputChange}
                     name="contact_person_email"
                   />
-                </div>
+                </FormGroup>
 
-                <div className="form-group">
-                  <label htmlFor="authorized_name">Authorized Name</label>
+                <FormGroup>
+                  <Label for="authorized_name">Authorized Name</Label>
                   <input
                     type="text"
                     className="form-control"
@@ -232,10 +242,10 @@ const AdminMembershipAdd = () => {
                     onChange={handleInputChange}
                     name="authorized_name"
                   />
-                </div>
+                </FormGroup>
 
-                <div className="form-group">
-                  <label htmlFor="authorized_title">Authorized Title</label>
+                <FormGroup>
+                  <Label for="authorized_title">Authorized Title</Label>
                   <input
                     type="text"
                     className="form-control"
@@ -245,10 +255,10 @@ const AdminMembershipAdd = () => {
                     onChange={handleInputChange}
                     name="authorized_title"
                   />
-                </div>
+                </FormGroup>
 
-                <div className="form-group">
-                  <label htmlFor="year_registered">Year of Register</label>
+                <FormGroup>
+                  <Label for="year_registered">Year of Register</Label>
                   <input
                     type="text"
                     className="form-control"
@@ -258,16 +268,20 @@ const AdminMembershipAdd = () => {
                     onChange={handleInputChange}
                     name="year_registered"
                   />
-                </div>
+                </FormGroup>
+                <FormGroup>
+                  <button onClick={saveCompany} className="btn-custom btn-success" disabled={isLoading}>
+                    {isLoading ? ( <span>Please Wait</span> ) : (<span>Submit</span>)} 
+                  </button>
+                </FormGroup>
 
-                <button onClick={saveCompany} className="btn btn-success">
-                  Submit
-                </button>
+                
               </div>
             )}
           </div>
-        </div>
-      </div>
+          </Col>
+        </Row>
+      </Container>
     );
 }
 

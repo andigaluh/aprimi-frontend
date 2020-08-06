@@ -3,12 +3,16 @@ import { Link } from "react-router-dom";
 import AuthService from "../../../services/auth.service";
 import Pagination from "@material-ui/lab/Pagination";
 import ContactService from "../../../services/ContactServices";
-//import moment from "moment";
+import { Container, Row, Col, Table, Badge } from 'reactstrap'
+import LoadingSpinner from "../../LoadingSpinner";
+import AdminSearch from "../AdminSearch";
+
 
 const AdminContact = () => {
     const [contact, setContact] = useState("");
     const [auth, setCurrentAuth] = useState(undefined);
     const [searchTitle, setSearchTitle] = useState("");
+    const [isLoading, setIsLoading] = useState(false)
 
     const [page, setPage] = useState(1);
     const [count, setCount] = useState(0);
@@ -36,10 +40,13 @@ const AdminContact = () => {
 
     useEffect(() => {
         const user = AuthService.getCurrentUser();
-
+        setIsLoading(true)
         if (user) {
             setCurrentAuth(user);
-            retrieveContact();
+            setTimeout(() => {
+                retrieveContact();
+                setIsLoading(false)
+            }, 1000);
         }
     }, [page, pageSize])
 
@@ -83,68 +90,66 @@ const AdminContact = () => {
 
 
     return (
-        <div className="col-md-12">
+        <Container>
             {auth ? (
                 <div>
-                    <h4>Admin Contact</h4>
-                    <div className="list row mb-3">
-                        <div className="col-md-12">
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Search by title"
-                                value={searchTitle}
-                                onChange={onChangeSearchTitle}
-                                onKeyUp={retrieveContact}
-                            />
-                        </div>
-
-                        
-                    </div>
-                    <div className="mb-3">
-                        {"Items per Page: "}
-                        <select onChange={handlePageSizeChange} value={pageSize}>
-                            {pageSizes.map((size) => (
-                                <option key={size} value={size}>
-                                    {size}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                    <div className="list row mb-3">
-                        <table className="table">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Id</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Subject</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {contact &&
-                                    contact.map((kontak, i) => (
+                    <Row>
+                        <Col><h4>Admin Contact</h4></Col>
+                    </Row>
+                    <hr />
+                    <AdminSearch
+                        onChangeSearchTitle={onChangeSearchTitle}
+                        searchTitle={searchTitle}
+                        retrieveTable={retrieveContact}
+                        handlePageSizeChange={handlePageSizeChange}
+                        pageSize={pageSize}
+                        pageSizes={pageSizes}
+                        isAddUrl={false}
+                        addUrl={"/contact"}
+                    />
+                    <hr />
+                    <Row>
+                        <Col>
+                        {isLoading ? (
+                            <LoadingSpinner />
+                        ) : (
+                                <Table hover>
+                                    <thead>
                                         <tr>
-                                            <td>{i + 1}</td>
-                                            <td>{kontak.id}</td>
-                                            <td>{kontak.name}</td>
-                                            <td>{kontak.email}</td>
-                                            <td>{kontak.subject}</td>
-                                            <td>
-                                                <Link
-                                                    to={"/admin/contact/" + kontak.id}
-                                                    className="badge badge-warning"
-                                                >
-                                                    Detail
-                          </Link>
-                                            </td>
+                                            <th>No</th>
+                                            <th>Id</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Subject</th>
+                                            <th>Action</th>
                                         </tr>
-                                    ))}
-                            </tbody>
-                        </table>
-                        <div className="mt-3 text-right">
+                                    </thead>
+                                    <tbody>
+                                        {contact &&
+                                            contact.map((kontak, i) => (
+                                                <tr>
+                                                    <td>{i + 1}</td>
+                                                    <td>{kontak.id}</td>
+                                                    <td>{kontak.name}</td>
+                                                    <td>{kontak.email}</td>
+                                                    <td>{kontak.subject}</td>
+                                                    <td>
+                                                        <Link
+                                                            to={"/admin/contact/" + kontak.id}
+                                                        >
+                                                            <Badge color="primary" pill><i className="fas fa-search"></i> Detail</Badge>
+                                                </Link>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                    </tbody>
+                                </Table>
+                        )}
+                            
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
                             <Pagination
                                 className="my-3"
                                 count={count}
@@ -154,16 +159,16 @@ const AdminContact = () => {
                                 variant="outlined"
                                 shape="rounded"
                                 onChange={handlePageChange}
-                            />
-                        </div>
-                    </div>
+                            />               
+                        </Col>
+                    </Row>
                 </div>
             ) : (
                     <div>
                         <h4>Unauthorized</h4>
                     </div>
                 )}
-        </div>
+        </Container>
     );
 }
 

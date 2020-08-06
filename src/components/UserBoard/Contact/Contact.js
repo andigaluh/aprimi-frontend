@@ -15,9 +15,9 @@ import ContactServices from '../../../services/ContactServices';
 const required = (value) => {
     if (!value) {
         return (
-            <div className="alert alert-danger" role="alert">
+            <p className="text-danger">
                 This field is required!
-            </div>
+            </p>
         );
     }
 };
@@ -25,9 +25,9 @@ const required = (value) => {
 const validEmail = (value) => {
     if (!isEmail(value)) {
         return (
-            <div className="alert alert-danger" role="alert">
+            <p className="text-danger">
                 This is not a valid email.
-            </div>
+            </p>
         );
     }
 };
@@ -42,8 +42,8 @@ const Contact = (props) => {
     const [inputMessage, setInputMessage] = useState("")
     const [successful, setSuccessful] = useState(false);
     const [message, setMessage] = useState("");
+    const [isLoading, setIsLoading] = useState(false)
     
-
     const onChangeName = (e) => {
         const v = e.target.value
         setInputName(v)
@@ -69,6 +69,7 @@ const Contact = (props) => {
 
         setMessage("");
         setSuccessful(false);
+        setIsLoading(true)
 
         form.current.validateAll();
         if (checkBtn.current.context._errors.length === 0) {
@@ -85,7 +86,7 @@ const Contact = (props) => {
                     console.log(response.data)
                     setMessage("Your data successfully submit");
                     setSuccessful(true);
-                    console.log(`response: ${response.data}`)
+                    setIsLoading(false)
                 },
                 (error) => {
                     const _content =
@@ -95,14 +96,15 @@ const Contact = (props) => {
                         error.message ||
                         error.toString();
 
-                    //setCurrentContent(_content);
+                    
                     setSuccessful(false)
                     setMessage(_content);
-                    console.log(_content);
+                    setIsLoading(false)
                 }
             )
         } else {
             console.log("no process")
+            setIsLoading(false)
         }
     }
 
@@ -111,6 +113,7 @@ const Contact = (props) => {
             <Row>
                 <Col>
                     <h4>Contact Form</h4>
+                    <hr/>
                     {message && (
                         <div className="form-group">
                             <div
@@ -174,7 +177,17 @@ const Contact = (props) => {
                                 </div>
 
                                 <div className="form-group">
-                                    <button type="submit" className="color-two button">Submit</button>
+                                    <button type="submit" className="color-two button" disabled={isLoading}>
+                                        {isLoading ? (
+                                            <span>
+                                                <span className="spinner-border spinner-border-sm"></span>
+                                                Please wait
+                                            </span>
+                                        ) : (
+                                            <span>Submit</span>
+                                        )}
+                                        
+                                    </button>
                                 </div>
                             </div>
                         )}

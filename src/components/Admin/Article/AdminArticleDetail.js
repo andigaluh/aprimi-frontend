@@ -3,6 +3,7 @@ import ArticleService from "../../../services/ArticleServices";
 import ArticleCategoryService from "../../../services/ArticleCategoryServices";
 import AuthService from "../../../services/auth.service";
 import JoditEditor from "jodit-react";
+import { Container, Row, Col, FormGroup, Label, Alert } from 'reactstrap'
 
 const AdminArticleDetail = props => {
     const [auth, setAuth] = useState(undefined);
@@ -92,7 +93,7 @@ const AdminArticleDetail = props => {
         ArticleService.update(currentArticle.id, data)
           .then(
             (response) => {
-              console.log(response.data);
+              window.scrollTo(0, 500)
               setMessage("The Article was updated successfully!");
             },
             (error) => {
@@ -110,9 +111,9 @@ const AdminArticleDetail = props => {
         };
 
         ArticleService.update(currentArticle.id, data)
-            .then((response) => {
+            .then(() => {
                 setCurrentArticle({ ...currentArticle, is_publish: status });
-                console.log(response.data);
+                setMessage("")
             })
             .catch((e) => {
                 console.log(e);
@@ -121,8 +122,8 @@ const AdminArticleDetail = props => {
 
     const hapus = () => {
         ArticleService.remove(currentArticle.id)
-            .then((response) => {
-                console.log(response.data);
+            .then(() => {
+                
                 props.history.push("/admin/article");
             })
             .catch((e) => {
@@ -131,14 +132,21 @@ const AdminArticleDetail = props => {
     };
 
     return (
-      <div className="col-md-12">
+      <Container>
+        <Row>
         {auth ? (
+          <Col>
           <div className="edit-user">
             <h4>Detail Article</h4>
-            <p>{message}</p>
-            <form>
-              <div className="form-group">
-                <label htmlFor="news_category_id">Article Category</label>
+            <hr/>
+            {message && (
+              <Alert color="success">
+                {message}
+              </Alert>
+                )}
+                
+              <FormGroup>
+                <Label for="news_category_id">Article Category</Label>
                 <select
                   value={currentArticle.news_category_id}
                   className="form-control"
@@ -153,9 +161,9 @@ const AdminArticleDetail = props => {
                       </option>
                     ))}
                 </select>
-              </div>
-              <div className="form-group">
-                <label htmlFor="title">Title</label>
+                </FormGroup>
+              <FormGroup>
+                <Label for="title">Title</Label>
                 <input
                   type="text"
                   className="form-control"
@@ -165,10 +173,10 @@ const AdminArticleDetail = props => {
                   onChange={handleInputChange}
                   name="title"
                 />
-              </div>
+                </FormGroup>
 
-              <div className="form-group">
-                <label htmlFor="headline">Headline</label>
+              <FormGroup>
+                <Label for="headline">Headline</Label>
                 <input
                   type="text"
                   className="form-control"
@@ -178,50 +186,53 @@ const AdminArticleDetail = props => {
                   onChange={handleInputChange}
                   name="headline"
                 />
-              </div>
-              <div className="form-group ">
-                <label htmlFor="date_event">Content</label>
+                </FormGroup>
+              <FormGroup>
+                <Label for="date_event">Content</Label>
                 <JoditEditor
                   ref={editor}
                   value={content}
                   tabIndex={1}
                   onBlur={(ContentBaru) => setContent(ContentBaru)}
                 />
-              </div>
-            </form>
+                </FormGroup>
+              <FormGroup>
             <button
               type="submit"
-              className="badge badge-success mr-2"
+              className="btn-custom btn-success mr-2"
               onClick={update}
             >
               Update
             </button>
             {currentArticle.is_publish ? (
               <button
-                className="badge badge-primary mr-2"
+                className="btn-custom btn-primary mr-2"
                 onClick={() => updateStatus(false)}
               >
                 UnPublish
               </button>
             ) : (
               <button
-                className="badge badge-primary mr-2"
+                className="btn-custom btn-primary mr-2"
                 onClick={() => updateStatus(true)}
               >
                 Publish
               </button>
             )}
 
-            <button className="badge badge-danger mr-2" onClick={hapus}>
+            <button className="btn-custom btn-danger mr-2" onClick={hapus}>
               Delete
             </button>
+                </FormGroup>
           </div>
+          </Col>
         ) : (
-          <div>
+          <Col>
             <h4>UnAuthorized!</h4>
-          </div>
+          </Col>
         )}
-      </div>
+        </Row>
+      </Container>
     );
 }
 

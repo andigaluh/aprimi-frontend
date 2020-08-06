@@ -1,20 +1,18 @@
 import React, { useState, useEffect } from "react";
 import CarouselService from "../../../services/CarouselServices";
 import AuthService from "../../../services/auth.service";
+import { Container, Row, Col, UncontrolledAlert } from "reactstrap"
 
 const AdminCarouselThumbnail = props => {
-    //const [auth, setAuth] = useState(undefined);
     const [selectedFiles, setSelectedFiles] = useState(undefined);
     const [currentFile, setCurrentFile] = useState(undefined);
     const [progress, setProgress] = useState(0);
     const [message, setMessage] = useState("");
-    //const [fileInfos, setFileInfos] = useState([]);
 
     useEffect(() => {
         const user = AuthService.getCurrentUser();
 
         if (user) {
-            //setAuth(user);
             CarouselService.get(props.match.params.id).then((response) => {
                 console.log(response.data);
             });
@@ -39,13 +37,7 @@ const AdminCarouselThumbnail = props => {
         })
             .then((response) => {
                 setMessage(response.data);
-                console.log(response.data);
                 props.history.push("/admin/carousel");
-                //return EventService.get(id);
-            })
-            .then((files) => {
-                //setFileInfos(files.data);
-                console.log(files.data);
             })
             .catch((error) => {
                 setProgress(0);
@@ -58,8 +50,14 @@ const AdminCarouselThumbnail = props => {
     };
 
     return (
-        <div>
+        <Container>
+            <Row>
+        <Col>
             <h4>Upload Image</h4>
+            <hr/>
+            {message && (
+                <UncontrolledAlert color="danger">{message}</UncontrolledAlert>
+            )}
             {currentFile && (
                 <div className="progress">
                     <div
@@ -75,24 +73,20 @@ const AdminCarouselThumbnail = props => {
                 </div>
             )}
 
-            <label className="btn btn-default">
+            <label className="btn-custom btn-default mr-2">
                 <input type="file" onChange={selectFile} name="image" id="image" />
             </label>
 
             <button
-                className="btn btn-success"
+                className="btn-custom btn-success"
                 disabled={!selectedFiles}
                 onClick={upload}
             >
                 Upload
-        </button>
-
-            <div className="alert alert-light" role="alert">
-                {message}
-            </div>
-
-
-        </div>
+            </button>
+                </Col>
+            </Row>
+        </Container>
     );
 
 

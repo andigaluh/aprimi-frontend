@@ -2,15 +2,17 @@ import React, { useState, useRef } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
-
 import AuthService from "../../../services/auth.service";
+import LoginHeader from "./LoginHeader";
+import { Container, Row, Col, FormGroup, Label } from "reactstrap"
+import {Link} from "react-router-dom"
 
 const required = (value) => {
   if (!value) {
     return (
-      <div className="alert alert-danger" role="alert">
+      <p className="text-danger">
         This field is required!
-      </div>
+      </p>
     );
   }
 };
@@ -23,6 +25,7 @@ const Login = (props) => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  
 
   const onChangeUsername = (e) => {
     const email = e.target.value;
@@ -48,7 +51,7 @@ const Login = (props) => {
           setTimeout(() => {
             props.history.push("/user");
             window.location.reload();
-          }, 1000);
+          }, 1500);
           
         },
         (error) => {
@@ -71,71 +74,75 @@ const Login = (props) => {
 
   return (
     <main>
-
-      <div className="lernen_banner large bg-contact">
-        <div className="container">
-          <div className="row">
-            <div className="lernen_banner_title">
-              <h1>Login</h1>
-            </div>
-          </div>
-        </div>
-      </div>
+      <LoginHeader />
 
       <div id="login" className="wrap-bg">
-        <div className="container">
-          <div className="row">
-              <div className="col-md-12 col-lg-12">
-              
+        <Container>
+          <Row>
+            <Col sm="12" md={{ size: 6, offset: 3 }}>
+              <h4>Please fill in</h4>
+              <hr />
               {message && (
                 <div className="alert alert-danger" role="alert">
                   {message}
                 </div>
               )}
 
-              <Form onSubmit={handleLogin} ref={form} className="form" id="login">
-                  <div className="form-group">
-                    <Input
-                      type="text"
-                      className="input-text email-field form-control"
-                      name="email"
-                      value={email}
-                      onChange={onChangeUsername}
-                      validations={[required]}
-                      placeholder="Username" 
-                      title="Your Username"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <Input
-                      type="password"
-                      className="input-text form-control"
-                      name="password"
-                      value={password}
-                      onChange={onChangePassword}
-                      validations={[required]}
-                      placeholder="Password"
-                      title="Your Password"
-                    />
-                  </div>
-                  
+              <Form
+                onSubmit={handleLogin}
+                ref={form}
+                className="form"
+                id="login"
+              >
+                <FormGroup>
+                  <Label for="email">Email</Label>
+                  <Input
+                    type="text"
+                    className="input-text email-field form-control"
+                    name="email"
+                    value={email}
+                    onChange={onChangeUsername}
+                    validations={[required]}
+                    placeholder="Email"
+                    title="Your Email"
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label for="password">Password</Label>
+                  <Input
+                    type="password"
+                    className="input-text form-control"
+                    name="password"
+                    value={password}
+                    onChange={onChangePassword}
+                    validations={[required]}
+                    placeholder="Password"
+                    title="Your Password"
+                  />
+                </FormGroup>
+
+                <FormGroup className="text-center">
                   <button className="color-two button" disabled={loading}>
                     {loading && (
                       <span className="spinner-border spinner-border-sm"></span>
                     )}
                     <span>Login</span>
                   </button>
-
-                
+                </FormGroup>
+                <FormGroup className="text-center">
+                  <p>
+                    Did not have an account ?{" "}
+                    <Link to={"/register"} className="text-info">
+                      REGISTER HERE
+                    </Link>
+                  </p>
+                </FormGroup>
                 <CheckButton style={{ display: "none" }} ref={checkBtn} />
-
-                </Form>
-              </div>
-            </div>
-          </div>
-        </div>
-    
-    
+              </Form>
+            </Col>
+          </Row>
+        </Container>
+      </div>
     </main>
   );
 };

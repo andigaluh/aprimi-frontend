@@ -4,12 +4,19 @@ import {
 } from 'reactstrap'
 import AgendaItem from './AgendaItem';
 import AgendaServices from '../../../services/AgendaServices'
+import LoadingSpinner from '../../LoadingSpinner';
 
 const Agenda = () => {
     const [currentAgenda, setCurrentAgenda] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
-        retrieveAgenda()
+        setIsLoading(true)
+        setTimeout(() => {
+            retrieveAgenda()
+            setIsLoading(false)
+        }, 1000);
+        
     },[])
 
     const retrieveAgenda = () => {
@@ -30,17 +37,24 @@ const Agenda = () => {
                 </Col>
             </Row>
             <Row>
-                <Col>  
-                    {currentAgenda && currentAgenda.map((v,k) => (
-                        <AgendaItem
-                            iKey={k}
-                            id={v.id}
-                            title={v.title}
-                            start_date={v.start_date}
-                            end_date={v.end_date}
-                            content={v.content}
-                        />
-                    ))}
+                <Col>
+                    {isLoading ? (
+                        <LoadingSpinner />
+                    ) : (
+                            <div>
+                            {currentAgenda && currentAgenda.map((v, k) => (
+                                <AgendaItem
+                                    iKey={k}
+                                    id={v.id}
+                                    title={v.title}
+                                    start_date={v.start_date}
+                                    end_date={v.end_date}
+                                    content={v.content}
+                                />
+                            ))}
+                            </div>
+                        
+                )}
                 </Col>
             </Row>
         </Container>

@@ -2,6 +2,7 @@ import React, { useState, useEffect }  from 'react';
 import UserService from "../../../services/UserService";
 import CompanyService from "../../../services/CompanyServices";
 import RoleService from "../../../services/RoleServices";
+import { Container, Row, Col, FormGroup, Label, UncontrolledAlert } from "reactstrap"
 
 const AdminUsersAdd = () => {
     const initialUserState = {
@@ -16,6 +17,9 @@ const AdminUsersAdd = () => {
     const [currentCompany, setcurrentCompany] = useState([]);
     const [currentRole, setcurrentRole] = useState([]);
     const [inputRole, setinputRole] = useState([]);
+    const [isLoading, setIsLoading] = useState(false)
+    const [message, setMessage] = useState("")
+  
 
     useEffect(() => {
         retrieveCompany();
@@ -27,7 +31,6 @@ const AdminUsersAdd = () => {
             (response) => {
                 const { items } = response.data;
                 setcurrentCompany(items);
-                console.log(response);
             },
             (error) => {
                 const _content =
@@ -47,7 +50,6 @@ const AdminUsersAdd = () => {
       RoleService.getAll().then(
         (response) => {
           setcurrentRole(response.data);
-          //console.log(response.data);
         },
         (error) => {
           const _content =
@@ -66,10 +68,42 @@ const AdminUsersAdd = () => {
       const { name, value, checked } = event.target;
       if (checked) {
           setinputRole({...inputRole, [name]:value});
+          console.log(inputRole)
+      } else{
+        const array = Object.values(inputRole);
+
+        //console.log(array);
+
+        const index = array.indexOf(value);
+        if (index > -1) {
+          array.splice(index, 1);
+        }
+
+        // array = [2, 9]
+        console.log(array); 
+        /* console.log(Object.values(inputRole).indexOf(name));
+        setinputRole({...inputRole, [name]:value}); */
+        
       } 
      
+      
       setUser({ ...user, [name]: value });
+      
     };
+
+    const handleCheckboxChange = (event) => {
+      const { name, value, checked } = event.target;
+      if (checked) {
+        setinputRole({ ...inputRole, [name]: value });
+      } else {
+        const array = Object.values(inputRole);
+        const index = array.indexOf(value);
+        if (index > -1) {
+          array.splice(index, 1);
+        }
+        setinputRole(array)
+      } 
+    }
 
     const newUser = () => {
         setUser(initialUserState);
@@ -77,6 +111,7 @@ const AdminUsersAdd = () => {
     }
 
     const saveUser = () => {
+        setIsLoading(true)
         var rolesArr = Object.values(inputRole).map(function (key) {
           return key;
         });
@@ -89,9 +124,9 @@ const AdminUsersAdd = () => {
           roles: rolesArr,
         };
         
-        //console.log(rolesArr);
         UserService.create(data).then(
             (response) => {
+              setTimeout(() => {
                 setUser({
                   id: response.data.id,
                   name: response.data.name,
@@ -101,7 +136,10 @@ const AdminUsersAdd = () => {
                   roles: response.data.roles
                 });
                 setSubmitted(true);
-                //console.log(response.data);
+                setIsLoading(false);
+                setMessage("");
+              }, 1000);
+                
             },
             (error) => {
                 const _content =
@@ -110,108 +148,120 @@ const AdminUsersAdd = () => {
                     error.response.data.message) ||
                   error.message ||
                   error.toString();
-
-                setUser(_content);
-                //console.log(_content);
+                setIsLoading(false);
+                setMessage(_content);
             }
-        )
+        ).catch((error) => {
+          console.log(error)
+        })
     }
 
     return (
-      <div className="list row">
-        <div className="col-md-12">
-          <div className="submit-form">
-            {submitted ? (
-              <div>
-                <h4>You submitted successfully!</h4>
-                <button className="btn btn-success" onClick={newUser}>
-                  Add
-                </button>
-              </div>
-            ) : (
-              <div>
-                <div className="form-group">
-                  <label htmlFor="name">Name</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="name"
-                    required
-                    value={user.name}
-                    onChange={handleInputChange}
-                    name="name"
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="email">Email</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="email"
-                    required
-                    value={user.email}
-                    onChange={handleInputChange}
-                    name="email"
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="password">Password</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="password"
-                    required
-                    value={user.password}
-                    onChange={handleInputChange}
-                    name="password"
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="company">Company</label>
-                  <select
-                    value={user.company_id}
-                    className="form-control"
-                    id="company_id"
-                    name="company_id"
-                    onChange={handleInputChange}
-                  >
-                    {currentCompany &&
-                      currentCompany.map((company, i) => (
-                        <option value={company.id}>{company.name}</option>
+      <Container>
+        <Row>
+          <Col>
+            <h4>Add new user</h4>
+          </Col>
+        </Row>
+        <hr />
+        {message && (
+          <UncontrolledAlert color="danger">{message}</UncontrolledAlert>
+        )}
+        {submitted ? (
+          <Row>
+            <Col>
+              <h4>Your data successfully submitted</h4>
+              <button onClick={newUser}>
+                <i className="fas fa-plus"> ADD</i>
+              </button>
+            </Col>
+          </Row>
+        ) : (
+            <Row>
+              <Col>
+                  <FormGroup>
+                    <Label for="name">Name</Label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="name"
+                      required
+                      value={user.name}
+                      onChange={handleInputChange}
+                      name="name"
+                    />
+                  </FormGroup>
+                  <FormGroup>
+                    <Label for="email">Email</Label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="email"
+                      required
+                      value={user.email}
+                      onChange={handleInputChange}
+                      name="email"
+                    />
+                  </FormGroup>
+                  <FormGroup>
+                    <Label for="password">Password</Label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="password"
+                      required
+                      value={user.password}
+                      onChange={handleInputChange}
+                      name="password"
+                    />
+                  </FormGroup>
+                  <FormGroup>
+                    <Label for="company">Company</Label>
+                    <select
+                      value={user.company_id}
+                      className="form-control"
+                      id="company_id"
+                      name="company_id"
+                      onChange={handleInputChange}
+                    >
+                      {currentCompany &&
+                        currentCompany.map((company, i) => (
+                          <option value={company.id}>{company.name}</option>
+                        ))}
+                    </select>
+                  </FormGroup>
+                  <FormGroup>
+                    <Label>Roles</Label>
+                    {currentRole &&
+                      currentRole.map((v, k) => (
+                        <div>
+                          <label htmlFor={`roles-${k}`}>
+                            <input
+                              className=""
+                              type="checkbox"
+                              name={`roles-${k}`}
+                              id={`roles-${k}`}
+                              value={v.name}
+                              onChange={handleCheckboxChange}
+                            />{" "}
+                            {v.name}
+                          </label>
+                        </div>
                       ))}
-                  </select>
-                </div>
-
-                <div className="form-group">
-                  {currentRole &&
-                    currentRole.map((v, k) => (
-                      <div>
-                        <label htmlFor={`roles-${k}`}>
-                          <input
-                            className=""
-                            type="checkbox"
-                            name={`roles-${k}`}
-                            id={`roles-${k}`}
-                            value={v.name}
-                            onChange={handleInputChange}
-                          />{" "}
-                          {v.name}
-                        </label>
-                      </div>
-                    ))}
-                </div>
-
-                <button onClick={saveUser} className="btn btn-success">
-                  Submit
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
+                  </FormGroup>
+                  <FormGroup className="text-right">
+                    <button onClick={saveUser} disabled={isLoading}>
+                      {isLoading ? (
+                        <span>Please Wait</span>
+                      ) : (<span>Submit</span> )} 
+                    </button>
+                  </FormGroup>
+              </Col>
+            </Row>
+            
+          
+        )}
+      </Container>
     );
 }
 

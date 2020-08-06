@@ -4,17 +4,18 @@ import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
 import { Link } from "react-router-dom"
-
 import MembershipService from "../../../services/CompanyServices"
+import { Container, Row, Col, FormGroup, Label} from "reactstrap"
+import MembershipHeader from "./MembershipHeader";
 
 const Membership = () => {
 
     const required = (value) => {
         if (!value) {
             return (
-                <div className="alert alert-danger" role="alert">
+                <p className="text-danger">
                     This field is required!
-                </div>
+                </p>
             );
         }
     };
@@ -22,9 +23,9 @@ const Membership = () => {
     const validEmail = (value) => {
         if (!isEmail(value)) {
             return (
-                <div className="alert alert-danger" role="alert">
+                <p className="text-danger">
                     This is not a valid email.
-                </div>
+                </p>
             );
         }
     };
@@ -44,6 +45,7 @@ const Membership = () => {
     const [authorized_title, setAuthorized_title] = useState("");
     const [successful, setSuccessful] = useState(false);
     const [message, setMessage] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     const onChangeName = (e) => {
         const name = e.target.value
@@ -100,6 +102,7 @@ const Membership = () => {
 
         setMessage("")
         setSuccessful(false)
+        setIsLoading(true)
 
         form.current.validateAll()
 
@@ -132,194 +135,212 @@ const Membership = () => {
                     setContact_person_email("");
                     setAuthorized_name("");
                     setAuthorized_title("");
+                    setIsLoading(false);
                     console.log(`response: ${response}`)
                 },
                 (error) => {
                     console.log(`response error: ${error}`)
                     setSuccessful(false);
+                    setIsLoading(false);
                 }
             ).catch((error) => {
                 console.log(`catch error: ${error}`)
                 setSuccessful(false);
+                setIsLoading(false);
             })
         } else {
             console.log(`no process`)
             setSuccessful(false);
+            setIsLoading(false);
         }
     }
     
-
-
     return (
-        <main>
+      <main>
+        <MembershipHeader />
 
-            <div className="lernen_banner large bg-contact">
-                <div className="container">
-                    <div className="row">
-                        <div className="lernen_banner_title">
-                            <h1>Company membership registration</h1>
-                        </div>
+        <div id="membership-registration" className="wrap-bg">
+          <Container>
+            <Row>
+              <Col sm="12" md={{ size: 6, offset: 3 }}>
+                {message && (
+                  <div>
+                    <h4>Membership registration notification</h4>
+                    <hr />
+                    <FormGroup>
+                      <div
+                        className={
+                          successful
+                            ? "alert alert-success"
+                            : "alert alert-danger"
+                        }
+                        role="alert"
+                      >
+                        {message}
+                      </div>
+                    </FormGroup>
+                  </div>
+                )}
+                <Form onSubmit={handleRegister} ref={form}>
+                  {!successful && (
+                    <div>
+                      <h4>Please fill in</h4>
+                      <hr />
+                      <FormGroup>
+                        <Label for="name">Company Name</Label>
+                        <Input
+                          type="text"
+                          className="form-control"
+                          name="name"
+                          value={name}
+                          onChange={onChangeName}
+                          validations={[required]}
+                        />
+                      </FormGroup>
+
+                      <FormGroup>
+                        <Label for="address">Address</Label>
+                        <Input
+                          type="text"
+                          className="form-control"
+                          name="address"
+                          value={address}
+                          onChange={onChangeAddress}
+                          validations={[required]}
+                        />
+                      </FormGroup>
+
+                      <FormGroup>
+                        <Label for="phone">Phone</Label>
+                        <Input
+                          type="text"
+                          className="form-control"
+                          name="phone"
+                          value={phone}
+                          onChange={onChangePhone}
+                          validations={[required]}
+                        />
+                      </FormGroup>
+
+                      <FormGroup>
+                        <Label for="fax">Fax</Label>
+                        <Input
+                          type="text"
+                          className="form-control"
+                          name="fax"
+                          value={fax}
+                          onChange={onChangeFax}
+                          validations={[required]}
+                        />
+                      </FormGroup>
+
+                      <FormGroup>
+                        <Label for="contact_person_name">
+                          Contact Person Name
+                        </Label>
+                        <Input
+                          type="text"
+                          className="form-control"
+                          name="contact_person_name"
+                          value={contact_person_name}
+                          onChange={onChangeContactPersonName}
+                          validations={[required]}
+                        />
+                      </FormGroup>
+
+                      <FormGroup>
+                        <Label for="contact_person_title">
+                          Contact Person Title
+                        </Label>
+                        <Input
+                          type="text"
+                          className="form-control"
+                          name="contact_person_title"
+                          value={contact_person_title}
+                          onChange={onChangeContactPersonTitle}
+                          validations={[required]}
+                        />
+                      </FormGroup>
+
+                      <FormGroup>
+                        <Label for="contact_person_phone">
+                          Contact Person Phone
+                        </Label>
+                        <Input
+                          type="text"
+                          className="form-control"
+                          name="contact_person_phone"
+                          value={contact_person_phone}
+                          onChange={onChangeContactPersonPhone}
+                          validations={[required]}
+                        />
+                      </FormGroup>
+
+                      <FormGroup>
+                        <Label for="contact_person_email">
+                          Contact Person Email
+                        </Label>
+                        <Input
+                          type="text"
+                          className="form-control"
+                          name="contact_person_email"
+                          value={contact_person_email}
+                          onChange={onChangeContactPersonEmail}
+                          validations={[required, validEmail]}
+                        />
+                      </FormGroup>
+
+                      <FormGroup>
+                        <Label for="authorized_name">Authorized Name</Label>
+                        <Input
+                          type="text"
+                          className="form-control"
+                          name="authorized_name"
+                          value={authorized_name}
+                          onChange={onChangeAuthorizedName}
+                          validations={[required]}
+                        />
+                      </FormGroup>
+
+                      <FormGroup>
+                        <Label for="authorized_title">Authorized Title</Label>
+                        <Input
+                          type="text"
+                          className="form-control"
+                          name="authorized_title"
+                          value={authorized_title}
+                          onChange={onChangeAuthorizedTitle}
+                          validations={[required]}
+                        />
+                      </FormGroup>
+
+                      <FormGroup className="text-center">
+                        <button
+                          type="submit"
+                          className="color-two button"
+                          disabled={isLoading}
+                        >
+                          {isLoading ? (
+                            <span>
+                              <span className="spinner-border spinner-border-sm"></span>
+                              Please wait
+                            </span>
+                          ) : (
+                            <span>Sign Up</span>
+                          )}
+                        </button>
+                      </FormGroup>
                     </div>
-                </div>
-            </div>
+                  )}
 
-            <div id="membership-registration" className="wrap-bg">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-12 col-lg-12">
-                            {message && (
-                                <div className="form-group">
-                                    <div
-                                        className={
-                                            successful ? "alert alert-success" : "alert alert-danger"
-                                        }
-                                        role="alert"
-                                    >
-                                        {message}
-                                    </div>
-                                </div>
-                            )}
-                            <Form onSubmit={handleRegister} ref={form}>
-                                {!successful && (
-                                    <div>
-                                        <div className="form-group">
-                                            <label htmlFor="name">Company Name</label>
-                                            <Input
-                                                type="text"
-                                                className="form-control"
-                                                name="name"
-                                                value={name}
-                                                onChange={onChangeName}
-                                                validations={[required]}
-                                            />
-                                        </div>
-
-                                        <div className="form-group">
-                                            <label htmlFor="address">Address</label>
-                                            <Input
-                                                type="text"
-                                                className="form-control"
-                                                name="address"
-                                                value={address}
-                                                onChange={onChangeAddress}
-                                                validations={[required]}
-                                            />
-                                        </div>
-
-                                        <div className="form-group">
-                                            <label htmlFor="phone">Phone</label>
-                                            <Input
-                                                type="text"
-                                                className="form-control"
-                                                name="phone"
-                                                value={phone}
-                                                onChange={onChangePhone}
-                                                validations={[required]}
-                                            />
-                                        </div>
-
-                                        <div className="form-group">
-                                            <label htmlFor="fax">Fax</label>
-                                            <Input
-                                                type="text"
-                                                className="form-control"
-                                                name="fax"
-                                                value={fax}
-                                                onChange={onChangeFax}
-                                                validations={[required]}
-                                            />
-                                        </div>
-
-                                        <div className="form-group">
-                                            <label htmlFor="contact_person_name">Contact Person Name</label>
-                                            <Input
-                                                type="text"
-                                                className="form-control"
-                                                name="contact_person_name"
-                                                value={contact_person_name}
-                                                onChange={onChangeContactPersonName}
-                                                validations={[required]}
-                                            />
-                                        </div>
-
-                                        <div className="form-group">
-                                            <label htmlFor="contact_person_title">Contact Person Title</label>
-                                            <Input
-                                                type="text"
-                                                className="form-control"
-                                                name="contact_person_title"
-                                                value={contact_person_title}
-                                                onChange={onChangeContactPersonTitle}
-                                                validations={[required]}
-                                            />
-                                        </div>
-
-                                        <div className="form-group">
-                                            <label htmlFor="contact_person_phone">Contact Person Phone</label>
-                                            <Input
-                                                type="text"
-                                                className="form-control"
-                                                name="contact_person_phone"
-                                                value={contact_person_phone}
-                                                onChange={onChangeContactPersonPhone}
-                                                validations={[required]}
-                                            />
-                                        </div>
-
-                                        <div className="form-group">
-                                            <label htmlFor="contact_person_email">Contact Person Email</label>
-                                            <Input
-                                                type="text"
-                                                className="form-control"
-                                                name="contact_person_email"
-                                                value={contact_person_email}
-                                                onChange={onChangeContactPersonEmail}
-                                                validations={[required, validEmail]}
-                                            />
-                                        </div>
-
-                                        <div className="form-group">
-                                            <label htmlFor="authorized_name">Authorized Name</label>
-                                            <Input
-                                                type="text"
-                                                className="form-control"
-                                                name="authorized_name"
-                                                value={authorized_name}
-                                                onChange={onChangeAuthorizedName}
-                                                validations={[required]}
-                                            />
-                                        </div>
-
-                                        <div className="form-group">
-                                            <label htmlFor="authorized_title">Authorized Title</label>
-                                            <Input
-                                                type="text"
-                                                className="form-control"
-                                                name="authorized_title"
-                                                value={authorized_title}
-                                                onChange={onChangeAuthorizedTitle}
-                                                validations={[required]}
-                                            />
-                                        </div>
-
-                                        <div className="form-group">
-                                            <button type="submit" className="color-two button">Sign Up</button>
-                                        </div>
-                                    </div>
-                                )}
-
-                                
-                                <CheckButton style={{ display: "none" }} ref={checkBtn} />
-                            </Form>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-
-        </main>
-    )
+                  <CheckButton style={{ display: "none" }} ref={checkBtn} />
+                </Form>
+              </Col>
+            </Row>
+          </Container>
+        </div>
+      </main>
+    );
 }
 
 export default Membership

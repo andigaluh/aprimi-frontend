@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import ContentService from "../../../services/ContentServices";
 import AuthService from "../../../services/auth.service";
 import JoditEditor from "jodit-react";
+import { Container, Row, Col, FormGroup, Label, UncontrolledAlert } from "reactstrap"
 
 const AdminContentAdd = () => {
     const initialContentState = {
@@ -20,6 +21,8 @@ const AdminContentAdd = () => {
     
     const editor = useRef(null);
     const [content, setContent] = useState("");
+    const [isLoading, setIsLoading] = useState(false)
+    const [message, setMessage] = useState("")
     
     useEffect(() => {
         const user = AuthService.getCurrentUser();
@@ -40,6 +43,8 @@ const AdminContentAdd = () => {
     };
 
     const saveContent = () => {
+        setIsLoading(true)
+
         var data = {
           title: currentContent.title,
           url_title: currentContent.url_title,
@@ -60,7 +65,7 @@ const AdminContentAdd = () => {
                     updated_user_id: response.data.updated_user_id
                 });
                 setSubmitted(true);
-                console.log(response.data);
+                setIsLoading(false)
             },
             (error) => {
                 const _content =
@@ -70,29 +75,36 @@ const AdminContentAdd = () => {
                     error.message ||
                     error.toString();
 
-                //setCurrentContent(_content);
-                console.log(_content);
+                setMessage(_content);
+                setIsLoading(false)
+                window.scrollTo(0, 500)
             }
         )
     }
 
     return (
-      <div className="list row">
+      <Container>
+        <Row>
+          <Col>
         {auth ? (
-          <div className="col-md-12">
-            <h4>Add Content</h4>
+          <div>
             <div className="submit-form">
               {submitted ? (
                 <div>
-                  <h4>You submitted successfully!</h4>
-                  <button className="btn btn-success" onClick={newContent}>
-                    Add
-                  </button>
+                    <h4>You submitted successfully!</h4>
+                    <button className="btn-custom btn-success" onClick={newContent}>
+                      Add
+                    </button>
                 </div>
               ) : (
                 <div>
-                  <div className="form-group">
-                    <label htmlFor="title">Title</label>
+                  <h4>Add Content</h4>
+                  <hr />
+                  {message && (
+                    <UncontrolledAlert color="danger">{message}</UncontrolledAlert>
+                  )}
+                  <FormGroup>
+                    <Label for="title">Title</Label>
                     <input
                       type="text"
                       className="form-control"
@@ -102,10 +114,10 @@ const AdminContentAdd = () => {
                       onChange={handleInputChange}
                       name="title"
                     />
-                  </div>
+                  </FormGroup>
 
-                  <div className="form-group">
-                    <label htmlFor="url_title">URL Title</label>
+                  <FormGroup>
+                    <Label for="url_title">URL Title</Label>
                     <input
                       type="text"
                       className="form-control"
@@ -115,10 +127,10 @@ const AdminContentAdd = () => {
                       onChange={handleInputChange}
                       name="url_title"
                     />
-                  </div>
+                  </FormGroup>
 
-                  <div className="form-group">
-                    <label htmlFor="content">Content</label>
+                  <FormGroup>
+                    <Label for="content">Content</Label>
                     <JoditEditor
                       ref={editor}
                       value={content}
@@ -126,21 +138,26 @@ const AdminContentAdd = () => {
                       onBlur={(ContentBaru) => setContent(ContentBaru)}
                       name="content"
                     />
-                  </div>
-
-                  <button onClick={saveContent} className="btn btn-success">
-                    Submit
-                  </button>
+                  </FormGroup>
+                  
+                  <FormGroup>
+                    <button onClick={saveContent} className="btn-custom btn-success" disabled={isLoading}>
+                            {isLoading ? (<span>Please Wait</span>) : (<span>Submit</span>)} 
+                    </button>
+                  </FormGroup>
+                  
                 </div>
               )}
             </div>
           </div>
         ) : (
-          <div className="col-md-12">
-            <h4>unAuthorized!</h4>
-          </div>
+          
+              <h4>unAuthorized!</h4>
+            
         )}
-      </div>
+          </Col>
+        </Row>
+      </Container>
     );
 }
 

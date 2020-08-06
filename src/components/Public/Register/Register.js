@@ -5,13 +5,16 @@ import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
 
 import AuthService from "../../../services/auth.service";
+import RegisterHeader from "./RegisterHeader";
+import { Container, Row, Col, FormGroup, Label } from 'reactstrap'
+import {Link} from 'react-router-dom'
 
 const required = (value) => {
   if (!value) {
     return (
-      <div className="alert alert-danger" role="alert">
+      <p className="text-danger">
         This field is required!
-      </div>
+      </p>
     );
   }
 };
@@ -19,9 +22,9 @@ const required = (value) => {
 const validEmail = (value) => {
   if (!isEmail(value)) {
     return (
-      <div className="alert alert-danger" role="alert">
+      <p className="text-danger">
         This is not a valid email.
-      </div>
+      </p>
     );
   }
 };
@@ -29,9 +32,9 @@ const validEmail = (value) => {
 const vusername = (value) => {
   if (value.length < 3 || value.length > 20) {
     return (
-      <div className="alert alert-danger" role="alert">
+      <p className="text-danger">
         The username must be between 3 and 20 characters.
-      </div>
+      </p>
     );
   }
 };
@@ -39,9 +42,9 @@ const vusername = (value) => {
 const vpassword = (value) => {
   if (value.length < 6 || value.length > 40) {
     return (
-      <div className="alert alert-danger" role="alert">
+      <p className="text-danger">
         The password must be between 6 and 40 characters.
-      </div>
+      </p>
     );
   }
 };
@@ -55,6 +58,7 @@ const Register = (props) => {
   const [password, setPassword] = useState("");
   const [successful, setSuccessful] = useState(false);
   const [message, setMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false)
 
   const onChangeUsername = (e) => {
     const username = e.target.value;
@@ -76,6 +80,7 @@ const Register = (props) => {
 
     setMessage("");
     setSuccessful(false);
+    setIsLoading(true)
 
     form.current.validateAll();
 
@@ -92,7 +97,7 @@ const Register = (props) => {
         (response) => {
           setMessage(response.data.message);
           setSuccessful(true);
-          console.log(`response: ${response.data.message}`)
+          setIsLoading(false);
         },
         (error) => {
           const resMessage =
@@ -103,38 +108,31 @@ const Register = (props) => {
             error.toString();
 
           setMessage(resMessage);
-          console.log(`error: ${resMessage}`)
+          setIsLoading(false);
           setSuccessful(false);
         }
       ).catch((error) => {
-        console.log(`catch: ${error}`)
+        setIsLoading(false);
       });
     } else {
-      console.log("no process")
+      setIsLoading(false);
     }
   };
 
   return (
     <main>
-      <div className="lernen_banner large bg-contact">
-        <div className="container">
-          <div className="row">
-            <div className="lernen_banner_title">
-              <h1>Registration</h1>
-            </div>
-          </div>
-        </div>
-      </div>
-
+      <RegisterHeader />
       <div id="register" className="wrap-bg">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12 col-lg-12">
+        <Container>
+          <Row>
+            <Col sm="12" md={{ size: 6, offset: 3 }}>
               {message && (
                 <div className="form-group">
                   <div
                     className={
-                      successful ? "alert alert-success" : "alert alert-danger"
+                      successful
+                        ? "alert alert-success text-center"
+                        : "alert alert-danger text-center"
                     }
                     role="alert"
                   >
@@ -145,8 +143,10 @@ const Register = (props) => {
               <Form onSubmit={handleRegister} ref={form}>
                 {!successful && (
                   <div>
-                    <div className="form-group">
-                      <label htmlFor="username">Username</label>
+                    <h4>Please fill in</h4>
+                    <hr />
+                    <FormGroup>
+                      <Label for="username">Username</Label>
                       <Input
                         type="text"
                         className="form-control"
@@ -155,10 +155,10 @@ const Register = (props) => {
                         onChange={onChangeUsername}
                         validations={[required, vusername]}
                       />
-                    </div>
+                    </FormGroup>
 
-                    <div className="form-group">
-                      <label htmlFor="email">Email</label>
+                    <FormGroup>
+                      <Label for="email">Email</Label>
                       <Input
                         type="text"
                         className="form-control"
@@ -167,10 +167,10 @@ const Register = (props) => {
                         onChange={onChangeEmail}
                         validations={[required, validEmail]}
                       />
-                    </div>
+                    </FormGroup>
 
-                    <div className="form-group">
-                      <label htmlFor="password">Password</label>
+                    <FormGroup>
+                      <Label for="password">Password</Label>
                       <Input
                         type="password"
                         className="form-control"
@@ -179,22 +179,41 @@ const Register = (props) => {
                         onChange={onChangePassword}
                         validations={[required, vpassword]}
                       />
-                    </div>
+                    </FormGroup>
 
-                    <div className="form-group">
-                      <button type="submit" className="color-two button">Sign Up</button>
-                    </div>
+                    <FormGroup className="text-center">
+                      <button
+                        type="submit"
+                        className="color-two button"
+                        disabled={isLoading}
+                      >
+                        {isLoading ? (
+                          <span>
+                            <span className="spinner-border spinner-border-sm"></span>
+                             Please wait
+                          </span>
+                        ) : (
+                          <span>Register</span>
+                        )}
+                      </button>
+                    </FormGroup>
+                    <FormGroup className="text-center">
+                      <p>
+                        Have already an account ?{" "}
+                        <Link to={"/login"} className="text-info">
+                          LOGIN HERE
+                        </Link>
+                      </p>
+                    </FormGroup>
                   </div>
                 )}
 
-                
                 <CheckButton style={{ display: "none" }} ref={checkBtn} />
               </Form>
-            </div>
-          </div>
-        </div>
+            </Col>
+          </Row>
+        </Container>
       </div>
-
     </main>
   );
 };

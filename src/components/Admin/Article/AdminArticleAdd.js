@@ -3,6 +3,7 @@ import AuthService from "../../../services/auth.service"
 import ArticleService from "../../../services/ArticleServices"
 import ArticleCategoryService from "../../../services/ArticleCategoryServices"
 import JoditEditor from "jodit-react";
+import { Container, Row, Col, FormGroup, Label, UncontrolledAlert } from "reactstrap"
 
 const AdminArticleAdd = () => {
     const initialArticleState = {
@@ -21,6 +22,7 @@ const AdminArticleAdd = () => {
     const [auth, setAuth] = useState(undefined);
     const [currentArticleCategory, setCurrentArticleCategory] = useState([]);
     const [errorMsg, setErrorMsg] = useState("")
+    const [isLoading, setIsLoading] = useState(false)
     
     const editor = useRef(null);
     const [content, setContent] = useState("");
@@ -104,23 +106,27 @@ const AdminArticleAdd = () => {
     };
 
     return (
-      <div className="list row">
+      <Container>
+      <Row>
         {auth ? (
-          <div className="col-md-12">
+          <Col>
             <h4>Add Article</h4>
+            <hr />
             <div className="submit-form">
               {submitted ? (
                 <div>
                   <h4>You submitted successfully!</h4>
-                  <button className="btn btn-success" onClick={newArticle}>
+                  <button className="btn-custom btn-success" onClick={newArticle}>
                     Add
                   </button>
                 </div>
               ) : (
                 <div>
-                  <p>{errorMsg}</p>
-                  <div className="form-group">
-                    <label htmlFor="news_category_id">Article Category</label>
+                  {errorMsg && (
+                    <UncontrolledAlert color="danger">{errorMsg}</UncontrolledAlert>
+                  )}
+                  <FormGroup>
+                    <Label for="news_category_id">Article Category</Label>
                     <select
                       name="news_category_id"
                       id="news_category_id"
@@ -134,9 +140,9 @@ const AdminArticleAdd = () => {
                           <option value={v.id}>{v.title}</option>
                         ))}
                     </select>
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="title">Title</label>
+                      </FormGroup>
+                  <FormGroup>
+                    <Label for="title">Title</Label>
                     <input
                       type="text"
                       className="form-control"
@@ -146,9 +152,9 @@ const AdminArticleAdd = () => {
                       onChange={handleInputChange}
                       name="title"
                     />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="headline">Headline</label>
+                      </FormGroup>
+                  <FormGroup>
+                    <Label for="headline">Headline</Label>
                     <input
                       type="text"
                       className="form-control"
@@ -158,9 +164,9 @@ const AdminArticleAdd = () => {
                       onChange={handleInputChange}
                       name="headline"
                     />
-                  </div>
-                  <div className="form-group ">
-                    <label htmlFor="content">Content</label>
+                      </FormGroup>
+                  <FormGroup>
+                    <Label for="content">Content</Label>
                     <JoditEditor
                       ref={editor}
                       value={content}
@@ -168,21 +174,24 @@ const AdminArticleAdd = () => {
                       onBlur={(ContentBaru) => setContent(ContentBaru)}
                       name="content"
                     />
-                  </div>
-
-                  <button onClick={saveArticle} className="btn btn-success">
-                    Submit
+                      </FormGroup>
+                  
+                      <FormGroup>
+                        <button onClick={saveArticle} className="btn-custom btn-success" disabled={isLoading}>
+                          {isLoading ? (<span>Please Wait</span>) : (<span>Submit</span>)} 
                   </button>
+                      </FormGroup>
                 </div>
               )}
             </div>
-          </div>
+            </Col>
         ) : (
-          <div>
+          <Col>
             <h4>UnAuthorized!</h4>
-          </div>
+          </Col>
         )}
-      </div>
+      </Row>
+      </Container>
     );
 }
 

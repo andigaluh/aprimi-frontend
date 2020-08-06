@@ -3,12 +3,15 @@ import { Link } from "react-router-dom";
 import AuthService from "../../../services/auth.service";
 import Pagination from "@material-ui/lab/Pagination";
 import CarouselService from "../../../services/CarouselServices";
-//import moment from "moment";
+import { Container, Row, Col, Table, Badge } from 'reactstrap'
+import LoadingSpinner from "../../LoadingSpinner";
+import AdminSearch from "../AdminSearch";
 
 const AdminCarousel = () => {
     const [carousel, setCarousel] = useState("");
     const [auth, setCurrentAuth] = useState(undefined);
     const [searchTitle, setSearchTitle] = useState("");
+    const [isLoading, setIsLoading] = useState(false)
 
     const [page, setPage] = useState(1);
     const [count, setCount] = useState(0);
@@ -36,10 +39,13 @@ const AdminCarousel = () => {
 
     useEffect(() => {
         const user = AuthService.getCurrentUser();
-
+        setIsLoading(true)
         if (user) {
             setCurrentAuth(user);
-            retrieveCarousel();
+            setTimeout(() => {
+                retrieveCarousel();
+                setIsLoading(false)    
+            }, 1000);
         }
     }, [page, pageSize])
 
@@ -82,101 +88,91 @@ const AdminCarousel = () => {
     };
 
     return (
-        <div className="col-md-12">
+        <Container>
             {auth ? (
                 <div>
-                    <h4>Admin Carousel</h4>
-                    <div className="list row mb-3">
-                        <div className="col-md-10">
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Search by title"
-                                value={searchTitle}
-                                onChange={onChangeSearchTitle}
-                                onKeyUp={retrieveCarousel}
-                            />
-                        </div>
-
-                        <div className="col-md-2">
-                            <Link to={"/admin/addCarousel"} className="btn btn-primary">
-                                + Add
-                </Link>
-                        </div>
-                    </div>
-                    <div className="mb-3">
-                        {"Items per Page: "}
-                        <select onChange={handlePageSizeChange} value={pageSize}>
-                            {pageSizes.map((size) => (
-                                <option key={size} value={size}>
-                                    {size}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                    <div className="list row mb-3">
-                        <table className="table">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Id</th>
-                                    <th>Image</th>
-                                    <th>title</th>
-                                    <th>Active</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {carousel &&
-                                    carousel.map((carous, i) => (
-                                        <tr>
-                                            <td>{i + 1}</td>
-                                            <td>{carous.id}</td>
-                                            <td>
-                                                {carous.image ? (
-                                                    <div>
-                                                        <img
-                                                            src={
-                                                                process.env.REACT_APP_API + "/uploads/carousel/" +
-                                                                carous.image
-                                                            }
-                                                            width="100"
-                                                            alt={carousel.title}
-                                                        /><br />
-                                                        <Link
-                                                            to={"/admin/thumbCarousel/" + carous.id}
-                                                            className="badge badge-warning"
-                                                        >
-                                                            Image
-                                                        </Link>
-                                                    </div>
-                                                ) : (
+                    <Row>
+                        <Col>
+                            <h4>Admin Carousel</h4>
+                        </Col>
+                    </Row>
+                    <hr/>
+                    <AdminSearch
+                        onChangeSearchTitle={onChangeSearchTitle}
+                        searchTitle={searchTitle}
+                        retrieveTable={retrieveCarousel}
+                        handlePageSizeChange={handlePageSizeChange}
+                        pageSize={pageSize}
+                        pageSizes={pageSizes}
+                        isAddUrl={true}
+                        addUrl={"/admin/addCarousel"}
+                    />
+                    <hr />
+                    <Row>
+                        <Col>
+                        {isLoading ? (
+                            <LoadingSpinner />
+                        ) : (
+                            <Table hover>
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Id</th>
+                                        <th>Image</th>
+                                        <th>Name</th>
+                                        <th>Active</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {carousel &&
+                                        carousel.map((carous, i) => (
+                                            <tr>
+                                                <td>{i + 1}</td>
+                                                <td>{carous.id}</td>
+                                                <td>
+                                                    {carous.image ? (
                                                         <div>
-                                                            No Image <br />
-                                                            <Link
-                                                                to={"/admin/thumbCarousel/" + carous.id}
-                                                                className="badge badge-warning"
-                                                            >
-                                                                Image
-                                                            </Link>
+                                                            <img
+                                                                src={
+                                                                    process.env.REACT_APP_API + "/uploads/carousel/" +
+                                                                    carous.image
+                                                                }
+                                                                width="100"
+                                                                alt={carousel.title}
+                                                            /><br />
+                                                            
                                                         </div>
-                                                    )}
-                                            </td>
-                                            <td>{carous.title}</td>
-                                            <td>{carous.is_publish ? `Active` : `NotActive`}</td>
-                                            <td>
-                                                <Link
-                                                    to={"/admin/carousel/" + carous.id}
-                                                    className="badge badge-warning"
-                                                >
-                                                    Edit
-                                                </Link>
-                                            </td>
-                                        </tr>
-                                    ))}
-                            </tbody>
-                        </table>
-                        <div className="mt-3 text-right">
+                                                    ) : (
+                                                            <div>
+                                                                No Image <br />
+                                                            </div>
+                                                        )}
+                                                    <Link
+                                                        to={"/admin/thumbCarousel/" + carous.id}
+                                                    >
+                                                        <Badge color="info" pill><i className="fas fa-upload"></i> Image</Badge>
+                                                            </Link>
+                                                </td>
+                                                <td>{carous.title}</td>
+                                                <td>{carous.is_publish ? `Active` : `NotActive`}</td>
+                                                <td>
+                                                    <Link
+                                                        to={"/admin/carousel/" + carous.id}>
+                                                        <Badge color="primary" pill><i className="fas fa-edit"></i> Edit</Badge>
+                                        </Link>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                </tbody>
+                            </Table>
+                        )}
+                        
+                        </Col>
+                        
+                    </Row>
+                    <Row>
+                        <Col>
                             <Pagination
                                 className="my-3"
                                 count={count}
@@ -187,15 +183,18 @@ const AdminCarousel = () => {
                                 shape="rounded"
                                 onChange={handlePageChange}
                             />
-                        </div>
-                    </div>
+                        </Col>
+                    </Row>
                 </div>
             ) : (
-                    <div>
-                        <h4>Unauthorized</h4>
-                    </div>
+                <Row>
+                        <Col>
+                            <h4>Unauthorized</h4>
+                        </Col>
+                </Row>
+                    
                 )}
-        </div>
+        </Container>
     );
 }
 

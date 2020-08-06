@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import UserService from "../../../services/UserService";
 import CompanyService from "../../../services/CompanyServices";
+import {Container, Row, Col, FormGroup, Label, Alert} from 'reactstrap'
+import RoleServices from '../../../services/RoleServices';
 
 const AdminUsersDetail = props => {
     const initialUserState = {
@@ -13,12 +15,14 @@ const AdminUsersDetail = props => {
     const [currentUser, setCurrentUser] = useState(initialUserState);
     const [message, setMessage] = useState("");
     const [currentCompany, setCurrentCompany] = useState([]);
+    const [currentRole, setcurrentRole] = useState([]);
+    const [inputRole, setInputRole] = useState([]);
 
     const User = (id) => {
         UserService.get(id).then(
             (response) => {
                 setCurrentUser(response.data);
-                console.log(response.data);
+                setInputRole(response.data.roles)
             },
             (error) => {
                 const _content =
@@ -40,7 +44,6 @@ const AdminUsersDetail = props => {
             (response) => {
                 const { items } = response.data;
                 setCurrentCompany(items);
-                console.log(response);
             },
             (error) => {
                 const _content =
@@ -56,18 +59,49 @@ const AdminUsersDetail = props => {
         )
     }
 
+    const retrieveRole = () => {
+        RoleServices.getAll().then(
+            (response) => {
+                setcurrentRole(response.data);
+            },
+            (error) => {
+                const _content =
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
+
+                setcurrentRole(_content);
+            }
+        );
+    };
+
     useEffect(() => {
         User(props.match.params.id);
         Company();
+        retrieveRole();
+        
     }, [props.match.params.id]);
 
     const handleInputChange = event => {
-        const { name, value } = event.target;
+        const { name, value, checked } = event.target;
         setCurrentUser({ ...currentUser, [name]: value });
     };
 
     const updateUser = () => {
-        UserService.update(currentUser.id, currentUser)
+        var rolesArr = Object.values(inputRole).map(function (key) {
+            return key;
+        });
+
+        var data = {
+            name: currentUser.name,
+            email: currentUser.email,
+            company_id: currentUser.company_id,
+            roles: rolesArr,
+        }
+
+        UserService.update(currentUser.id, data)
             .then(response => {
                 console.log(response.data);
                 setMessage("The User was updated successfully!");
@@ -106,14 +140,19 @@ const AdminUsersDetail = props => {
   };
 
     return (
-        <div>
+        <Container>
             {currentUser ? (
-                <div className="edit-user">
+                <Row>
+                    <Col>
                     <h4>Detail user</h4>
-                    <p>{message}</p>
+                    <hr/>
+                    {message && (
+                        <Alert color="success">{message}</Alert>
+                    )}
+                    
                     <form>
-                        <div className="form-group">
-                            <label htmlFor="name">Name</label>
+                        <FormGroup>
+                            <Label for="name">Name</Label>
                             <input
                                 type="text"
                                 className="form-control"
@@ -122,9 +161,9 @@ const AdminUsersDetail = props => {
                                 value={currentUser.name}
                                 onChange={handleInputChange}
                             />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="email">Email</label>
+                        </FormGroup>
+                        <FormGroup>
+                            <Label for="email">Email</Label>
                             <input
                                 type="text"
                                 className="form-control"
@@ -133,9 +172,9 @@ const AdminUsersDetail = props => {
                                 value={currentUser.email}
                                 onChange={handleInputChange}
                             />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="company">Company</label>
+                        </FormGroup>
+                        <FormGroup>
+                            <Label for="company">Company</Label>
                             <select 
                                 value={currentUser.company_id} 
                                 className="form-control" 
@@ -147,7 +186,28 @@ const AdminUsersDetail = props => {
                                     <option value={company.id}>{company.name}</option>
                                 ))}
                             </select>
-                        </div>
+                        </FormGroup>
+                        <FormGroup>
+                            <Label>Roles</Label>
+                            {currentRole &&
+                                currentRole.map((v, k) => (
+                                    <div>
+                                        <label htmlFor={`roles-${k}`}>
+                                            <input
+                                                className=""
+                                                type="checkbox"
+                                                name={`roles-${k}`}
+                                                id={`roles-${k}`}
+                                                checked={inputRole.includes(v.name)}
+                                                value={v.name}
+                                                onChange={handleInputChange}
+                                                disabled={true}
+                                            />{" "}
+                                            {v.name}
+                                        </label>
+                                    </div>
+                                ))}
+                        </FormGroup>
                         
                     </form>
                     <button
@@ -176,15 +236,17 @@ const AdminUsersDetail = props => {
                     <button className="btn-custom btn-danger mr-2" onClick={deleteUser}>
                         Delete
                     </button>
-                    
-                </div>
+                    </Col>
+                </Row>
             ) : (
-                <div>
-                    <h4>No Id selected</h4>
-                </div>
+                <Row>
+                    <Col>
+                        <h4>No Id selected</h4>
+                    </Col>
+                </Row>
             )}
             
-        </div>
+        </Container>
     );
 }
 

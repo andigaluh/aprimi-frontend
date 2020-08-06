@@ -3,11 +3,15 @@ import { Link } from "react-router-dom";
 import AuthService from "../../../services/auth.service";
 import ContentService from "../../../services/ContentServices"
 import Pagination from "@material-ui/lab/Pagination";
+import { Container, Row, Col, Table, Badge } from 'reactstrap'
+import LoadingSpinner from "../../LoadingSpinner";
+import AdminSearch from "../AdminSearch";
 
 const AdminContent = () => {
     const [content, setContent] = useState("");
     const [auth, setCurrentAuth] = useState(undefined);
     const [searchTitle, setSearchTitle] = useState("");
+    const [isLoading, setIsLoading] = useState(false)
 
     const [page, setPage] = useState(1);
     const [count, setCount] = useState(0);
@@ -35,10 +39,13 @@ const AdminContent = () => {
 
     useEffect(() => {
         const user = AuthService.getCurrentUser();
-
+        setIsLoading(true)
         if(user) {
             setCurrentAuth(user);
-            retrieveContent();
+            setTimeout(() => {
+                retrieveContent();
+                setIsLoading(false)
+            }, 1000);
         }
     },[page, pageSize])
 
@@ -50,7 +57,6 @@ const AdminContent = () => {
 
                 setContent(items);
                 setCount(totalPages);
-                console.log(response.data);
             }, 
             (error) => {
                 const _content =
@@ -81,74 +87,69 @@ const AdminContent = () => {
     };
 
     return (
-        <div className="col-md-12">
+        <Container>
             {auth ? (
                 <div>
-                    <h4>Admin Content</h4>
-                    <div className="list row mb-3">
-                        <div className="col-md-10">
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Search by title"
-                                value={searchTitle}
-                                onChange={onChangeSearchTitle}
-                                onKeyUp={retrieveContent}
-                            />
-                        </div>
-
-                        <div className="col-md-2">
-                            <Link to={"/admin/addContent"} className="btn btn-primary">
-                                + Add
-                            </Link>
-                        </div>
-                    </div>
-                    <div className="mb-3">
-                        {"Items per Page: "}
-                        <select onChange={handlePageSizeChange} value={pageSize}>
-                            {pageSizes.map((size) => (
-                                <option key={size} value={size}>
-                                    {size}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                    <div className="list row mb-3">
-                        <table className="table">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Id</th>
-                                    <th>title</th>
-                                    <th>url title</th>
-                                    <th>Content</th>
-                                    <th>Active</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {content &&
-                                    content.map((konten, i) => (
-                                        <tr>
-                                            <td>{i + 1}</td>
-                                            <td>{konten.id}</td>
-                                            <td>{konten.title}</td>
-                                            <td>{konten.url_title}</td>
-                                            <td>{konten.content}</td>
-                                            <td>{konten.is_publish ? `Active` : `NotActive`}</td>
-                                            <td>
-                                                <Link
-                                                    to={"/admin/content/" + konten.id}
-                                                    className="badge badge-warning"
-                                                >
-                                                    Edit
-                                                </Link>
-                                            </td>
-                                        </tr>
-                                    ))}
-                            </tbody>
-                        </table>
-                        <div className="mt-3 text-right">
+                    <Row>
+                        <Col>
+                            <h4>Admin Content</h4>
+                        </Col>
+                    </Row>
+                    <hr/>
+                    <AdminSearch
+                        onChangeSearchTitle={onChangeSearchTitle}
+                        searchTitle={searchTitle}
+                        retrieveTable={retrieveContent}
+                        handlePageSizeChange={handlePageSizeChange}
+                        pageSize={pageSize}
+                        pageSizes={pageSizes}
+                        isAddUrl={true}
+                        addUrl={"/admin/addContent"}
+                    />
+                    <hr />
+                    <Row>
+                        <Col>
+                        {isLoading ? (
+                            <LoadingSpinner />
+                        ) : ( 
+                            <Table hover>
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Id</th>
+                                        <th>title</th>
+                                        <th>url title</th>
+                                        <th>Content</th>
+                                        <th>Active</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {content &&
+                                        content.map((konten, i) => (
+                                            <tr>
+                                                <td>{i + 1}</td>
+                                                <td>{konten.id}</td>
+                                                <td>{konten.title}</td>
+                                                <td>{konten.url_title}</td>
+                                                <td>{konten.content}</td>
+                                                <td>{konten.is_publish ? `Active` : `NotActive`}</td>
+                                                <td>
+                                                    <Link
+                                                        to={"/admin/content/" + konten.id}
+                                                    >
+                                                        <Badge color="primary" pill><i className="fas fa-edit"></i> Edit</Badge>
+                                        </Link>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                </tbody>
+                            </Table>
+                        )}
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
                             <Pagination
                                 className="my-3"
                                 count={count}
@@ -159,15 +160,17 @@ const AdminContent = () => {
                                 shape="rounded"
                                 onChange={handlePageChange}
                             />
-                        </div>
-                    </div>
+                        </Col>
+                    </Row>
                 </div>
             ) : (
                 <div>
                     <h4>Unauthorized</h4>
                 </div>
             )}
-        </div>
+        
+            
+        </Container>
     );
 }
 

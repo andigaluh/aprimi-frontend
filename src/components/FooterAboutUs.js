@@ -1,4 +1,5 @@
 import React from "react" 
+import { Link } from "react-router-dom"
 
 const FooterAboutUs = () => {
     return (
@@ -8,11 +9,8 @@ const FooterAboutUs = () => {
             </div>
             <div className="f-widget-link">
                 <ul>
-                    <li><a href="#">Link 1</a></li>
-                    <li><a href="#">Link 2</a></li>
-                    <li><a href="#">Link 3</a></li>
-                    <li><a href="#">Link 4</a></li>
-                    <li><a href="#">Link 5</a></li>
+                    <li><Link to={"/about"}>About us</Link></li>
+                    <li><Link to={"/about/committee"}>Committee</Link></li>
                 </ul>
             </div>
         </div>

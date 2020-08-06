@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import AuthService from "../../../services/auth.service"
 import LogoService from "../../../services/LogoServices"
+import { Container, Row, Col, FormGroup, Label, UncontrolledAlert } from "reactstrap"
 
 const AdminLogoAdd = () => {
     const intialLogoState = {
@@ -17,6 +18,7 @@ const AdminLogoAdd = () => {
     const [submitted, setSubmitted] = useState(false);
     const [auth, setAuth] = useState(undefined);
     const [errorMsg, setErrorMsg] = useState("");
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
         const user = AuthService.getCurrentUser();
@@ -37,6 +39,7 @@ const AdminLogoAdd = () => {
     };
 
     const saveLogo = () => {
+        setIsLoading(true)
         var data = {
             title: currentLogo.title,
             url_title: currentLogo.url_title,
@@ -59,7 +62,8 @@ const AdminLogoAdd = () => {
                 });
                 setSubmitted(true);
                 setErrorMsg("");
-                console.log(response.data);
+                setIsLoading(false)
+                
             },
             (error) => {
                 const _content =
@@ -70,33 +74,33 @@ const AdminLogoAdd = () => {
                     error.toString();
 
                 setErrorMsg(_content);
-                console.log(_content);
+                setIsLoading(false)
             }
         );
     };
 
     return (
-        <div className="list row">
+        <Container>
+        <Row>
             {auth ? (
-                <div className="col-md-12">
+                <Col>
                     <h4>Add Logo</h4>
+                    <hr/>
                     <div className="submit-form">
-                        {errorMsg ? (
-                            <div className="alert alert-danger">{errorMsg}</div>
-                        ) : (
-                                <div></div>
-                            )}
+                        {errorMsg && (
+                            <UncontrolledAlert color="danger">{errorMsg}</UncontrolledAlert>
+                        )}
                         {submitted ? (
                             <div>
                                 <h4>You submitted successfully!</h4>
-                                <button className="btn btn-success" onClick={newLogo}>
+                                <button className="btn-custom btn-success" onClick={newLogo}>
                                     Add
                                 </button>
                             </div>
                         ) : (
                                 <div>
-                                    <div className="form-group">
-                                        <label htmlFor="title">Title</label>
+                                    <FormGroup>
+                                        <Label for="title">Title</Label>
                                         <input
                                             type="text"
                                             className="form-control"
@@ -106,9 +110,9 @@ const AdminLogoAdd = () => {
                                             onChange={handleInputChange}
                                             name="title"
                                         />
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="url_title">URL Title</label>
+                                        </FormGroup>
+                                    <FormGroup>
+                                        <Label for="url_title">URL Title</Label>
                                         <input
                                             type="text"
                                             className="form-control"
@@ -118,9 +122,9 @@ const AdminLogoAdd = () => {
                                             onChange={handleInputChange}
                                             name="url_title"
                                         />
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="url_link">URL Link</label>
+                                        </FormGroup>
+                                    <FormGroup>
+                                        <Label for="url_link">URL Link</Label>
                                         <input
                                             type="text"
                                             className="form-control"
@@ -130,21 +134,27 @@ const AdminLogoAdd = () => {
                                             onChange={handleInputChange}
                                             name="url_link"
                                         />
-                                    </div>
-
-                                    <button onClick={saveLogo} className="btn btn-success">
-                                        Submit
+                                        </FormGroup>
+                                    <FormGroup>
+                                    <button onClick={saveLogo} className="btn-custom btn-success" disabled={isLoading}>
+                                        {isLoading ? (
+                                            <span>Please wait</span>
+                                        ) : (
+                                            <span>Submit</span>
+                                        )}
                                     </button>
+                                        </FormGroup>
                                 </div>
                             )}
                     </div>
-                </div>
+                </Col>
             ) : (
-                    <div>
+                    <Col>
                         <h4>UnAuthorized!</h4>
-                    </div>
+                        </Col>
                 )}
-        </div>
+        </Row>
+        </Container>
     )
 }
 

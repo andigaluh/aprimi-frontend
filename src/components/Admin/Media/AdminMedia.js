@@ -3,13 +3,16 @@ import { Link } from "react-router-dom";
 import AuthService from "../../../services/auth.service";
 import Pagination from "@material-ui/lab/Pagination";
 import MediaService from "../../../services/MediaServices";
-//import moment from "moment";
+import { Container, Row, Col, Table, Badge } from 'reactstrap'
+import LoadingSpinner from "../../LoadingSpinner";
+import AdminSearch from "../AdminSearch";
 
 const AdminMedia = () => {
 
     const [media, setMedia] = useState("");
     const [auth, setCurrentAuth] = useState(undefined);
     const [searchTitle, setSearchTitle] = useState("");
+    const [isLoading, setIsLoading] = useState(false)
 
     const [page, setPage] = useState(1);
     const [count, setCount] = useState(0);
@@ -37,10 +40,13 @@ const AdminMedia = () => {
 
     useEffect(() => {
         const user = AuthService.getCurrentUser();
-
+        setIsLoading(true)
         if (user) {
             setCurrentAuth(user);
-            retrieveMedia();
+            setTimeout(() => {
+                retrieveMedia();
+                setIsLoading(false)
+            }, 1000);
         }
     }, [page, pageSize])
 
@@ -82,9 +88,13 @@ const AdminMedia = () => {
     };
 
     const hapus = (id) => {
+        setIsLoading(true)
         MediaService.remove(id)
-            .then((response) => {
-                retrieveMedia();
+            .then(() => {
+                setTimeout(() => {
+                    retrieveMedia();
+                    setIsLoading(false)
+                }, 1000);     
                 window.location.href("/admin/media");
             })
             .catch((e) => {
@@ -93,81 +103,79 @@ const AdminMedia = () => {
     };
 
     return (
-        <div className="col-md-12">
+        <Container>
             {auth ? (
                 <div>
-                    <h4>Admin Media</h4>
-                    <div className="list row mb-3">
-                        <div className="col-md-10">
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Search by title"
-                                value={searchTitle}
-                                onChange={onChangeSearchTitle}
-                                onKeyUp={retrieveMedia}
-                            />
-                        </div>
+                    <Row>
+                        <Col>
+                            <h4>Admin Media</h4>
+                        </Col>
+                    </Row>
+                    <hr/>
+                    <AdminSearch
+                        onChangeSearchTitle={onChangeSearchTitle}
+                        searchTitle={searchTitle}
+                        retrieveTable={retrieveMedia}
+                        handlePageSizeChange={handlePageSizeChange}
+                        pageSize={pageSize}
+                        pageSizes={pageSizes}
+                        isAddUrl={true}
+                        addUrl={"/admin/addMedia"}
+                    />
+                    <hr />
 
-                        <div className="col-md-2">
-                            <Link to={"/admin/addMedia"} className="btn btn-primary">
-                                + Add
-                </Link>
-                        </div>
-                    </div>
-                    <div className="mb-3">
-                        {"Items per Page: "}
-                        <select onChange={handlePageSizeChange} value={pageSize}>
-                            {pageSizes.map((size) => (
-                                <option key={size} value={size}>
-                                    {size}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                    <div className="list row mb-3">
-                        <table className="table">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Id</th>
-                                    <th>title</th>
-                                    <th>Attachment</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {media &&
-                                    media.map((med, i) => (
-                                        <tr>
-                                            <td>{i + 1}</td>
-                                            <td>{med.id}</td>
-                                            <td>{med.title}</td>
-                                            
-                                            <td>
-                                                {med.name ? (
-                                                    <div>
-                                                        <a href={process.env.REACT_APP_API + "/uploads/media/" + med.name}>Download</a>
-                                                    </div>
-                                                ) : (
+                    <Row>
+                        <Col>
+                        {isLoading ? (
+                            <LoadingSpinner />
+                        ) : (
+                            <Table hover>
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Id</th>
+                                        <th>title</th>
+                                        <th>Attachment</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {media &&
+                                        media.map((med, i) => (
+                                            <tr>
+                                                <td>{i + 1}</td>
+                                                <td>{med.id}</td>
+                                                <td>{med.title}</td>
+
+                                                <td>
+                                                    {med.name ? (
                                                         <div>
-                                                            No Files <br />
-                                                            
+                                                            <a href={process.env.REACT_APP_API + "/uploads/media/" + med.name}>Download</a>
                                                         </div>
-                                                    )}
-                                            </td>
-                                            <td>
-                                                <span className="badge badge-warning" onClick={() => hapus(med.id)}>
-                                                    Delete
-                                                </span>
-                                                    
-                                                
-                                            </td>
-                                        </tr>
-                                    ))}
-                            </tbody>
-                        </table>
-                        <div className="mt-3 text-right">
+                                                    ) : (
+                                                            <div>
+                                                                No Files <br />
+
+                                                            </div>
+                                                        )}
+                                                </td>
+                                                <td>
+                                                    <span onClick={() => hapus(med.id)}>
+                                                        <Badge color="danger" pill><i className="fas fa-trash"></i> Delete</Badge>
+                                                    </span>
+
+
+                                                </td>
+                                            </tr>
+                                        ))}
+                                </tbody>
+                            </Table>
+                        )}
+                        
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
                             <Pagination
                                 className="my-3"
                                 count={count}
@@ -178,15 +186,17 @@ const AdminMedia = () => {
                                 shape="rounded"
                                 onChange={handlePageChange}
                             />
-                        </div>
-                    </div>
+                        </Col>
+                    </Row>
                 </div>
             ) : (
-                    <div>
-                        <h4>Unauthorized</h4>
-                    </div>
+                    <Row>
+                        <Col>
+                            <h4>Unauthorized</h4>
+                        </Col>
+                    </Row>
                 )}
-        </div>
+        </Container>
     );
 }
 

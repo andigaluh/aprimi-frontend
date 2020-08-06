@@ -16,7 +16,7 @@ const AgendaItem = (props) => {
     return (
         <Card body inverse color={styleKey}>
             <CardBody >
-                <CardTitle>{props.iKey} - {props.title}</CardTitle>
+                <CardTitle>{props.title}</CardTitle>
                 <CardSubtitle>{momentAgenda(props.start_date)} - {momentAgenda(props.end_date)}</CardSubtitle>
                 <CardText>{props.content}</CardText>
             </CardBody>

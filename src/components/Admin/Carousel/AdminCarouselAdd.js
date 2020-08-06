@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import AuthService from "../../../services/auth.service"
 import CarouselService from "../../../services/CarouselServices"
 import JoditEditor from "jodit-react";
+import { Container, Row, Col, FormGroup, Label, UncontrolledAlert } from "reactstrap"
 
 const AdminCarouselAdd = () => {
     const intialCarouselState = {
@@ -21,6 +22,7 @@ const AdminCarouselAdd = () => {
     const [submitted, setSubmitted] = useState(false);
     const [auth, setAuth] = useState(undefined);
     const [errorMsg, setErrorMsg] = useState("");
+    const [isLoading, setIsLoading] = useState(false)
 
     const editor = useRef(null);
     const [content, setContent] = useState("");
@@ -44,6 +46,7 @@ const AdminCarouselAdd = () => {
     };
 
     const saveCarousel = () => {
+        setIsLoading(true)
         var data = {
             title: currentCarousel.title,
             url_title: currentCarousel.url_title,
@@ -72,7 +75,7 @@ const AdminCarouselAdd = () => {
                 });
                 setSubmitted(true);
                 setErrorMsg("");
-                console.log(response.data);
+                setIsLoading(false)
             },
             (error) => {
                 const _content =
@@ -83,7 +86,7 @@ const AdminCarouselAdd = () => {
                     error.toString();
 
                 setErrorMsg(_content);
-                console.log(_content);
+                setIsLoading(false)
             }
         );
     };
@@ -91,27 +94,27 @@ const AdminCarouselAdd = () => {
 
 
     return (
-      <div className="list row">
+      <Container>
+      <Row>
         {auth ? (
-          <div className="col-md-12">
+          <Col>
             <h4>Add Carousel</h4>
+            <hr/>
             <div className="submit-form">
-              {errorMsg ? (
+              {errorMsg && (
                 <div className="alert alert-danger">{errorMsg}</div>
-              ) : (
-                <div></div>
               )}
               {submitted ? (
                 <div>
                   <h4>You submitted successfully!</h4>
-                  <button className="btn btn-success" onClick={newCarousel}>
+                  <button className="btn-custom btn-success" onClick={newCarousel}>
                     Add
                   </button>
                 </div>
               ) : (
                 <div>
-                  <div className="form-group">
-                    <label htmlFor="title">Title</label>
+                  <FormGroup>
+                    <Label for="title">Title</Label>
                     <input
                       type="text"
                       className="form-control"
@@ -121,9 +124,9 @@ const AdminCarouselAdd = () => {
                       onChange={handleInputChange}
                       name="title"
                     />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="url_title">URL Title</label>
+                      </FormGroup>
+                  <FormGroup>
+                    <Label for="url_title">URL Title</Label>
                     <input
                       type="text"
                       className="form-control"
@@ -133,9 +136,9 @@ const AdminCarouselAdd = () => {
                       onChange={handleInputChange}
                       name="url_title"
                     />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="url_link">URL Link</label>
+                      </FormGroup>
+                  <FormGroup>
+                    <Label for="url_link">URL Link</Label>
                     <input
                       type="text"
                       className="form-control"
@@ -145,9 +148,9 @@ const AdminCarouselAdd = () => {
                       onChange={handleInputChange}
                       name="url_link"
                     />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="promo">Promo</label>
+                      </FormGroup>
+                  <FormGroup>
+                    <Label for="promo">Promo</Label>
                     <input
                       type="text"
                       className="form-control"
@@ -157,9 +160,9 @@ const AdminCarouselAdd = () => {
                       onChange={handleInputChange}
                       name="promo"
                     />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="promo_link">Promo Link</label>
+                      </FormGroup>
+                  <FormGroup>
+                    <Label for="promo_link">Promo Link</Label>
                     <input
                       type="text"
                       className="form-control"
@@ -169,9 +172,9 @@ const AdminCarouselAdd = () => {
                       onChange={handleInputChange}
                       name="promo_link"
                     />
-                  </div>
-                  <div className="form-group ">
-                    <label htmlFor="content">Content</label>
+                      </FormGroup>
+                  <FormGroup>
+                    <Label for="content">Content</Label>
                     <JoditEditor
                       ref={editor}
                       value={content}
@@ -179,21 +182,27 @@ const AdminCarouselAdd = () => {
                       onBlur={(ContentBaru) => setContent(ContentBaru)}
                       name="content"
                     />
-                  </div>
-
-                  <button onClick={saveCarousel} className="btn btn-success">
-                    Submit
+                      </FormGroup>
+                  <FormGroup>
+                  <button onClick={saveCarousel} className="btn-custom btn-success" disabled={isLoading}>
+                    {isLoading ? (
+                      <span>Please wait</span>
+                    ) : (
+                      <span>Submit</span>
+                    )}
                   </button>
+                      </FormGroup>
                 </div>
               )}
             </div>
-          </div>
+          </Col>
         ) : (
-          <div>
+          <Col>
             <h4>UnAuthorized!</h4>
-          </div>
+          </Col>
         )}
-      </div>
+      </Row>
+      </Container>
     );
 }
 

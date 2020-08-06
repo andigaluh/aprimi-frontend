@@ -3,6 +3,7 @@ import AuthService from "../../../services/auth.service"
 import EventService from "../../../services/EventServices"
 import EventCategoryService from "../../../services/EventCategoryServices"
 import JoditEditor from "jodit-react";
+import { Container, Row, Col, FormGroup, Label, UncontrolledAlert } from "reactstrap"
 
 
 const AdminEventAdd = () => {
@@ -31,7 +32,9 @@ const AdminEventAdd = () => {
     const editor = useRef(null);
     const [content, setContent] = useState("");
     const [contentMember, setContentMember] = useState("");
-    const [contentNonMember, setContentNonMember] = useState(""); 
+    const [contentNonMember, setContentNonMember] = useState("");
+    const [isLoading, setIsLoading] = useState(false)
+    const [message, setMessage] = useState("")
     
     useEffect(() => {
       const user = AuthService.getCurrentUser();
@@ -72,6 +75,7 @@ const AdminEventAdd = () => {
     };
 
     const saveEvent = () => {
+      setIsLoading(true)
       var data = {
         title: currentEvent.title,
         date_event: currentEvent.date_event,
@@ -101,7 +105,7 @@ const AdminEventAdd = () => {
             updated_user_id: response.data.updated_user_id,
           });
           setSubmitted(true);
-          console.log(response.data);
+          setIsLoading(false)
         },
         (error) => {
           const _content =
@@ -110,30 +114,35 @@ const AdminEventAdd = () => {
               error.response.data.message) ||
             error.message ||
             error.toString();
-
-          setCurrentEvent(_content);
-          console.log(`aneh : ${_content}`);
+            window.scrollTo(0, 500)
+          setMessage(_content);
+          setIsLoading(false)
         }
       );
     };
 
     return (
-      <div className="list row">
+      <Container>
+      <Row>
         {auth ? (
-          <div className="col-md-12">
+          <Col>
             <h4>Add Event</h4>
+            <hr/>
             <div className="submit-form">
               {submitted ? (
                 <div>
                   <h4>You submitted successfully!</h4>
-                  <button className="btn btn-success" onClick={newEvent}>
+                  <button className="btn-custom btn-success" onClick={newEvent}>
                     Add
                   </button>
                 </div>
               ) : (
                 <div>
-                  <div className="form-group">
-                    <label htmlFor="event_category_id">Event Category</label>
+                  {message && (
+                    <UncontrolledAlert color="danger">{message}</UncontrolledAlert>
+                  )}
+                  <FormGroup>
+                    <Label for="event_category_id">Event Category</Label>
                     <select
                       name="event_category_id"
                       id="event_category_id"
@@ -147,9 +156,9 @@ const AdminEventAdd = () => {
                           <option value={v.id}>{v.title}</option>
                         ))}
                     </select>
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="title">Title</label>
+                    </FormGroup>
+                  <FormGroup>
+                    <Label for="title">Title</Label>
                     <input
                       type="text"
                       className="form-control"
@@ -159,11 +168,11 @@ const AdminEventAdd = () => {
                       onChange={handleInputChange}
                       name="title"
                     />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="date_event">Date event</label>
+                  </FormGroup>
+                  <FormGroup>
+                    <Label for="date_event">Date event</Label>
                     <input
-                      type="text"
+                          type="date"
                       className="form-control"
                       id="date_event"
                       required
@@ -171,9 +180,9 @@ const AdminEventAdd = () => {
                       onChange={handleInputChange}
                       name="date_event"
                     />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="location">Location</label>
+                      </FormGroup>
+                  <FormGroup>
+                    <Label for="location">Location</Label>
                     <input
                       type="text"
                       className="form-control"
@@ -183,9 +192,9 @@ const AdminEventAdd = () => {
                       onChange={handleInputChange}
                       name="location"
                     />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="headline">Headline</label>
+                      </FormGroup>
+                  <FormGroup>
+                    <Label for="headline">Headline</Label>
                     <input
                       type="text"
                       className="form-control"
@@ -195,9 +204,9 @@ const AdminEventAdd = () => {
                       onChange={handleInputChange}
                       name="headline"
                     />
-                  </div>
-                  <div className="form-group ">
-                    <label htmlFor="content">Content</label>
+                      </FormGroup>
+                  <FormGroup>
+                    <Label for="content">Content</Label>
 
                     <JoditEditor
                       ref={editor}
@@ -205,36 +214,20 @@ const AdminEventAdd = () => {
                       onChange={(ContentBaru) => setContent(ContentBaru)}
                       name="content"
                     />
-                  </div>
-                  <div className="form-group mt-20">
-                    <label htmlFor="content_member_fee">Content Member</label>
-                    {/* <textarea
-                      className="form-control"
-                      id="content_member_fee"
-                      name="content_member_fee"
-                      onChange={handleInputChange}
-                    >
-                      {currentEvent.content_member_fee}
-                    </textarea> */}
+                      </FormGroup>
+                  <FormGroup className="mt-20">
+                    <Label for="content_member_fee">Content Member</Label>
                     <JoditEditor
                       ref={editor}
                       value={contentMember}
                       onChange={(ContentBaru) => setContentMember(ContentBaru)}
                       name="content_member_fee"
                     />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="content_nonmember_fee">
+                  </FormGroup>
+                  <FormGroup>
+                    <Label for="content_nonmember_fee">
                       Content NonMember
-                    </label>
-                    {/*  <textarea
-                      className="form-control"
-                      id="content_nonmember_fee"
-                      name="content_nonmember_fee"
-                      onChange={handleInputChange}
-                    >
-                      {currentEvent.content_nonmember_fee}
-                    </textarea> */}
+                    </Label>
                     <JoditEditor
                       ref={editor}
                       value={contentNonMember}
@@ -243,21 +236,23 @@ const AdminEventAdd = () => {
                       }
                       name="content_nonmember_fee"
                     />
-                  </div>
-
-                  <button onClick={saveEvent} className="btn btn-success">
-                    Submit
-                  </button>
+                    </FormGroup>
+                  <FormGroup>
+                        <button onClick={saveEvent} className="btn-custom btn-success" disabled={isLoading}>
+                          {isLoading ? (<span>Please Wait</span>) : (<span>Submit</span>)}
+                    </button>
+                  </FormGroup>
                 </div>
               )}
             </div>
-          </div>
+            </Col>
         ) : (
-          <div>
+          <Col>
             <h4>UnAuthorized!</h4>
-          </div>
+          </Col>
         )}
-      </div>
+        </Row>
+      </Container>
     );
 }
 

@@ -4,6 +4,7 @@ import EventCategoryService from "../../../services/EventCategoryServices";
 import AuthService from "../../../services/auth.service";
 import JoditEditor from "jodit-react";
 import moment from "moment"
+import { Container, Row, Col, FormGroup, Label, Alert } from 'reactstrap'
 
 const AdminEventDetail = props => {
     const [auth, setAuth] = useState(undefined);
@@ -39,7 +40,7 @@ const AdminEventDetail = props => {
                 setContent(response.data.content);
                 setContentMember(response.data.content_member_fee);
                 setContentNonMember(response.data.content_nonmember_fee);
-                console.log(response.data)
+                
             },
             (error) => {
                 const _content =
@@ -59,7 +60,6 @@ const AdminEventDetail = props => {
         EventCategoryService.AdminGetAll().then(
             (response) => {
                 setCurrentEventCategory(response.data);
-                console.log(response.data);
             },
             (error) => {
                 const _content =
@@ -111,8 +111,8 @@ const AdminEventDetail = props => {
       EventService.update(currentEvent.id, data)
         .then(
           (response) => {
-            console.log(response.data);
-            setMessage("The Event was updated successfully!");
+            window.scrollTo(0, 500)
+            setMessage(response.data.message);
           },
           (error) => {
             console.log(`error disini ${error}`);
@@ -131,7 +131,6 @@ const AdminEventDetail = props => {
       EventService.update(currentEvent.id, data)
         .then((response) => {
           setCurrentEvent({ ...currentEvent, is_publish: status });
-          console.log(response.data);
         })
         .catch((e) => {
           console.log(e);
@@ -141,7 +140,6 @@ const AdminEventDetail = props => {
     const hapus = () => {
       EventService.remove(currentEvent.id)
         .then((response) => {
-          console.log(response.data);
           props.history.push("/admin/event");
         })
         .catch((e) => {
@@ -150,14 +148,18 @@ const AdminEventDetail = props => {
     };
 
     return (
-      <div className="col-md-12">
+      <Container>
+        <Row>
+          <Col>
         {auth ? (
           <div className="edit-user">
             <h4>Detail Event</h4>
-            <p>{message}</p>
-            <form>
-              <div className="form-group">
-                <label htmlFor="event_category_id">Event Category</label>
+            <hr/>
+            {message && (
+              <Alert color="success">{message}</Alert>
+            )}
+              <FormGroup>
+                <Label for="event_category_id">Event Category</Label>
                 <select
                   value={currentEvent.event_category_id}
                   className="form-control"
@@ -172,9 +174,9 @@ const AdminEventDetail = props => {
                       </option>
                     ))}
                 </select>
-              </div>
-              <div className="form-group">
-                <label htmlFor="title">Title</label>
+                </FormGroup>
+              <FormGroup>
+                <Label for="title">Title</Label>
                 <input
                   type="text"
                   className="form-control"
@@ -184,11 +186,11 @@ const AdminEventDetail = props => {
                   onChange={handleInputChange}
                   name="title"
                 />
-              </div>
-              <div className="form-group">
-                <label htmlFor="date_event">Date event</label>
+                </FormGroup>
+              <FormGroup>
+                <Label for="date_event">Date event</Label>
                 <input
-                  type="text"
+                  type="date"
                   className="form-control"
                   id="date_event"
                   required
@@ -196,9 +198,9 @@ const AdminEventDetail = props => {
                   onChange={handleInputChange}
                   name="date_event"
                 />
-              </div>
-              <div className="form-group">
-                <label htmlFor="location">Location</label>
+                </FormGroup>
+              <FormGroup>
+                <Label for="location">Location</Label>
                 <input
                   type="text"
                   className="form-control"
@@ -208,9 +210,9 @@ const AdminEventDetail = props => {
                   onChange={handleInputChange}
                   name="location"
                 />
-              </div>
-              <div className="form-group">
-                <label htmlFor="headline">Headline</label>
+                </FormGroup>
+              <FormGroup>
+                <Label for="headline">Headline</Label>
                 <input
                   type="text"
                   className="form-control"
@@ -220,91 +222,71 @@ const AdminEventDetail = props => {
                   onChange={handleInputChange}
                   name="headline"
                 />
-              </div>
-              <div className="form-group ">
-                <label htmlFor="date_event">Content</label>
-                {/* <textarea
-                  className="form-control"
-                  id="content"
-                  name="content"
-                  onChange={handleInputChange}
-                  value={currentEvent.content}
-                ></textarea> */}
+                </FormGroup>
+                <FormGroup>
+                <Label for="date_event">Content</Label>
                 <JoditEditor
                   ref={editor}
                   value={content}
                   tabIndex={1}
                   onBlur={(ContentBaru) => setContent(ContentBaru)}
                 />
-              </div>
-              <div className="form-group mt-20">
-                <label htmlFor="date_event">Content Member</label>
-                {/* <textarea
-                  className="form-control"
-                  id="content_member_fee"
-                  name="content_member_fee"
-                  onChange={handleInputChange}
-                  value={currentEvent.content_member_fee}
-                ></textarea> */}
+                </FormGroup>
+                <FormGroup className="mt-20">
+                <Label for="date_event">Content Member</Label>
                 <JoditEditor
                   ref={editor}
                   value={contentMember}
                   tabIndex={1}
                   onBlur={(ContentBaru) => setContentMember(ContentBaru)}
                 />
-              </div>
-              <div className="form-group">
-                <label htmlFor="date_event">Content NonMember</label>
-                {/* <textarea
-                  className="form-control"
-                  id="content_nonmember_fee"
-                  name="content_nonmember_fee"
-                  onChange={handleInputChange}
-                  value={currentEvent.content_nonmember_fee}
-                >
-                  {currentEvent.content_nonmember_fee}
-                </textarea> */}
+                </FormGroup>
+              <FormGroup>
+                <Label for="date_event">Content NonMember</Label>
                 <JoditEditor
                   ref={editor}
                   value={contentNonMember}
                   tabIndex={1}
                   onBlur={(ContentBaru) => setContentNonMember(ContentBaru)}
                 />
-              </div>
-            </form>
-            <button
-              type="submit"
-              className="badge badge-success mr-2"
-              onClick={update}
-            >
-              Update
-            </button>
-            {currentEvent.is_publish ? (
-              <button
-                className="badge badge-primary mr-2"
-                onClick={() => updateStatus(false)}
-              >
-                UnPublish
-              </button>
-            ) : (
-              <button
-                className="badge badge-primary mr-2"
-                onClick={() => updateStatus(true)}
-              >
-                Publish
-              </button>
-            )}
+                </FormGroup>
+                <FormGroup>
+                  <button
+                    type="submit"
+                    className="btn-custom btn-success mr-2"
+                    onClick={update}
+                  >
+                    Update
+                  </button>
+                  {currentEvent.is_publish ? (
+                    <button
+                      className="btn-custom btn-primary mr-2"
+                      onClick={() => updateStatus(false)}
+                    >
+                      UnPublish
+                    </button>
+                  ) : (
+                    <button
+                      className="btn-custom btn-primary mr-2"
+                      onClick={() => updateStatus(true)}
+                    >
+                      Publish
+                    </button>
+                  )}
 
-            <button className="badge badge-danger mr-2" onClick={hapus}>
-              Delete
-            </button>
+                  <button className="btn-custom btn-danger mr-2" onClick={hapus}>
+                    Delete
+                  </button>
+                </FormGroup>
           </div>
         ) : (
           <div>
             <h4>UnAuthorized!</h4>
           </div>
         )}
-      </div>
+          </Col>
+        </Row>
+      </Container>
     );
 }
 

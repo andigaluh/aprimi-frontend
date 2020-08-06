@@ -1,54 +1,84 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
+import {
+  Carousel,
+  CarouselItem,
+  CarouselControl,
+  CarouselIndicators,
+  CarouselCaption } from 'reactstrap'
 import CarouselService from "../../../services/CarouselServices"
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import "../../../App.css";
 
 
-const HomeSlider = () => {
-    var settings = {
-      dots: true,
-      infinite: true,
-      speed: 1000,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      autoplay: true,
-      adaptiveHeight: false,
-      centerMode: false,
-    };
+const HomeSlider = (props) => {
+  const [carousel, setCarousel] = useState([])
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [animating, setAnimating] = useState(false);
 
-    const [carousel, setCarousel] = useState("")
-    
-    useEffect(() => {
-        retrieveCarousel();
-    }, []);
+  useEffect(() => {
+    retrieveCarousel();
+  }, []);
 
-    const retrieveCarousel = () => {
-        CarouselService.getAll().then(
-            (response) => {
-                const { items, totalPages  } = response.data
-                setCarousel(items);
-            }
-            )
-    }
-   
-    return (
-      <Slider {...settings}>
-        {carousel &&
-          carousel.map((car, i) => (
-            <div className="slide">
-              <img
-                src={
-                  process.env.REACT_APP_API + "/uploads/carousel/" + car.image
-                }
-                className="img-carousel"
-              />
-              <div className="text-carousel-centered">{car.title}</div>
-            </div>
-          ))}
-      </Slider>
+  const retrieveCarousel = () => {
+    CarouselService.getAll().then(
+      (response) => {
+        const { items, totalPages } = response.data
+        setCarousel(items);
+        console.log(items)
+      }
+    )
+  }
+
+  const next = () => {
+    if (animating) return;
+    const nextIndex = activeIndex === carousel.length - 1 ? 0 : activeIndex + 1;
+    setActiveIndex(nextIndex);
+  }
+
+  const previous = () => {
+    if (animating) return;
+    const nextIndex = activeIndex === 0 ? carousel.length - 1 : activeIndex - 1;
+    setActiveIndex(nextIndex);
+  }
+
+  const goToIndex = (newIndex) => {
+    if (animating) return;
+    setActiveIndex(newIndex);
+  }
+
+  const slides = carousel.map((item) => {
+    return (     
+      <CarouselItem
+        key={item.id}
+        onExiting={() => setAnimating(true)}
+        onExited={() => setAnimating(false)}
+      >
+        <img src={process.env.REACT_APP_API + "/uploads/carousel/" + item.image} alt={item.title} className="custom-tag"/>
+        <CarouselCaption className="text-info" captionText={item.title} captionHeader={item.promo} />
+      </CarouselItem>
     );
+  });
+
+  return (
+    <div>
+      <style>
+        {
+          `.custom-tag {
+              max-width: 100%;
+              width: 100%;
+            }`
+        }
+      </style>
+      <Carousel
+        activeIndex={activeIndex}
+        next={next}
+        previous={previous}
+      >
+        <CarouselIndicators items={carousel} activeIndex={activeIndex} onClickHandler={goToIndex} />
+        {slides}
+        <CarouselControl direction="prev" directionText="Previous" onClickHandler={previous} />
+        <CarouselControl direction="next" directionText="Next" onClickHandler={next} />
+      </Carousel>
+    </div>
+  );
 }
 
 export default HomeSlider;

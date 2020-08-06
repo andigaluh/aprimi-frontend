@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import LogoService from "../../../services/LogoServices";
 import AuthService from "../../../services/auth.service";
+import { Container, Row, Col, FormGroup, Label, Alert } from 'reactstrap'
 
 const AdminLogoDetail = props => {
     const [auth, setAuth] = useState(undefined);
@@ -54,18 +55,15 @@ const AdminLogoDetail = props => {
     const update = () => {
         LogoService.update(currentLogo.id, currentLogo)
             .then(
-                (response) => {
-                    console.log(response.data);
+                () => {
                     setMessage("The Logo was updated successfully!");
                 },
                 (error) => {
                     setMessage(error);
-                    console.log(`error disini ${error}`);
                 }
             )
             .catch((e) => {
                 setMessage(e);
-                console.log(e);
             });
     };
 
@@ -75,9 +73,9 @@ const AdminLogoDetail = props => {
         };
 
         LogoService.update(currentLogo.id, data)
-            .then((response) => {
+            .then(() => {
                 setCurrentLogo({ ...currentLogo, is_publish: status });
-                console.log(response.data);
+                
             })
             .catch((e) => {
                 console.log(e);
@@ -86,8 +84,7 @@ const AdminLogoDetail = props => {
 
     const hapus = () => {
         LogoService.remove(currentLogo.id)
-            .then((response) => {
-                console.log(response.data);
+            .then(() => {
                 props.history.push("/admin/logo");
             })
             .catch((e) => {
@@ -96,14 +93,18 @@ const AdminLogoDetail = props => {
     };
 
     return (
-        <div className="col-md-12">
+        <Container>
+            <Row>
+            <Col>
             {auth ? (
                 <div className="edit-user">
                     <h4>Detail Logo</h4>
-                    <p>{message}</p>
-                    <form>
-                        <div className="form-group">
-                            <label htmlFor="title">Title</label>
+                    <hr/>
+                            {message && (
+                                <Alert color="success">{message}</Alert>
+                            )}
+                        <FormGroup>
+                            <Label for="title">Title</Label>
                             <input
                                 type="text"
                                 className="form-control"
@@ -113,9 +114,9 @@ const AdminLogoDetail = props => {
                                 onChange={handleInputChange}
                                 name="title"
                             />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="url_title">URL Title</label>
+                            </FormGroup>
+                        <FormGroup>
+                            <Label for="url_title">URL Title</Label>
                             <input
                                 type="text"
                                 className="form-control"
@@ -125,9 +126,9 @@ const AdminLogoDetail = props => {
                                 onChange={handleInputChange}
                                 name="url_title"
                             />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="url_link">URL Link</label>
+                            </FormGroup>
+                        <FormGroup>
+                            <Label for="url_link">URL Link</Label>
                             <input
                                 type="text"
                                 className="form-control"
@@ -137,42 +138,45 @@ const AdminLogoDetail = props => {
                                 onChange={handleInputChange}
                                 name="url_link"
                             />
-                        </div>
+                            </FormGroup>
                         
-                    </form>
+                        <FormGroup>
                     <button
                         type="submit"
-                        className="badge badge-success mr-2"
+                        className="btn-custom btn-success mr-2"
                         onClick={update}
                     >
                         Update
                     </button>
                     {currentLogo.is_publish ? (
                         <button
-                            className="badge badge-primary mr-2"
+                            className="btn-custom btn-primary mr-2"
                             onClick={() => updateStatus(false)}
                         >
                             UnPublish
                         </button>
                     ) : (
                             <button
-                                className="badge badge-primary mr-2"
+                                className="btn-custom btn-primary mr-2"
                                 onClick={() => updateStatus(true)}
                             >
                                 Publish
                             </button>
                         )}
 
-                    <button className="badge badge-danger mr-2" onClick={hapus}>
+                    <button className="btn-custom btn-danger mr-2" onClick={hapus}>
                         Delete
                     </button>
+                            </FormGroup>
                 </div>
             ) : (
                     <div>
                         <h4>UnAuthorized!</h4>
                     </div>
                 )}
-        </div>
+                </Col>
+            </Row>
+        </Container>
     );
 
 

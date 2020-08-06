@@ -42,3 +42,7 @@
 .mr-10 {
   margin-right:10px
 }
+
+.carousel-caption > h3 {
+  color: orange;
+}

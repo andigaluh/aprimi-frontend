@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import ContactService from "../../../services/ContactServices";
 import AuthService from "../../../services/auth.service";
 import { Link } from "react-router-dom";
+import { Container, Row, Col, FormGroup, Label, Alert } from 'reactstrap'
 
 const AdminContactDetail = props => {
     const [auth, setAuth] = useState(undefined);
@@ -14,6 +15,7 @@ const AdminContactDetail = props => {
         };
     const [currentContact, setCurrentContact] = useState(initialContactState);
     const [message, setMessage] = useState("");
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
         const user = AuthService.getCurrentUser();
@@ -57,84 +59,96 @@ const AdminContactDetail = props => {
     };
 
     const hapus = () => {
+        setIsLoading(true)
         ContactService.remove(currentContact.id)
-            .then((response) => {
-                console.log(response.data);
+            .then(() => {
+                setIsLoading(false)
                 props.history.push("/admin/contact");
             })
             .catch((e) => {
-                console.log(e);
+                setIsLoading(false)
+                setMessage(e)
             });
     };
 
     return (
-        <div className="col-md-12">
-            {auth ? (
-                <div className="edit-user">
-                    <h4>Detail Contact</h4>
-                    <p>{message}</p>
-                    <form>
-                        <div className="form-group">
-                            <label htmlFor="name">Name</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="name"
-                                required
-                                value={currentContact.name}
-                                onChange={handleInputChange}
-                                name="name"
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="email">Email</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="email"
-                                required
-                                value={currentContact.email}
-                                onChange={handleInputChange}
-                                name="email"
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="subject">Subject</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="subject"
-                                required
-                                value={currentContact.subject}
-                                onChange={handleInputChange}
-                                name="subject"
-                            />
-                        </div>
-                        <div className="form-group ">
-                            <label htmlFor="date_event">Message</label>
-                            <textarea
-                                className="form-control"
-                                id="message"
-                                name="message"
-                                onChange={handleInputChange}
-                                value={currentContact.message}
-                            ></textarea>
-                        </div>
-                        
-                    </form>
-                    <button className="badge badge-danger mr-2" onClick={hapus}>
-                        Delete
-                    </button>
-                    <Link to={"/admin/contact"} className="badge badge-warning">
-                        Back
-                    </Link>
-                </div>
-            ) : (
-                    <div>
+        <Container>
+            <Row>
+                
+                    {auth ? (
+                        <Col>
+                            <h4>Detail Contact</h4>
+                            <hr/>
+                            {message && (
+                                <Alert color="success">{message}</Alert>
+                            )}
+                                <FormGroup>
+                                    <Label for="name">Name</Label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="name"
+                                        required
+                                        value={currentContact.name}
+                                        onChange={handleInputChange}
+                                        name="name"
+                                    />
+                        </FormGroup>
+                                <FormGroup>
+                                    <Label for="email">Email</Label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="email"
+                                        required
+                                        value={currentContact.email}
+                                        onChange={handleInputChange}
+                                        name="email"
+                                    />
+                        </FormGroup>
+                                <FormGroup>
+                                    <Label for="subject">Subject</Label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="subject"
+                                        required
+                                        value={currentContact.subject}
+                                        onChange={handleInputChange}
+                                        name="subject"
+                                    />
+                        </FormGroup>
+                                <FormGroup>
+                                    <Label for="date_event">Message</Label>
+                                    <textarea
+                                        className="form-control"
+                                        id="message"
+                                        name="message"
+                                        onChange={handleInputChange}
+                                        value={currentContact.message}
+                                    ></textarea>
+                        </FormGroup>
+                            <FormGroup>
+                            <button className="btn-custom btn-danger mr-2" onClick={hapus} disabled={isLoading}>
+                                {isLoading ? (
+                                    <span>Please wait</span>
+                                ) : (
+                                    <span>Delete</span>
+                                )}
+                            </button>
+                            <Link to={"/admin/contact"} className="btn-custom btn-warning">
+                                Back
+                            </Link>
+                        </FormGroup>
+                    </Col>
+                    ) : (
+                    <Col>
                         <h4>UnAuthorized!</h4>
-                    </div>
+                    </Col>
                 )}
-        </div>
+                
+            </Row>
+        </Container>
     );
 
 

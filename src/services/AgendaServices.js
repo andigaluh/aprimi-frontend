@@ -7,8 +7,6 @@ const getAgendaUser = () => {
     });
 };
 
-
-
 export default {
     getAgendaUser
 };

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import EventService from "../../../services/EventServices";
 import AuthService from "../../../services/auth.service";
+import { Container, Row, Col, UncontrolledAlert } from "reactstrap"
 
 const AdminEventThumbnail = props => {
     
@@ -54,41 +55,45 @@ const AdminEventThumbnail = props => {
     };
 
     return (
-      <div>
-        <h4>Upload Thumbnail</h4>
-        {currentFile && (
-          <div className="progress">
-            <div
-              className="progress-bar progress-bar-info progress-bar-striped"
-              role="progressbar"
-              aria-valuenow={progress}
-              aria-valuemin="0"
-              aria-valuemax="100"
-              style={{ width: progress + "%" }}
+      <Container>
+        <Row>
+          <Col>
+            <h4>Upload Thumbnail</h4>
+            <hr/>
+            {message && (
+              <UncontrolledAlert color="danger">{message}</UncontrolledAlert>
+            )}
+            {currentFile && (
+              <div className="progress">
+                <div
+                  className="progress-bar progress-bar-info progress-bar-striped"
+                  role="progressbar"
+                  aria-valuenow={progress}
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  style={{ width: progress + "%" }}
+                >
+                  {progress}%
+                </div>
+              </div>
+            )}
+
+            <label className="btn-custom btn-default mr-2">
+              <input type="file" onChange={selectFile} name="thumbnail" id="thumbnail" />
+            </label>
+
+            <button
+              className="btn-custom btn-success"
+              disabled={!selectedFiles}
+              onClick={upload}
             >
-              {progress}%
-            </div>
-          </div>
-        )}
+              Upload
+            </button>
 
-        <label className="btn btn-default">
-          <input type="file" onChange={selectFile} name="thumbnail" id="thumbnail" />
-        </label>
-
-        <button
-          className="btn btn-success"
-          disabled={!selectedFiles}
-          onClick={upload}
-        >
-          Upload
-        </button>
-
-        <div className="alert alert-light" role="alert">
-          {message}
-        </div>
-
-        
-      </div>
+            
+          </Col>
+        </Row>
+      </Container>
     );
 }
 

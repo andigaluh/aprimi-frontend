@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import CarouselService from "../../../services/CarouselServices";
 import AuthService from "../../../services/auth.service";
 import JoditEditor from "jodit-react";
+import { Container, Row, Col, FormGroup, Label, Alert } from 'reactstrap'
 
 const AdminCarouselDetail = props => {
     const [auth, setAuth] = useState(undefined);
@@ -114,14 +115,18 @@ const AdminCarouselDetail = props => {
     };
 
     return (
-      <div className="col-md-12">
+      <Container>
+        <Row>
+      <Col>
         {auth ? (
           <div className="edit-user">
             <h4>Detail Carousel</h4>
-            <p>{message}</p>
-            <form>
-              <div className="form-group">
-                <label htmlFor="title">Title</label>
+            <hr/>
+            {message && (
+              <Alert color="danger">{message}</Alert>
+            )}
+              <FormGroup>
+                <Label for="title">Title</Label>
                 <input
                   type="text"
                   className="form-control"
@@ -131,9 +136,9 @@ const AdminCarouselDetail = props => {
                   onChange={handleInputChange}
                   name="title"
                 />
-              </div>
-              <div className="form-group">
-                <label htmlFor="url_title">URL Title</label>
+                </FormGroup>
+              <FormGroup>
+                <Label for="url_title">URL Title</Label>
                 <input
                   type="text"
                   className="form-control"
@@ -143,9 +148,9 @@ const AdminCarouselDetail = props => {
                   onChange={handleInputChange}
                   name="url_title"
                 />
-              </div>
-              <div className="form-group">
-                <label htmlFor="url_link">URL Link</label>
+                </FormGroup>
+              <FormGroup>
+                <Label for="url_link">URL Link</Label>
                 <input
                   type="text"
                   className="form-control"
@@ -155,9 +160,9 @@ const AdminCarouselDetail = props => {
                   onChange={handleInputChange}
                   name="url_link"
                 />
-              </div>
-              <div className="form-group">
-                <label htmlFor="promo">Promo</label>
+                </FormGroup>
+              <FormGroup>
+                <Label for="promo">Promo</Label>
                 <input
                   type="text"
                   className="form-control"
@@ -167,9 +172,9 @@ const AdminCarouselDetail = props => {
                   onChange={handleInputChange}
                   name="promo"
                 />
-              </div>
-              <div className="form-group">
-                <label htmlFor="promo_link">Promo Link</label>
+                </FormGroup>
+              <FormGroup>
+                <Label for="promo_link">Promo Link</Label>
                 <input
                   type="text"
                   className="form-control"
@@ -179,50 +184,55 @@ const AdminCarouselDetail = props => {
                   onChange={handleInputChange}
                   name="promo_link"
                 />
-              </div>
-              <div className="form-group ">
-                <label htmlFor="content">Content</label>
+                </FormGroup>
+              <FormGroup>
+                <Label for="content">Content</Label>
                 <JoditEditor
                   ref={editor}
                   value={content}
                   tabIndex={1}
                   onBlur={(ContentBaru) => setContent(ContentBaru)}
                 />
-              </div>
-            </form>
+                </FormGroup>
+              <FormGroup>
             <button
               type="submit"
-              className="badge badge-success mr-2"
+              className="btn-custom btn-success mr-2"
               onClick={update}
             >
               Update
             </button>
             {currentCarousel.is_publish ? (
               <button
-                className="badge badge-primary mr-2"
+                className="btn-custom btn-primary mr-2"
                 onClick={() => updateStatus(false)}
               >
                 UnPublish
               </button>
             ) : (
               <button
-                className="badge badge-primary mr-2"
+                className="btn-custom btn-primary mr-2"
                 onClick={() => updateStatus(true)}
               >
                 Publish
               </button>
             )}
 
-            <button className="badge badge-danger mr-2" onClick={hapus}>
+            <button className="btn-custom btn-danger mr-2" onClick={hapus}>
               Delete
             </button>
+                </FormGroup>
           </div>
         ) : (
-          <div>
-            <h4>UnAuthorized!</h4>
-          </div>
+          <Row>
+            <Col>
+              <h4>Unauthorized</h4>
+            </Col>
+          </Row>
         )}
-      </div>
+      </Col>
+        </Row>
+      </Container>
     );
 
 

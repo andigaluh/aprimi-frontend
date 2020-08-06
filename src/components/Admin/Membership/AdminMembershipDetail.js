@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CompanyService from "../../../services/CompanyServices";
 import AuthService from "../../../services/auth.service";
+import { Container, Row, Col, FormGroup, Label, Alert } from 'reactstrap'
 
 const AdminMembershipDetail = (props) => {
     const [auth, setAuth] = useState(undefined)
@@ -27,7 +28,7 @@ const AdminMembershipDetail = (props) => {
         CompanyService.get(id).then(
             (response) => {
                 setCurrentCompany(response.data);
-                console.log(response.data);
+                
             },
             (error) => {
                 const _content =
@@ -61,11 +62,11 @@ const AdminMembershipDetail = (props) => {
       CompanyService.update(currentCompany.id, currentCompany)
         .then(
           (response) => {
-            console.log(response.data);
-            setMessage("The Member was updated successfully!");
+            window.scrollTo(0, 500)
+            setMessage(response.data.message);
           },
           (error) => {
-            console.log(`error disini ${error}`);
+            console.log(error);
           }
         )
         .catch((e) => {
@@ -102,14 +103,18 @@ const AdminMembershipDetail = (props) => {
 
 
     return (
-      <div className="col-md-12">
+      <Container>
+        <Row>
+      <Col>
         {auth ? (
           <div>
             <h4>Detail Membership</h4>
-            <p>{message}</p>
-            <form>
-              <div className="form-group">
-                <label htmlFor="name">Name</label>
+            <hr/>
+            {message && (
+              <Alert color="success">{message}</Alert>
+            )}
+              <FormGroup>
+                <Label for="name">Name</Label>
                 <input
                   type="text"
                   className="form-control"
@@ -118,10 +123,10 @@ const AdminMembershipDetail = (props) => {
                   value={currentCompany.name}
                   onChange={handleInputChange}
                 />
-              </div>
+              </FormGroup>
 
-              <div className="form-group">
-                <label htmlFor="address">Address</label>
+              <FormGroup>
+                <Label for="address">Address</Label>
                 <input
                   type="text"
                   className="form-control"
@@ -131,10 +136,10 @@ const AdminMembershipDetail = (props) => {
                   onChange={handleInputChange}
                   name="address"
                 />
-              </div>
+              </FormGroup>
 
-              <div className="form-group">
-                <label htmlFor="phone">Phone</label>
+              <FormGroup>
+                <Label for="phone">Phone</Label>
                 <input
                   type="text"
                   className="form-control"
@@ -144,10 +149,10 @@ const AdminMembershipDetail = (props) => {
                   onChange={handleInputChange}
                   name="phone"
                 />
-              </div>
+              </FormGroup>
 
-              <div className="form-group">
-                <label htmlFor="fax">Fax</label>
+              <FormGroup>
+                <Label for="fax">Fax</Label>
                 <input
                   type="text"
                   className="form-control"
@@ -157,10 +162,10 @@ const AdminMembershipDetail = (props) => {
                   onChange={handleInputChange}
                   name="fax"
                 />
-              </div>
+              </FormGroup>
 
-              <div className="form-group">
-                <label htmlFor="contact_person_name">Contact Person Name</label>
+              <FormGroup>
+                <Label for="contact_person_name">Contact Person Name</Label>
                 <input
                   type="text"
                   className="form-control"
@@ -170,12 +175,12 @@ const AdminMembershipDetail = (props) => {
                   onChange={handleInputChange}
                   name="contact_person_name"
                 />
-              </div>
+              </FormGroup>
 
-              <div className="form-group">
-                <label htmlFor="contact_person_title">
+              <FormGroup>
+                <Label for="contact_person_title">
                   Contact Person Title
-                </label>
+                </Label>
                 <input
                   type="text"
                   className="form-control"
@@ -185,12 +190,12 @@ const AdminMembershipDetail = (props) => {
                   onChange={handleInputChange}
                   name="contact_person_title"
                 />
-              </div>
+              </FormGroup>
 
-              <div className="form-group">
-                <label htmlFor="contact_person_phone">
+              <FormGroup>
+                <Label for="contact_person_phone">
                   Contact Person Phone
-                </label>
+                </Label>
                 <input
                   type="text"
                   className="form-control"
@@ -200,12 +205,12 @@ const AdminMembershipDetail = (props) => {
                   onChange={handleInputChange}
                   name="contact_person_phone"
                 />
-              </div>
+              </FormGroup>
 
-              <div className="form-group">
-                <label htmlFor="contact_person_email">
+              <FormGroup>
+                <Label for="contact_person_email">
                   Contact Person Email
-                </label>
+                </Label>
                 <input
                   type="text"
                   className="form-control"
@@ -215,10 +220,10 @@ const AdminMembershipDetail = (props) => {
                   onChange={handleInputChange}
                   name="contact_person_email"
                 />
-              </div>
+              </FormGroup>
 
-              <div className="form-group">
-                <label htmlFor="authorized_name">Authorized Name</label>
+              <FormGroup>
+                <Label for="authorized_name">Authorized Name</Label>
                 <input
                   type="text"
                   className="form-control"
@@ -228,10 +233,10 @@ const AdminMembershipDetail = (props) => {
                   onChange={handleInputChange}
                   name="authorized_name"
                 />
-              </div>
+              </FormGroup>
 
-              <div className="form-group">
-                <label htmlFor="authorized_title">Authorized Title</label>
+              <FormGroup>
+                <Label for="authorized_title">Authorized Title</Label>
                 <input
                   type="text"
                   className="form-control"
@@ -241,10 +246,10 @@ const AdminMembershipDetail = (props) => {
                   onChange={handleInputChange}
                   name="authorized_title"
                 />
-              </div>
+              </FormGroup>
 
-              <div className="form-group">
-                <label htmlFor="year_registered">Year of Register</label>
+              <FormGroup>
+                <Label for="year_registered">Year of Register</Label>
                 <input
                   type="text"
                   className="form-control"
@@ -254,41 +259,49 @@ const AdminMembershipDetail = (props) => {
                   onChange={handleInputChange}
                   name="year_registered"
                 />
-              </div>
-            </form>
-            <button
-              type="submit"
-              className="badge badge-success mr-2"
-              onClick={Update}
-            >
-              Update
-            </button>
-            {currentCompany.is_active ? (
-              <button
-                className="badge badge-primary mr-2"
-                onClick={() => UpdateStatus(false)}
-              >
-                UnPublish
-              </button>
-            ) : (
-              <button
-                className="badge badge-primary mr-2"
-                onClick={() => UpdateStatus(true)}
-              >
-                Publish
-              </button>
-            )}
+              </FormGroup>
+              
 
-            <button className="badge badge-danger mr-2" onClick={Delete}>
-              Delete
-            </button>
+                <FormGroup>
+                  <button
+                    type="submit"
+                    className="btn-custom btn-success mr-2"
+                    onClick={Update}
+                  >
+                    Update
+                    </button>
+                  {currentCompany.is_active ? (
+                    <button
+                      className="btn-custom btn-primary mr-2"
+                      onClick={() => UpdateStatus(false)}
+                    >
+                      UnPublish
+                    </button>
+                  ) : (
+                      <button
+                        className="btn-custom btn-primary mr-2"
+                        onClick={() => UpdateStatus(true)}
+                      >
+                        Publish
+                      </button>
+                    )}
+
+                  <button className="btn-custom btn-danger mr-2" onClick={Delete}>
+                    Delete
+                  </button>
+                </FormGroup>
+            
           </div>
         ) : (
-          <div>
-            <h4>Unauthorized</h4>
-          </div>
+          <Row>
+            <Col>
+              <h4>Unauthorized</h4>
+            </Col>    
+          </Row>
         )}
-      </div>
+          </Col>
+      </Row>
+      </Container>
     );
 } 
 

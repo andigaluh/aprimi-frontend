@@ -95,11 +95,11 @@ const TrainingCertficationConfirm = (props) => {
                         </div>
                     )}
                     <label className="btn btn-default">
-                        <input type="file" onChange={selectFile} name="confirmation_image" id="confirmation_image" />
+                        <input type="file" onChange={selectFile} name="confirmation_image" id="confirmation_image"/>
                     </label>
 
                     <button
-                        className="btn btn-success"
+                        className="color button"
                         disabled={!selectedFiles}
                         onClick={upload}
                     >

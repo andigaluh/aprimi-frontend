@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import ContentService from "../../../services/ContentServices";
 import AuthService from "../../../services/auth.service";
 import JoditEditor from "jodit-react";
+import { Container, Row, Col, FormGroup, Label, ALert, Alert } from 'reactstrap'
 
 const AdminContentDetail = (props) => {
     const initialContentState = {
@@ -66,6 +67,7 @@ const AdminContentDetail = (props) => {
           .then(
             (response) => {
               console.log(response.data);
+              window.scrollTo(0, 500)
               setMessage("The Content was updated successfully!");
             },
             (error) => {
@@ -104,14 +106,19 @@ const AdminContentDetail = (props) => {
     };
 
     return (
-      <div className="col-md-12">
+      <Container>
+        <Row>
+      <Col>
         {auth ? (
           <div>
             <h4>Detail Content</h4>
-
-            <form>
-              <div className="form-group">
-                <label htmlFor="title">Title</label>
+            <hr />
+            {message && (
+              <Alert color="success">{message}</Alert>
+            )}
+            
+              <FormGroup>
+                <Label for="title">Title</Label>
                 <input
                   type="text"
                   className="form-control"
@@ -120,9 +127,9 @@ const AdminContentDetail = (props) => {
                   value={currentContent.title}
                   onChange={handleInputChange}
                 />
-              </div>
-              <div className="form-group">
-                <label htmlFor="url_title">URL Title</label>
+              </FormGroup>
+              <FormGroup>
+                <Label for="url_title">URL Title</Label>
                 <input
                   type="text"
                   className="form-control"
@@ -131,49 +138,52 @@ const AdminContentDetail = (props) => {
                   value={currentContent.url_title}
                   onChange={handleInputChange}
                 />
-              </div>
-              <div className="form-group">
-                <label htmlFor="content">Content</label>
+              </FormGroup>
+              <FormGroup>
+                <Label for="content">Content</Label>
                 <JoditEditor
                   ref={editor}
                   value={content}
                   tabIndex={1}
                   onBlur={(ContentBaru) => setContent(ContentBaru)}
                 />
-              </div>
-            </form>
+              </FormGroup>
+            
+            <FormGroup>
             <button
               type="submit"
-              className="badge badge-success mr-2"
+              className="btn-custom btn-success mr-2"
               onClick={Update}
             >
               Update
             </button>
             {currentContent.is_publish ? (
               <button
-                className="badge badge-primary mr-2"
+                className="btn-custom btn-primary mr-2"
                 onClick={() => UpdateStatus(false)}
               >
                 UnPublish
               </button>
             ) : (
               <button
-                className="badge badge-primary mr-2"
+                className="btn-custom btn-primary mr-2"
                 onClick={() => UpdateStatus(true)}
               >
                 Publish
               </button>
             )}
 
-            <button className="badge badge-danger mr-2" onClick={Delete}>
+            <button className="btn-custom btn-danger mr-2" onClick={Delete}>
               Delete
             </button>
-            <p>{message}</p>
+            </FormGroup>
           </div>
         ) : (
           <div></div>
         )}
-      </div>
+          </Col>
+        </Row>
+      </Container>
     );
 }
 

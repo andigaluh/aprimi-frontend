@@ -4,11 +4,15 @@ import AuthService from "../../../services/auth.service";
 import Pagination from "@material-ui/lab/Pagination";
 import ArticleService from "../../../services/ArticleServices";
 //import moment from "moment";
+import { Container, Row, Col, Table, Badge } from 'reactstrap'
+import LoadingSpinner from "../../LoadingSpinner";
+import AdminSearch from "../AdminSearch";
 
 const AdminArticle = () => {
     const [article, setArticle] = useState("");
     const [auth, setCurrentAuth] = useState(undefined);
     const [searchTitle, setSearchTitle] = useState("");
+    const [isLoading, setIsLoading] = useState(false)
 
     const [page, setPage] = useState(1);
     const [count, setCount] = useState(0);
@@ -36,10 +40,14 @@ const AdminArticle = () => {
 
     useEffect(() => {
         const user = AuthService.getCurrentUser();
-
+        setIsLoading(true)
         if (user) {
             setCurrentAuth(user);
-            retrieveArticle();
+            setTimeout(() => {
+                retrieveArticle();
+                setIsLoading(false)
+            }, 1000);
+            
         }
     }, [page, pageSize])
 
@@ -51,7 +59,6 @@ const AdminArticle = () => {
                 const { items, totalPages } = response.data;
                 setArticle(items);
                 setCount(totalPages);
-                console.log(response.data);
             },
             (error) => {
                 const _content =
@@ -62,7 +69,6 @@ const AdminArticle = () => {
                     error.toString();
 
                 setArticle(_content);
-                console.log(`no user ${_content}`);
             }
         )
     }
@@ -83,70 +89,68 @@ const AdminArticle = () => {
 
 
     return (
-        <div className="col-md-12">
+        <Container>
+        
             {auth ? (
                 <div>
-                    <h4>Admin Article</h4>
-                    <div className="list row mb-3">
-                        <div className="col-md-10">
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Search by title"
-                                value={searchTitle}
-                                onChange={onChangeSearchTitle}
-                                onKeyUp={retrieveArticle}
-                            />
-                        </div>
+                    <Row>
+                        <Col>
+                            <h4>Admin Article</h4>
+                        </Col>
+                    </Row>
+                    <hr/>
 
-                        <div className="col-md-2">
-                            <Link to={"/admin/addArticle"} className="btn btn-primary">
-                                + Add
-                </Link>
-                        </div>
-                    </div>
-                    <div className="mb-3">
-                        {"Items per Page: "}
-                        <select onChange={handlePageSizeChange} value={pageSize}>
-                            {pageSizes.map((size) => (
-                                <option key={size} value={size}>
-                                    {size}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                    <div className="list row mb-3">
-                        <table className="table">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Id</th>
-                                    <th>title</th>
-                                    <th>Active</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {article &&
-                                    article.map((artikel, i) => (
-                                        <tr>
-                                            <td>{i + 1}</td>
-                                            <td>{artikel.id}</td>
-                                            <td>{artikel.title}</td>
-                                            <td>{artikel.is_publish ? `Active` : `NotActive`}</td>
-                                            <td>
-                                                <Link
-                                                    to={"/admin/article/" + artikel.id}
-                                                    className="badge badge-warning"
-                                                >
-                                                    Edit
+                    <AdminSearch
+                        onChangeSearchTitle={onChangeSearchTitle}
+                        searchTitle={searchTitle}
+                        retrieveTable={retrieveArticle}
+                        handlePageSizeChange={handlePageSizeChange}
+                        pageSize={pageSize}
+                        pageSizes={pageSizes}
+                        isAddUrl={true}
+                        addUrl={"/admin/addArticle"}
+                    />
+                    <hr />
+                    
+                    <Row>
+                        <Col>
+                        {isLoading ? (
+                            <LoadingSpinner />
+                        ) : (
+                            <table className="table">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Id</th>
+                                        <th>title</th>
+                                        <th>Active</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {article &&
+                                        article.map((artikel, i) => (
+                                            <tr>
+                                                <td>{i + 1}</td>
+                                                <td>{artikel.id}</td>
+                                                <td>{artikel.title}</td>
+                                                <td>{artikel.is_publish ? `Active` : `NotActive`}</td>
+                                                <td>
+                                                    <Link
+                                                        to={"/admin/article/" + artikel.id}
+                                                    >
+                                                        <Badge color="primary" pill><i className="fas fa-edit"></i> Edit</Badge>
                                                 </Link>
-                                            </td>
-                                        </tr>
-                                    ))}
-                            </tbody>
-                        </table>
-                        <div className="mt-3 text-right">
+                                                </td>
+                                            </tr>
+                                        ))}
+                                </tbody>
+                            </table>
+                        )}   
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
                             <Pagination
                                 className="my-3"
                                 count={count}
@@ -157,15 +161,16 @@ const AdminArticle = () => {
                                 shape="rounded"
                                 onChange={handlePageChange}
                             />
-                        </div>
-                    </div>
+                        </Col>
+                    </Row>
                 </div>
             ) : (
                     <div>
                         <h4>Unauthorized</h4>
                     </div>
                 )}
-        </div>
+        
+        </Container>
     );
 }
 
