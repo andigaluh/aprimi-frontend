@@ -59,6 +59,7 @@ const AdminArticle = () => {
                 const { items, totalPages } = response.data;
                 setArticle(items);
                 setCount(totalPages);
+                console.log(items)
             },
             (error) => {
                 const _content =
@@ -122,6 +123,7 @@ const AdminArticle = () => {
                                     <tr>
                                         <th>No</th>
                                         <th>Id</th>
+                                        <th>Thumbnail</th>
                                         <th>title</th>
                                         <th>Active</th>
                                         <th>Action</th>
@@ -133,6 +135,29 @@ const AdminArticle = () => {
                                             <tr>
                                                 <td>{i + 1}</td>
                                                 <td>{artikel.id}</td>
+                                                <td>
+                                                    {artikel.thumbnail ? (
+                                                        <div>
+                                                            <img
+                                                                src={
+                                                                    process.env.REACT_APP_API + "/uploads/news/thumbnail/" +
+                                                                    artikel.thumbnail
+                                                                }
+                                                                width="100"
+                                                                alt={artikel.title}
+                                                            /><br />
+                                                        </div>
+                                                    ) : (
+                                                            <div>
+                                                                No Image <br />
+                                                            </div>
+                                                        )}
+                                                    <Link
+                                                        to={"/admin/articleThumb/" + artikel.id}
+                                                    >
+                                                        <Badge color="info" pill><i className="fas fa-upload"></i> Thumbnail</Badge>
+                                                    </Link>    
+                                                </td>
                                                 <td>{artikel.title}</td>
                                                 <td>{artikel.is_publish ? `Active` : `NotActive`}</td>
                                                 <td>

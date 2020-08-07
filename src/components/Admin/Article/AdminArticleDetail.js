@@ -13,6 +13,7 @@ const AdminArticleDetail = props => {
         headline: "",
         content: "",
         is_publish: false,
+        is_featured: false,
         news_category_id: 1,
         created_user_id: "",
         updated_user_id: "",
@@ -120,6 +121,21 @@ const AdminArticleDetail = props => {
             });
     };
 
+  const updateFeatured = (status) => {
+    var data = {
+      is_featured: status,
+    };
+
+    ArticleService.update(currentArticle.id, data)
+      .then(() => {
+        setCurrentArticle({ ...currentArticle, is_featured: status });
+        setMessage("")
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
     const hapus = () => {
         ArticleService.remove(currentArticle.id)
             .then(() => {
@@ -219,6 +235,22 @@ const AdminArticleDetail = props => {
                 Publish
               </button>
             )}
+
+                  {currentArticle.is_featured ? (
+                    <button
+                      className="btn-custom btn-primary mr-2"
+                      onClick={() => updateFeatured(false)}
+                    >
+                      Non-featured
+                    </button>
+                  ) : (
+                      <button
+                        className="btn-custom btn-primary mr-2"
+                        onClick={() => updateFeatured(true)}
+                      >
+                        Featured
+                      </button>
+                    )}
 
             <button className="btn-custom btn-danger mr-2" onClick={hapus}>
               Delete

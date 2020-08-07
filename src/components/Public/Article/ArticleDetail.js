@@ -48,7 +48,7 @@ const ArticleDetail = () => {
         </div>
       </div>
 
-      <div id="blog-detail" className="wrap-bg wrap-bg ">
+      <div id="blog-detail" className="wrap-bg">
         <div className="container">
           <div className="row">
             <div className="col-md-12 col-lg-8">
@@ -78,7 +78,7 @@ const ArticleDetail = () => {
                 ></div>
               </div>
             </div>
-            <div class="col-md-12 col-lg-4">
+            <div className="col-md-12 col-lg-4">
               <div class="relative sidebar-services mt-25">
                 <div class="services_image services_bg3 hoverblack">
                   <div class="opac">

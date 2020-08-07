@@ -35,6 +35,7 @@ import AdminLogoThumbnail from "./Admin/Logo/AdminLogoThumbnail";
 import authService from "../services/auth.service";
 
 import { UserContext } from "../UserContext";
+import AdminArticleThumb from "./Admin/Article/AdminArticleThumb";
 
 
 const BoardAdmin = (props) => {
@@ -91,6 +92,7 @@ const BoardAdmin = (props) => {
                       <Route exact path="/admin/article" component={AdminArticle} />
                       <Route exact path="/admin/addArticle/" component={AdminArticleAdd} />
                       <Route exact path="/admin/article/:id" component={AdminArticleDetail} />
+                      <Route exact path="/admin/articleThumb/:id" component={AdminArticleThumb} />
                       <Route exact path="/admin/media" component={AdminMedia} />
                       <Route exact path="/admin/addMedia" component={AdminMediaAdd} />
                       <Route exact path="/admin/contact" component={AdminContact} />
