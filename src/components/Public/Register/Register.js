@@ -30,10 +30,10 @@ const validEmail = (value) => {
 };
 
 const vusername = (value) => {
-  if (value.length < 3 || value.length > 20) {
+  if (value.length < 3 || value.length > 120) {
     return (
       <p className="text-danger">
-        The username must be between 3 and 20 characters.
+        The username must be between 3 and 120 characters.
       </p>
     );
   }
