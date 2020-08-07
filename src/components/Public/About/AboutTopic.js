@@ -1,16 +1,6 @@
-import React, { useState, useEffect } from "react"
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
-    useParams,
-    useRouteMatch
-} from "react-router-dom";
-
+import React from "react"
 
 const AboutTopic = (props) => {
-    let { topicId } = useParams();
     
     return(
         <div>

@@ -2,11 +2,9 @@ import React, { useState, useEffect } from "react";
 import Item from "./ArticleItem";
 import ArticleService from "../../../services/ArticleServices";
 import {
-  //BrowserRouter as Router,
   Switch,
   Route,
   Link,
-  //useParams,
   useRouteMatch,
 } from "react-router-dom";
 import ItemDetail from "./ArticleDetail";
@@ -22,7 +20,6 @@ const ArticleList = () => {
   const retrieveEvent = () => {
     ArticleService.getAllPublished().then((response) => {
       setArticle(response.data);
-      console.log(response.data);
     });
   };
 

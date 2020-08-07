@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext }from "react"
+import React, { useState, useEffect }from "react"
 import {
     useParams,
     
@@ -45,7 +45,7 @@ const TrainingCertificationDetail = () => {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12 col-lg-8">
-                            {((eventType == "registration") && (currentAuth.id)) ? (
+                            {((eventType === "registration") && (currentAuth.id)) ? (
                                 
                                 <ItemRegistration 
                                     headline={itemDetail.headline}
@@ -82,24 +82,24 @@ const TrainingCertificationDetail = () => {
                             <div class="detail-widgets widget-category">
                                 <h4 class="title">Categories</h4>
                                 <ul>
-                                    <li><a href="#">Coaching <span>04</span></a></li>
-                                    <li><a href="#">Building <span>13</span></a></li>
-                                    <li><a href="#">House <span>22</span></a>
-                                    </li><li><a href="#">Interior <span>19</span></a></li>
-                                    <li><a href="#">Architect <span>14</span></a></li>
+                                    <li><a>Coaching <span>04</span></a></li>
+                                    <li><a>Building <span>13</span></a></li>
+                                    <li><a>House <span>22</span></a>
+                                    </li><li><a>Interior <span>19</span></a></li>
+                                    <li><a>Architect <span>14</span></a></li>
                                 </ul>
                             </div>
 
                             <div class="detail-widgets widget-tag">
                                 <h4 class="title">Tags Cloud</h4>
                                 <ul>
-                                    <li><a href="#">Doctor</a></li>
-                                    <li><a href="#">House</a></li>
-                                    <li><a href="#">Interior</a></li>
-                                    <li><a href="#">Coaching</a></li>
-                                    <li><a href="#">Architect</a></li>
-                                    <li><a href="#">Medical</a></li>
-                                    <li><a href="#">Services</a></li>
+                                    <li><a>Doctor</a></li>
+                                    <li><a>House</a></li>
+                                    <li><a>Interior</a></li>
+                                    <li><a>Coaching</a></li>
+                                    <li><a>Architect</a></li>
+                                    <li><a>Medical</a></li>
+                                    <li><a>Services</a></li>
                                 </ul>
                             </div>
 

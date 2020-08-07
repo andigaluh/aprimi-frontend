@@ -46,16 +46,6 @@ const vusername = (value) => {
   }
 };
 
-const vpassword = (value) => {
-  if (value.length < 6 || value.length > 40) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        The password must be between 6 and 40 characters.
-      </div>
-    );
-  }
-};
-
 const EditProfile = () => {
     const {userLogin, setUserLogin} = useContext(UserContext)
     const form = useRef();
@@ -83,7 +73,6 @@ const EditProfile = () => {
           setEmail(response.data.email)
           setCompanyId(response.data.company_id);
           setUserId(response.data.id)
-          console.log(response.data);
         },
         (error) => {
           const _content =

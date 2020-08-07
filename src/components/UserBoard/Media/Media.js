@@ -6,7 +6,7 @@ const Media = (props) => {
     const [searchTitle, setSearchTitle] = useState("");
 
     const [page, setPage] = useState(1);
-    const [count, setCount] = useState(0);
+    /* const [count, setCount] = useState(0); */
     const [pageSize, setPageSize] = useState(10);
 
     const pageSizes = [10, 25, 50, 100];
@@ -37,9 +37,9 @@ const Media = (props) => {
         const params = getRequestParams(searchTitle, page, pageSize);
         MediaServices.getAll(params).then(
             (response) => {
-                const { items, totalPages } = response.data;
+                const { items } = response.data;
                 setCurrentMedia(items)
-                setCount(totalPages);
+                /* setCount(totalPages); */
             },
             (error) => {
                 const _content =
@@ -59,10 +59,6 @@ const Media = (props) => {
         const searchTitle = e.target.value;
         setSearchTitle(searchTitle);
     }
-
-    const handlePageChange = (media, value) => {
-        setPage(value);
-    };
 
     const handlePageSizeChange = (media) => {
         setPageSize(media.target.value);
@@ -120,7 +116,7 @@ const Media = (props) => {
                                     <td>{v.type}</td>
                                     <td>{v.name}</td>
                                     <td className="text-center">
-                                        <a href={process.env.REACT_APP_API + "/uploads/media/" + v.name} target="_BLANK">
+                                        <a href={process.env.REACT_APP_API + "/uploads/media/" + v.name} target="_BLANK" rel="noopener noreferrer">
                                             <span><i className="fas fa-download"></i></span>
                                         </a>
                                     </td>

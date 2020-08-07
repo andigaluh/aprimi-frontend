@@ -1,5 +1,4 @@
 import React from "react"
-import WhatWeDo from "./WhatWeDo"
 import "../../../App.css"
 
 const WhatWeDoList = (props) => {

@@ -14,7 +14,7 @@ import ArticleServices from '../../../services/ArticleServices';
 
 const ArticleByUser = (props) => {
     const [currentArticle, setCurrentArticle] = useState([])
-    const [searchTitle, setSearchTitle] = useState("");
+    const [searchTitle] = useState("");
 
     const [page, setPage] = useState(1);
     const [count, setCount] = useState(0);
@@ -107,7 +107,7 @@ const ArticleByUser = (props) => {
           <Col>
             {currentArticle &&
               currentArticle.map((v, k) => (
-                <Card body inverse color={k % 2 == 0 ? `primary` : `info`}>
+                <Card body inverse color={k % 2 === 0 ? `primary` : `info`}>
                   <CardTitle>
                     {v.title} - <i>{v.is_published ? `Published ` : `Not Published `}</i>
                     &nbsp;&nbsp;

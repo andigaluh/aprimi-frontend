@@ -44,7 +44,6 @@ const TrainingCertificationRegistration = (props) => {
     const form = useRef();
     const checkBtn = useRef();
 
-    const [invoicedTo, setInvoicedTo] = useState("");
     const [wwId, setWwId] = useState("");
     const [reportName, setReportName] = useState("");
     const [reportDate, setReportDate] = useState("");

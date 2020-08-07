@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import AuthService from "../../../services/auth.service"
 import CarouselService from "../../../services/CarouselServices"
 import JoditEditor from "jodit-react";
-import { Container, Row, Col, FormGroup, Label, UncontrolledAlert } from "reactstrap"
+import { Container, Row, Col, FormGroup, Label } from "reactstrap"
 
 const AdminCarouselAdd = () => {
     const intialCarouselState = {

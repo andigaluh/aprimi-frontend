@@ -1,9 +1,8 @@
-import React, { useRef, useState, useContext } from "react"
+import React, { useRef, useState } from "react"
 import { Col, FormGroup, Label, Container, Row, Alert } from "reactstrap";
 import ValidForm from "react-validation/build/form";
 import ValidInput from "react-validation/build/input";
-import CheckButton from "react-validation/build/button";
-import { UserContext } from "../../../UserContext";
+import CheckButton from "react-validation/build/button"
 import UserService from "../../../services/UserService"
 
 const required = (value) => {
@@ -37,7 +36,6 @@ const password = (value, props, components) => {
 }
 
 const ChangePassword = () => {
-    const { userLogin } = useContext(UserContext);
     const form = useRef();
     const checkBtn = useRef();
     const [successful, setSuccessful] = useState(false);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Row, Col, Alert } from 'reactstrap'
+import { Container, Row, Col } from 'reactstrap'
 import LoginHeader from './LoginHeader';
 import {Link} from 'react-router-dom'
 

@@ -22,11 +22,6 @@ const Contact = () => {
     setErrorTitle(false)
   }
 
-  const newContact = () => {
-    setCurrentContact(initialState)
-    setSubmitted(false)
-  }
-
   const saveContact = () => {
     var data = {
       name: currentContact.name,
@@ -37,11 +32,10 @@ const Contact = () => {
     }
 
     ContactService.createMsg(data).then(
-      (response) => {
+      () => {
         setCurrentContact(initialState)
         setErrorTitle(false)
         setSubmitted(true)
-        console.log(response.data)
       },
       (error) => {
         const _content =
@@ -51,10 +45,8 @@ const Contact = () => {
           error.message ||
           error.toString();
 
-        //setCurrentContent(_content);
         setErrorTitle(true)
         setErrorTitleMsg(_content)
-        console.log(_content);
         }
     )
   }

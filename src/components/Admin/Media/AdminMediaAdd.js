@@ -8,29 +8,22 @@ const AdminMediaAdd = props => {
         title: "",
         name: ""
     }
-    const [auth, setAuth] = useState(undefined);
     const [selectedFiles, setSelectedFiles] = useState(undefined);
     const [currentFile, setCurrentFile] = useState(undefined);
     const [currentMedia, setCurrentMedia] = useState(InitialMediaState);
     const [progress, setProgress] = useState(0);
     const [message, setMessage] = useState("");
-    const [fileInfos, setFileInfos] = useState([]);
     const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
         const user = AuthService.getCurrentUser();
 
         if (user) {
-            setAuth(user);
             MediaService.get().then((response) => {
-                setFileInfos(response.data);
+                
             });
         }
     }, []);
-
-    const selectFile = (event) => {
-        setSelectedFiles(event.target.files);
-    };
 
     const handleInputChange = (event) => {
         const { name, value,files } = event.target;

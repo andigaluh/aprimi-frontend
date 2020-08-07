@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react"
 import moment from "moment"
 import {
-    //BrowserRouter as Router,
-    //Switch,
-    //Route,
-    Link,
-    //useParams,
-    //useRouteMatch
+    Link
 } from "react-router-dom";
 import "../../../App.css"
 import AuthService from "../../../services/auth.service"
@@ -29,7 +24,7 @@ const TrainingCertificationItem = (props) => {
                         <div className="date">
                             <h4><span>{moment(props.date_event).format("DD")}</span>{moment(props.date_event).format("MMM, YYYY")}</h4>
                         </div>
-                        <Link to={"/trainingcertification/detail/" + props.id + "/" + props.title.split(/[&\/\\#,+()$~%.'":*?<>{}\s]/g).join('-').toLowerCase()}>
+                        <Link to={"/trainingcertification/detail/" + props.id + "/" + props.title.split(/[&\\#,+()$~%.'":*?<>{}\s]/g).join('-').toLowerCase()}>
                             {(props.thumbnail) ? (
                                 <img src={
                                     process.env.REACT_APP_API +
@@ -45,7 +40,7 @@ const TrainingCertificationItem = (props) => {
                     </div>
                     <div className="event-content">
                         <h5 className="title">
-                            <Link to={"/trainingcertification/detail/" + props.id + "/" + props.title.split(/[&\/\\#,+()$~%.'":*?<>{}\s]/g).join('-').toLowerCase()}>
+                            <Link to={"/trainingcertification/detail/" + props.id + "/" + props.title.split(/[&\\#,+()$~%.'":*?<>{}\s]/g).join('-').toLowerCase()}>
                                 {props.title}
                             </Link>
                         </h5>
@@ -58,7 +53,7 @@ const TrainingCertificationItem = (props) => {
                         </div>
                         <div className="btn-section">
                             {currentAuth.id && (
-                                <Link to={"/trainingcertification/registration/" + props.id + "/" + props.title.split(/[&\/\\#,+()$~%.'":*?<>{}\s]/g).join('-').toLowerCase()} className="button-light">
+                                <Link to={"/trainingcertification/registration/" + props.id + "/" + props.title.split(/[&\\#,+()$~%.'":*?<>{}\s]/g).join('-').toLowerCase()} className="button-light">
                                     <i className="fas fa-arrow-right"></i>Book Ticket
                                 </Link>
                             )}

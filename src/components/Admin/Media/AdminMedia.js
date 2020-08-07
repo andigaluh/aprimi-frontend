@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import AuthService from "../../../services/auth.service";
 import Pagination from "@material-ui/lab/Pagination";
 import MediaService from "../../../services/MediaServices";

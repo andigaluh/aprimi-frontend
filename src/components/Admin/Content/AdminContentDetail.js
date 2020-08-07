@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import ContentService from "../../../services/ContentServices";
 import AuthService from "../../../services/auth.service";
 import JoditEditor from "jodit-react";
-import { Container, Row, Col, FormGroup, Label, ALert, Alert } from 'reactstrap'
+import { Container, Row, Col, FormGroup, Label, Alert } from 'reactstrap'
 
 const AdminContentDetail = (props) => {
     const initialContentState = {

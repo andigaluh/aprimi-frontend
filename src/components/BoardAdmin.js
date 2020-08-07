@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import UserService from "../services/user.service";
 import AdminMenu from "./AdminMenu";
 import Profile from "./Admin/Profile/Profile";
 import AdminUsers from "./Admin/Users/AdminUsers";

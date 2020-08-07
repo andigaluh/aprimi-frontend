@@ -1,13 +1,12 @@
 import React from 'react';
 import {
-    Container, Row, Col, Card, Button, CardImg, CardTitle, CardText, CardDeck, CardSubtitle, CardBody, CardColumns, CardGroup
-} from 'reactstrap'
+    Card, CardTitle, CardText, CardSubtitle, CardBody } from 'reactstrap'
 import moment from 'moment'
 
 
 const AgendaItem = (props) => {
     var key = props.iKey
-    var styleKey = (key % 2 == 0) ? `primary` : `danger`; 
+    var styleKey = (key % 2 === 0) ? `primary` : `danger`; 
    
     const momentAgenda = (value) => {
         return moment(value).format('DD MMM YYYY h:mm:ss')

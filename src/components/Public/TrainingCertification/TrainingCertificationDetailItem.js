@@ -1,16 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
     Link,
-    useParams,
-    useRouteMatch
+    useParams
 } from "react-router-dom";
 import moment from "moment"
 
 const TrainingCertificationDetailItem = (props) => {
-    let { eventId, eventTitle, eventType } = useParams();
+    let { eventId, eventTitle } = useParams();
     
     return (
         <div className="blog-content">

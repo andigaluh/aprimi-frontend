@@ -12,9 +12,6 @@ import LoadingSpinner from '../../LoadingSpinner';
 
 const TrainingCertificationHistory = (props) => {
     const [myRegistration, setMyRegistration] = useState()
-    
-    const [modal, setModal] = useState(false);
-    const toggle = () => setModal(!modal);
     const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
@@ -68,7 +65,7 @@ const TrainingCertificationHistory = (props) => {
                                 </thead>
                                 <tbody>
                                     {myRegistration && myRegistration.map((v, k) => (
-                                        <tr scope="row">
+                                        <tr>
                                             <th>{k + 1}</th>
                                             <th>{v.event.title}</th>
                                             <th>{moment(v.date_event).format("DD MMM YYYY")}</th>
@@ -105,7 +102,7 @@ const TrainingCertificationHistory = (props) => {
                                                     )}
                                             </th>
                                             <th>
-                                                <Link to={`/user/TrainingCertificationConfirm/${v.id}/${v.event.title.split(/[&\/\\#,+()$~%.'":*?<>{}\s]/g).join('-').toLowerCase()}`}>
+                                                <Link to={`/user/TrainingCertificationConfirm/${v.id}/${v.event.title.split(/[&\\#,+()$~%.'":*?<>{}\s]/g).join('-').toLowerCase()}`}>
                                                     <button className="color button">Confirm</button>
                                                 </Link>
                                             </th>

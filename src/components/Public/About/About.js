@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from "react";
 import {
-    BrowserRouter as Router,
     Switch,
     Route,
-    Link,
-    useParams,
     useRouteMatch
 } from "react-router-dom";
 import Topic from "./AboutTopic"
 import ContenService from "../../../services/ContentServices"
 
 const About = () => {
-    let { path, url } = useRouteMatch();
+    let { path } = useRouteMatch();
     const [aboutContentCompany, setAboutContentCompany] = useState([])
     const [aboutContentCommittee, setAboutContentCommittee] = useState([])
 

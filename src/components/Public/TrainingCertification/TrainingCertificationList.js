@@ -10,8 +10,6 @@ import {
     useRouteMatch
 } from "react-router-dom";
 import ItemDetail from "./TrainingCertificationDetail"
-import ItemRegistration from "./TrainingCertificationRegistration"
-import { Container, Row, Col } from "reactstrap";
 
 const TrainingCertificationList = () => {
 

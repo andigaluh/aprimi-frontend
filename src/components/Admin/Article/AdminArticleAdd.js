@@ -67,6 +67,7 @@ const AdminArticleAdd = () => {
     };
 
     const saveArticle = () => {
+      setIsLoading(true)
         var data = {
             title: currentArticle.title,
             headline: currentArticle.headline,
@@ -88,7 +89,7 @@ const AdminArticleAdd = () => {
                     updated_user_id: response.data.updated_user_id,
                 });
                 setSubmitted(true);
-                console.log(response.data);
+            setIsLoading(false)
             },
             (error) => {
                 const _content =
@@ -100,7 +101,7 @@ const AdminArticleAdd = () => {
 
                 setCurrentArticle(_content);
                 setErrorMsg(_content);
-                console.log(`message : ${_content}`);
+              setIsLoading(false)
             }
         );
     };

@@ -85,7 +85,7 @@ const AdminUsersDetail = props => {
     }, [props.match.params.id]);
 
     const handleInputChange = event => {
-        const { name, value, checked } = event.target;
+        const { name, value } = event.target;
         setCurrentUser({ ...currentUser, [name]: value });
     };
 

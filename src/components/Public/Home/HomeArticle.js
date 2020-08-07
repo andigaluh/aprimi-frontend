@@ -71,7 +71,7 @@ const HomeArticle = () => {
                         </ul>
                       </div>
                       <h5 className="title">
-                        <a href="#">{article.title}</a>
+                        <Link to={"/article/" + article.id + "/" + article.title.split(' ').join('-')}>{article.title}</Link>
                       </h5>
                       <p>{article.headline}</p>
                     </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom'
 import Form from 'react-validation/build/form'
 import Input from 'react-validation/build/input'
@@ -13,7 +13,6 @@ import {
     Label,
     UncontrolledAlert,
 } from "reactstrap";
-import { UserContext } from '../../../UserContext';
 import ArticleServices from '../../../services/ArticleServices';
 
 const required = (value) => {
@@ -28,15 +27,12 @@ const required = (value) => {
 
 const EditArticleByUser = (props) => {
     let { id } = useParams();
-    const { userLogin } = useContext(UserContext);
     const form = useRef();
     const checkBtn = useRef();
     const editor = useRef(null);
     const [content, setContent] = useState("");
     const [inputTitle, setInputTitle] = useState("")
     const [inputHeadline, setInputHeadline] = useState("")
-    const [inputContent, setInputContent] = useState("")
-    const [inputNewsCategoryId, setInputNewsCategoryId] = useState(1)
     const [successful, setSuccessful] = useState(false);
     const [message, setMessage] = useState("");
 

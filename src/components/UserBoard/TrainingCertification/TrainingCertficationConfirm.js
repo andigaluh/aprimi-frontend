@@ -117,6 +117,7 @@ const TrainingCertficationConfirm = (props) => {
                                     process.env.REACT_APP_API + "/uploads/confirmation/thumbnail/" +
                                     currentConfirmationImage
                                 }
+                             alt="confirmation"
                             />
                         </div>
                     )}

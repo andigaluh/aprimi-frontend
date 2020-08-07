@@ -1,15 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import AuthService from "../services/auth.service"
-import BoardAdmin from "../components/BoardAdmin";
 import { UserContext } from "../UserContext";
 
 const Header = () => {
     const [currentUser, setCurrentUser] = useState(undefined);
     const [showAdminBoard, setShowAdminBoard] = useState(false);
     const [showUserBoard, setShowUserBoard] = useState(false);
-    const { userLogin, setUserLogin } = useContext(UserContext)
+    const { userLogin } = useContext(UserContext)
 
     useEffect(() => {
         const user = AuthService.getCurrentUser();

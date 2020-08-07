@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from "react";
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
   Link,
-  useParams,
-  useRouteMatch,
+  useParams
 } from "react-router-dom";
 import ArticleService from "../../../services/ArticleServices";
 import moment from "moment";
 
 const ArticleDetail = () => {
-  let { articleId, articleTitle } = useParams();
+  let { articleId } = useParams();
   const [itemDetail, setItemDetail] = useState({});
   const [createdUser, setCreatedUser] = useState({});
 
@@ -24,7 +20,6 @@ const ArticleDetail = () => {
     ArticleService.get(id).then((response) => {
       setItemDetail(response.data);
       setCreatedUser(response.data.created_user);
-      console.log(response.data);
     });
   };
 

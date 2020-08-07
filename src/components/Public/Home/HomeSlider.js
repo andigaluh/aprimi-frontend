@@ -20,9 +20,8 @@ const HomeSlider = (props) => {
   const retrieveCarousel = () => {
     CarouselService.getAll().then(
       (response) => {
-        const { items, totalPages } = response.data
+        const { items } = response.data
         setCarousel(items);
-        console.log(items)
       }
     )
   }
