@@ -40,7 +40,6 @@ const AdminArticleAdd = () => {
         ArticleCategoryService.AdminGetAll().then(
             (response) => {
                 setCurrentArticleCategory(response.data);
-                //console.log(response.data);
             },
             (error) => {
                 const _content =

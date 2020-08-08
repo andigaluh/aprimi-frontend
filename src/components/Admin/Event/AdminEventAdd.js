@@ -106,6 +106,7 @@ const AdminEventAdd = () => {
           });
           setSubmitted(true);
           setIsLoading(false)
+          window.scrollTo(0,500)
         },
         (error) => {
           const _content =

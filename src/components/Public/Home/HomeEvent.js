@@ -45,30 +45,30 @@ const HomeEvent = () => {
                       <div className="blog-photo">
                         <Link
                           to={
-                            "/trainingcertification/" +
+                            "/trainingcertification/detail/" +
                             event.id +
                             "/" +
-                            event.title.split(' ').join('-')
+                            event.title.split(" ").join("-")
                           }
                         >
-                            {event.thumbnail ? (
-                              <img
-                                src={
-                                  process.env.REACT_APP_API +
-                                  "/uploads/event/thumbnail/" +
-                                  event.thumbnail
-                                }
-                                alt={event.title}
-                              />
-                            ) : (
-                              <img
-                                src={
-                                  process.env.REACT_APP_API +
-                                  "/uploads/event/thumbnail/default.jpg"
-                                }
-                                alt={event.title}
-                              />
-                            )}
+                          {event.thumbnail ? (
+                            <img
+                              src={
+                                process.env.REACT_APP_API +
+                                "/uploads/event/thumbnail/" +
+                                event.thumbnail
+                              }
+                              alt={event.title}
+                            />
+                          ) : (
+                            <img
+                              src={
+                                process.env.REACT_APP_API +
+                                "/uploads/event/thumbnail/default.jpg"
+                              }
+                              alt={event.title}
+                            />
+                          )}
                         </Link>
                       </div>
                       <div className="blog-content">
@@ -85,8 +85,16 @@ const HomeEvent = () => {
                           </ul>
                         </div>
                         <h5 className="title">
-                          <Link to={"/trainingcertification/" + event.id+ "/" + event.title.split(' ').join('-')} >{event.title}</Link>
-                          
+                          <Link
+                            to={
+                              "/trainingcertification/detail/" +
+                              event.id +
+                              "/" +
+                              event.title.split(" ").join("-")
+                            }
+                          >
+                            {event.title}
+                          </Link>
                         </h5>
                         <p>{event.headline}</p>
                       </div>

@@ -36,6 +36,9 @@ import authService from "../services/auth.service";
 
 import { UserContext } from "../UserContext";
 import AdminArticleThumb from "./Admin/Article/AdminArticleThumb";
+import AdminAgenda from "./Admin/Agenda/AdminAgenda";
+import AdminAgendaAdd from "./Admin/Agenda/AdminAgendaAdd";
+import AdminAgendaDetail from "./Admin/Agenda/AdminAgendaDetail";
 
 
 const BoardAdmin = (props) => {
@@ -105,6 +108,9 @@ const BoardAdmin = (props) => {
                       <Route exact path="/admin/addLogo" component={AdminLogoAdd} />
                       <Route exact path="/admin/logo/:id" component={AdminLogoDetail} />
                       <Route exact path="/admin/thumbLogo/:id" component={AdminLogoThumbnail} />
+                      <Route exact path="/admin/agenda" component={AdminAgenda} />
+                      <Route exact path="/admin/addAgenda" component={AdminAgendaAdd} />
+                      <Route exact path="/admin/agenda/:id" component={AdminAgendaDetail} />
                   </div>
                 )}
               </Switch>
