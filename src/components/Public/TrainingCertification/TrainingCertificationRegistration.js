@@ -148,7 +148,6 @@ const TrainingCertificationRegistration = (props) => {
             console.log(data)
             EventServices.register(eventId, data).then(
                 (response) => {
-                    console.log(response.data)
                     setMessage("Your data has been successfully submited. Please go to your page to confirm payment. Thank You");
                     setSuccessful(true);
                 },
@@ -161,13 +160,10 @@ const TrainingCertificationRegistration = (props) => {
                         error.toString();
 
                     setMessage(resMessage);
-                    console.log(`error: ${resMessage}`);
                     setSuccessful(false);
                 }
             )
-        } else {
-            console.log("no process");
-        }
+        } 
     }
     
     return (

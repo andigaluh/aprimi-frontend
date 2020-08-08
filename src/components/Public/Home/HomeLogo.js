@@ -29,7 +29,6 @@ const HomeLogo = () => {
         LogoService.getAll().then(
             (response) => {
                 setLogo(response.data);
-                console.log(response.data)
             }
         )
     }

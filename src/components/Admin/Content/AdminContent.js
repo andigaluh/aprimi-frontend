@@ -119,7 +119,6 @@ const AdminContent = () => {
                                         <th>Id</th>
                                         <th>title</th>
                                         <th>url title</th>
-                                        <th>Content</th>
                                         <th>Active</th>
                                         <th>Action</th>
                                     </tr>
@@ -132,7 +131,6 @@ const AdminContent = () => {
                                                 <td>{konten.id}</td>
                                                 <td>{konten.title}</td>
                                                 <td>{konten.url_title}</td>
-                                                <td>{konten.content}</td>
                                                 <td>{konten.is_publish ? `Active` : `NotActive`}</td>
                                                 <td>
                                                     <Link

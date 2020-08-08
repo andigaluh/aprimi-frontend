@@ -22,7 +22,6 @@ const About = () => {
             (response) => {
                 setAboutContentCommittee(response.data[0])
                 setAboutContentCompany(response.data[1])
-                console.log(response.data[1])
             }
         )
     }

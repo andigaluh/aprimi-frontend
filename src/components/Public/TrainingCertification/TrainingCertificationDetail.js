@@ -22,7 +22,6 @@ const TrainingCertificationDetail = () => {
         }
         retriveEvent(eventId)
         window.scrollTo(0, 0)
-        console.log(eventType)
     }, [eventId])
 
     const retriveEvent = (id) => {

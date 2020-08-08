@@ -8,7 +8,7 @@ import AuthService from "../../../services/auth.service"
 
 const TrainingCertificationItem = (props) => {
     const [currentAuth, setCurrentAuth] = useState({})
-    console.table(props)
+    
     useEffect(()=> {
         const auth = AuthService.getCurrentUser()
         if (auth) {
