@@ -383,32 +383,6 @@ const AboutTopic = (props) => {
 
                             <div className="col-sm-3">
                                 <article className="item">
-                                    <a href="http://aprimi.org/assets/theme/img/committee/250x250/ardhian1_250.jpg" className="fancybox"
-                                        data-fancybox-group="images_gallery"><img src="http://aprimi.org/assets/theme/img/committee/250x250/ardhian1_250.jpg" alt="Image 1" /></a>
-                                    <div className="teacher-content">
-                                        <div className="teacher-social">
-                                            <i className="teacher-icon fa fa-share-alt social-first"></i>
-                                            <a href="#" className="teacher-icon social-link">
-                                                <i className="fab fa-facebook"></i>
-                                            </a>
-                                            <a href="#" className="teacher-icon social-link">
-                                                <i className="fab fa-twitter" aria-hidden="true"></i>
-                                            </a>
-                                            <a href="#" className="teacher-icon social-link">
-                                                <i className="fab fa-linkedin" aria-hidden="true"></i>
-                                            </a>
-                                            <a href="#" className="teacher-icon social-link">
-                                                <i className="fab fa-instagram" aria-hidden="true"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <h5>Ardhian Pratama, SE, CHRP, GRP, CCP</h5>
-                                    <span>IT & Communication</span>
-                                </article>
-                            </div>
-
-                            <div className="col-sm-3">
-                                <article className="item">
                                     <a href="http://aprimi.org/assets/theme/img/committee/250x250/aprabowo2_250.jpg" className="fancybox"
                                         data-fancybox-group="images_gallery"><img src="http://aprimi.org/assets/theme/img/committee/250x250/aprabowo2_250.jpg" alt="Image 1" /></a>
                                     <div className="teacher-content">
