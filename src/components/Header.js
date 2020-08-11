@@ -61,7 +61,13 @@ const Header = () => {
             </div>
           </div>
         </div>
-        <Navbar />
+        <Navbar 
+          showUserBoard={showUserBoard} 
+          showAdminBoard={showAdminBoard}
+          currentUser={currentUser}
+          userLogin={userLogin}
+          logOut={logOut}
+        />
       </header>
     );
 }

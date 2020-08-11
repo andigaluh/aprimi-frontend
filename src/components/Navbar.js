@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = (props) => {
     return (
       <nav
         className="navbar navbar-default navbar-expand-md navbar-light"
@@ -57,6 +57,32 @@ const Navbar = () => {
                   Contact
                 </Link>
               </li>
+
+              {props.showUserBoard && (
+                <li className="d-block d-sm-none">
+                  <Link to={"/user"}>User Board</Link>
+                </li>
+              )}
+              {props.showAdminBoard && (
+                <li className="d-block d-sm-none">
+                  <Link to={"/admin"}>Admin Board</Link>
+                </li>
+              )}
+              {props.currentUser ? (
+                <li className="d-block d-sm-none">
+                  <Link to={"/membership"}>Membership</Link>
+                  <Link to={"/user"}>{props.userLogin.name}</Link>
+                  <a href="/login" onClick={props.logOut}>
+                    LogOut
+                  </a>
+                </li>
+              ) : (
+                <li className="d-block d-sm-none">
+                  <Link to={"/membership"}>Membership</Link>
+                  <Link to={"/register"}>Register</Link>
+                  <Link to={"/login"}>Login</Link>
+                  </li>
+                )}
             </ul>
             <div className="header-cta">
                 <Link to={"/contact"} className="btn btn-1c">
