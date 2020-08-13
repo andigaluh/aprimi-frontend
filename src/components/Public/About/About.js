@@ -11,8 +11,9 @@ const About = () => {
     let { path } = useRouteMatch();
     const [aboutContentCompany, setAboutContentCompany] = useState([])
     const [aboutContentCommittee, setAboutContentCommittee] = useState([])
-
+   
     useEffect(() => {
+        window.scrollTo(0, 500)
         retrieveContentAbout();
     }, []);
 

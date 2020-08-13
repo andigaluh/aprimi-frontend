@@ -39,6 +39,8 @@ import AdminArticleThumb from "./Admin/Article/AdminArticleThumb";
 import AdminAgenda from "./Admin/Agenda/AdminAgenda";
 import AdminAgendaAdd from "./Admin/Agenda/AdminAgendaAdd";
 import AdminAgendaDetail from "./Admin/Agenda/AdminAgendaDetail";
+import AdminEventRegistration from "./Admin/Event/AdminEventRegistration";
+import AdminEventRegistrationDetail from "./Admin/Event/AdminEventRegistrationDetail";
 
 
 const BoardAdmin = (props) => {
@@ -92,6 +94,8 @@ const BoardAdmin = (props) => {
                       <Route path="/admin/event/:id" component={AdminEventDetail} />
                       <Route path="/admin/thumbEvent/:id" component={AdminEventThumbnail} />
                       <Route path="/admin/fileEvent/:id" component={AdminEventFile} />
+                      <Route exact path="/admin/registrationEvent/:id" component={AdminEventRegistration} />
+                      <Route path="/admin/registrationEvent/detail/:id" component={AdminEventRegistrationDetail} />
                       <Route exact path="/admin/article" component={AdminArticle} />
                       <Route exact path="/admin/addArticle/" component={AdminArticleAdd} />
                       <Route exact path="/admin/article/:id" component={AdminArticleDetail} />

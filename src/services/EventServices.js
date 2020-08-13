@@ -86,6 +86,24 @@ const myRegistrationById = (id) => {
   })
 }
 
+const myRegistrationByEventUser = (id) => {
+  return http.get(`/event/registrationbyevent/${id}`, {
+    headers: authHeader()
+  })
+}
+
+const AdminGetAllByEvent = (id) => {
+  return http.get(`/admin/event_reg/event/${id}`, {
+    headers: authHeader()
+  });
+};
+
+const AdminGetRegistrationById = (id) => {
+  return http.get(`/admin/event_reg/${id}`, {
+    headers: authHeader()
+  });
+};
+
 export default {
   getAll,
   get,
@@ -100,5 +118,8 @@ export default {
   register,
   myRegistration,
   uploadConfirmation,
-  myRegistrationById
+  myRegistrationById,
+  myRegistrationByEventUser,
+  AdminGetAllByEvent,
+  AdminGetRegistrationById
 };

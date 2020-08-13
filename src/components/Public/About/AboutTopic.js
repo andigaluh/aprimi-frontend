@@ -3,6 +3,7 @@ import {useParams} from 'react-router-dom'
 
 const AboutTopic = (props) => {
     let { topicId } = useParams()
+    window.scrollTo(0, 500)
     return(
         <div>
             {(topicId === 'committee') ? (

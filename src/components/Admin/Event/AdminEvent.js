@@ -124,6 +124,7 @@ const AdminEvent = () => {
                           <th>Thumbnail</th>
                           <th>Attachment</th>
                           <th>Action</th>
+                          <th>Registration</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -180,7 +181,13 @@ const AdminEvent = () => {
                                 <Link
                                   to={"/admin/event/" + epent.id}>
                                   <Badge color="primary" pill><i className="fas fa-edit"></i> Edit</Badge>
-                            </Link>
+                                </Link>
+                              </td>
+                              <td>
+                                <Link
+                                  to={"/admin/registrationEvent/" + epent.id}>
+                                  <Badge color="warning" pill><i className="fas fa-search"></i> Show</Badge>
+                                </Link>
                               </td>
                             </tr>
                           ))}

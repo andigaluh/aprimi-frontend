@@ -15,7 +15,8 @@ import {
     Label,
     Container,
     Row,
-    Alert
+    Alert,
+    UncontrolledAlert
 } from "reactstrap";
 import EventServices from "../../../services/EventServices";
 
@@ -58,9 +59,10 @@ const TrainingCertificationRegistration = (props) => {
     const [invoiceNotes, setInvoiceNotes] = useState("");
     const [successful, setSuccessful] = useState(false);
     const [message, setMessage] = useState("");
+    const element = document.getElementById("top-container");
     
     useEffect(() => {
-        window.scrollTo(0, 450)
+        window.scrollTo(0, 500)
     },[eventId])
 
     const onChangeWwId = (e) => {
@@ -127,47 +129,64 @@ const TrainingCertificationRegistration = (props) => {
         e.preventDefault();
         setMessage("");
         setSuccessful(false);
-        form.current.validateAll();
-        if (checkBtn.current.context._errors.length === 0) {
-            console.log("process");
-            var data = {
-                invoiced_to: 1,
-                ww_id: wwId,
-                report_name: reportName,
-                report_date: reportDate,
-                report_job: reportJob,
-                report_email: reportEmail,
-                report_fax: reportFax,
-                report_address: reportAddress,
-                invoice_name: invoiceName,
-                invoice_email: invoiceEmail,
-                invoice_phone: invoicePhone,
-                invoice_fax: invoiceFax,
-                invoice_notes: invoiceNotes
-            }
-            console.log(data)
-            EventServices.register(eventId, data).then(
-                (response) => {
-                    setMessage("Your data has been successfully submited. Please go to your page to confirm payment. Thank You");
-                    setSuccessful(true);
-                },
-                (error) => {
-                    const resMessage =
-                        (error.response &&
-                            error.response.data &&
-                            error.response.data.message) ||
-                        error.message ||
-                        error.toString();
-
-                    setMessage(resMessage);
-                    setSuccessful(false);
+        EventServices.myRegistrationByEventUser(eventId).then(
+            (response) => {
+                const countRow = response.data.count;
+                if (countRow > 0) {
+                    element.scrollIntoView()
+                    setMessage(`Your account already register for this event!!`);
+                } else {
+                    form.current.validateAll();
+                    if (checkBtn.current.context._errors.length === 0) {
+                        console.log("process");
+                        var data = {
+                            invoiced_to: 1,
+                            ww_id: wwId,
+                            report_name: reportName,
+                            report_date: reportDate,
+                            report_job: reportJob,
+                            report_email: reportEmail,
+                            report_fax: reportFax,
+                            report_address: reportAddress,
+                            invoice_name: invoiceName,
+                            invoice_email: invoiceEmail,
+                            invoice_phone: invoicePhone,
+                            invoice_fax: invoiceFax,
+                            invoice_notes: invoiceNotes
+                        }
+                        EventServices.register(eventId, data).then(
+                            (response) => {
+                                element.scrollIntoView()
+                                setMessage("Your data has been successfully submited. Please go to your page to confirm payment. Thank You");
+                                setSuccessful(true);
+                            },
+                            (error) => {
+                                const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+                                element.scrollIntoView()
+                                setMessage(resMessage);
+                                setSuccessful(false);
+                            }
+                        )
+                    } 
                 }
-            )
-        } 
+            },
+            (error) => {
+                const resMessage =
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
+
+                setMessage(resMessage);
+            }
+        )
+
+        
     }
     
     return (
-            <div className="blog-content ">
+        <div className="blog-content" id="top-container">
                 <div className="section-title">
                     <div>
                         <h3>{props.headline}</h3>
@@ -185,15 +204,15 @@ const TrainingCertificationRegistration = (props) => {
                         </ul>
                     </div>
                 </div>
-                <Container>
+            <Container>
                     <Row>
-                        <Col xs="12">
+                        <Col xs="12" >
                             <h4>FORM REGISTRATION</h4>
                             {message && (
                                 <FormGroup>
-                                    <Alert color={successful ? `success` : `danger`}>
+                                    <UncontrolledAlert color={successful ? `success` : `danger`}>
                                         {message}
-                                    </Alert>
+                                    </UncontrolledAlert>
                                     {successful && (
                                         <div>
                                             <hr />
@@ -201,7 +220,7 @@ const TrainingCertificationRegistration = (props) => {
                                                 <Link to={`/trainingcertification/detail/${eventId}/${eventTitle}`}>
                                                     <button className="color button">Go to training certification</button>
                                                 </Link>
-                                                <Link to={`/trainingcertification/detail/${eventId}/${eventTitle}`}>
+                                                <Link to={`/user/trainingCertificationHistory`}>
                                                     <button className="color button">Go to payment confirmation</button>
                                                 </Link>
                                             </div>
