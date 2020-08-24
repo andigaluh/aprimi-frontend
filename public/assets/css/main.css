@@ -235,6 +235,28 @@ h6,
     background: #fe4c1c;
 }
 
+.carousel-caption {
+    top: 40%
+}
+
+.carousel-caption > h3 {
+    text-transform: uppercase;
+    font-size: 2rem;
+    position: relative;
+    margin-bottom: 10px;
+    display: block;
+    font-weight: 500;
+    text-align: left;
+    color: #fff !important
+}
+
+.carousel-caption > p {
+    text-align: left;
+    color: #fff !important;
+    font-size: 5rem;
+    line-height: 5rem;
+}
+
 #members .item,
 #members-two .item,
 .color-three,
@@ -1212,6 +1234,7 @@ select:focus {
     right: 0;
     margin: 0px auto;
     box-shadow: 1px 0 10px rgba(0, 0, 0, 0.4);
+    opacity: 0.6;
 }
 .transparent-header.sticky-menu {
     max-width: 100%;

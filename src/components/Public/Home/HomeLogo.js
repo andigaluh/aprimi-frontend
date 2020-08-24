@@ -8,16 +8,7 @@ import "../../../App.css";
 
 
 const HomeLogo = () => {
-    var settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 4,
-        slidesToScroll: 4,
-        autoplay: false,
-        adaptiveHeight: false,
-        centerMode: false,
-    };
+
 
     const [logo, setLogo] = useState([])
 
@@ -33,31 +24,46 @@ const HomeLogo = () => {
         )
     }
 
+
+
     return (
-        <div id="logo-partner" className="wrap-bg">
+        < div className="sponsor wrap-bg-small wrap-bg-dark" >
             <div className="container">
-                <div className="row justify-content-center text-center">
-                    <div className="col-lg-12">
-                        <Slider {...settings}>
-                            {logo &&
-                                logo.map((item, i) => (
-                                    <div className="slide">
-                                        <Link to={item.url_link}>
-                                            <img
-                                                src={
-                                                    process.env.REACT_APP_API + "/uploads/logo/" + item.image
-                                                }
-                                                className="img-logo"
-                                                alt={item.title}
-                                            />
-                                        </Link>
-                                    </div>
-                                ))}
-                        </Slider>
+
+                <div className="text-center">
+                    <span>PARTNER COMPANIES</span>
+                </div>
+
+                <div className=" carousel-slider sponsor-slider">
+
+                    <div className="item">
+                        <img src="/assets/images/content/students/1.svg" alt="Logo" />
                     </div>
+
+                    <div className="item">
+                        <img src="/assets/images/content/students/2.svg" alt="Logo" />
+                    </div>
+
+                    <div className="item">
+                        <img src="/assets/images/content/students/3.svg" alt="Logo" />
+                    </div>
+
+                    <div className="item">
+                        <img src="/assets/images/content/students/4.svg" alt="Logo" />
+                    </div>
+
+                    <div className="item">
+                        <img src="/assets/images/content/students/5.svg" alt="Logo" />
+                    </div>
+
+                    <div className="item">
+                        <img src="/assets/images/content/students/6.svg" alt="Logo" />
+                    </div>
+
                 </div>
             </div>
         </div>
+
     );
 }
 

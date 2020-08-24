@@ -4,6 +4,7 @@ import HomeServices from "./HomeServices";
 import HomeEvent from "./HomeEvent";
 import HomeArticle from "./HomeArticle";
 import HomeLogo from "./HomeLogo";
+import HomeBenefit from "./HomeBenefit";
 
 const Home = () => {
   
@@ -11,6 +12,7 @@ const Home = () => {
   return (
     <main>
       <HomeSlider />
+      <HomeBenefit />
       <HomeServices />
       <HomeEvent />
       <HomeArticle />

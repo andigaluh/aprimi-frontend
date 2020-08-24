@@ -51,7 +51,9 @@ const HomeSlider = (props) => {
         onExited={() => setAnimating(false)}
       >
         <img src={process.env.REACT_APP_API + "/uploads/carousel/" + item.image} alt={item.title} className="custom-tag"/>
-        <CarouselCaption className="text-info" captionText={item.title} captionHeader={item.promo} />
+        
+        <CarouselCaption className="text-info" captionText={item.promo} captionHeader={item.title} />
+        
       </CarouselItem>
     );
   });
