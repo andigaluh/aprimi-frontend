@@ -8,7 +8,6 @@ import HomeBenefit from "./HomeBenefit";
 
 const Home = () => {
   
-  
   return (
     <main>
       <HomeSlider />

@@ -1234,7 +1234,7 @@ select:focus {
     right: 0;
     margin: 0px auto;
     box-shadow: 1px 0 10px rgba(0, 0, 0, 0.4);
-    opacity: 0.6;
+    
 }
 .transparent-header.sticky-menu {
     max-width: 100%;

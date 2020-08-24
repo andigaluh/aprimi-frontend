@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 
 function HomeBenefit(props) {
     return (
@@ -24,14 +25,16 @@ function HomeBenefit(props) {
                                     <li><i class="fas fa-check-circle"></i> Members could join APRIMI regular event i.e. best practice sharing session from other member companies in HR and remuneration area.</li>
                                     <li><i class="fas fa-check-circle"></i> Members get an exclusive publication and other materials related to Remuneration in the Oil and Gas industry.</li>
                                 </ul>
-                                
+                                <div class="mt-25 mb-50">
+                                    <Link to={"/register"} className="color-two btn-custom">Join Us <i class="fas fa-arrow-right"></i></Link>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
+
     );
 }
 
