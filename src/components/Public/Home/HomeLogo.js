@@ -60,6 +60,18 @@ const HomeLogo = () => {
                         <img src="/assets/images/content/students/6.svg" alt="Logo" />
                     </div>
 
+                    <div className="item">
+                        <img src="/assets/images/content/students/4.svg" alt="Logo" />
+                    </div>
+
+                    <div className="item">
+                        <img src="/assets/images/content/students/5.svg" alt="Logo" />
+                    </div>
+
+                    <div className="item">
+                        <img src="/assets/images/content/students/6.svg" alt="Logo" />
+                    </div>
+
                 </div>
             </div>
         </div>

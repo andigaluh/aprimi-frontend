@@ -120,7 +120,6 @@ const Login = (props) => {
                     title="Your Password"
                   />
                 </FormGroup>
-
                 <FormGroup className="text-center">
                   <button className="color-two button" disabled={loading}>
                     {loading && (
@@ -135,6 +134,10 @@ const Login = (props) => {
                     <Link to={"/register"} className="text-info">
                       REGISTER HERE
                     </Link>
+                  </p>
+                  <p>
+                    Forget Password ? {" "}
+                    <Link to={"/forget-password"} className="text-info">CLICK HERE</Link>
                   </p>
                 </FormGroup>
                 <CheckButton style={{ display: "none" }} ref={checkBtn} />

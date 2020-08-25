@@ -37,9 +37,6 @@ const updatePasswordByMe = (data) => {
 };
 
 const findByName = (params) => {
-  /* return http.get(`/admin/users?name=${title}`, {
-    headers: authHeader(),
-  }) */
   return http.get("/admin/users", {
     headers: authHeader(),
     params,
@@ -68,6 +65,18 @@ const getByMe = () => {
   });
 }
 
+const checkEmail = (data) => {
+  return http.post(`/users/checkEmail`, data);
+}
+
+const checkEmailEnc = (id) => {
+  return http.get(`/users/findEmailEnc/${id}`)
+}
+
+const updatePasswordByEmail = (data) => {
+  return http.put(`/users/updatePasswordByEmail`, data);
+};
+
 export default {
   signin,
   getAll,
@@ -79,5 +88,8 @@ export default {
   updateByMe,
   updatePasswordByMe,
   checkPassword,
-  getByMe
+  getByMe,
+  checkEmail,
+  checkEmailEnc,
+  updatePasswordByEmail
 };
