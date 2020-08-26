@@ -27,7 +27,7 @@ const Profile = () => {
           <hr />
           <Row>
             <Col>
-              <Table hover>
+              <Table hover responsive>
                 <thead>
                   <tr>
                     <th>Id</th>

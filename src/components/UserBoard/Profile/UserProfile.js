@@ -9,14 +9,15 @@ import {
 } from "reactstrap";
 
 const UserProfile = () => {
-    const { userLogin } = useContext(UserContext);
-    return (
-      <Container>
-        <Row>
-          <Col>
-            <h4>User Profile</h4>
-            <hr />
-            <table className="table table-responsive">
+  const { userLogin } = useContext(UserContext);
+  return (
+    <Container>
+      <Row>
+        <Col>
+          <h4>User Profile</h4>
+          <hr />
+          <div className="table-responsive">
+            <table className="table">
               <tbody>
                 <tr>
                   <td>
@@ -38,19 +39,20 @@ const UserProfile = () => {
                 </tr>
               </tbody>
             </table>
-            <div className="text-left">
-              <Link to={"/user/changePassword"} className="mr-10">
-                <button className="color-two button">Change Password</button>
-              </Link>
-              <Link to={"/user/profile"}>
-                <button className="color-two button">Edit Profile</button>
-              </Link>
-            </div>
-          </Col>
-        </Row>
-      </Container>
-      
-    );
+          </div>
+          <div className="text-left">
+            <Link to={"/user/changePassword"} className="mr-10">
+              <button className="color-two button">Change Password</button>
+            </Link>
+            <Link to={"/user/profile"}>
+              <button className="color-two button">Edit Profile</button>
+            </Link>
+          </div>
+        </Col>
+      </Row>
+    </Container>
+
+  );
 }
 
 export default UserProfile

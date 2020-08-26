@@ -1,4 +1,4 @@
-import React, { useState, useEffect }  from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import AuthService from "../../../services/auth.service";
 import Pagination from "@material-ui/lab/Pagination";
@@ -47,7 +47,7 @@ const AdminArticle = () => {
                 retrieveArticle();
                 setIsLoading(false)
             }, 1000);
-            
+
         }
     }, [page, pageSize])
 
@@ -91,7 +91,7 @@ const AdminArticle = () => {
 
     return (
         <Container>
-        
+
             {auth ? (
                 <div>
                     <Row>
@@ -99,7 +99,7 @@ const AdminArticle = () => {
                             <h4>Admin Article</h4>
                         </Col>
                     </Row>
-                    <hr/>
+                    <hr />
 
                     <AdminSearch
                         onChangeSearchTitle={onChangeSearchTitle}
@@ -112,66 +112,68 @@ const AdminArticle = () => {
                         addUrl={"/admin/addArticle"}
                     />
                     <hr />
-                    
+
                     <Row>
                         <Col>
-                        {isLoading ? (
-                            <LoadingSpinner />
-                        ) : (
-                            <table className="table">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Id</th>
-                                        <th>Thumbnail</th>
-                                        <th>title</th>
-                                        <th>Active</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {article &&
-                                        article.map((artikel, i) => (
-                                            <tr>
-                                                <td>{i + 1}</td>
-                                                <td>{artikel.id}</td>
-                                                <td>
-                                                    {artikel.thumbnail ? (
-                                                        <div>
-                                                            <img
-                                                                src={
-                                                                    process.env.REACT_APP_API + "/uploads/news/thumbnail/" +
-                                                                    artikel.thumbnail
-                                                                }
-                                                                width="100"
-                                                                alt={artikel.title}
-                                                            /><br />
-                                                        </div>
-                                                    ) : (
-                                                            <div>
-                                                                No Image <br />
-                                                            </div>
-                                                        )}
-                                                    <Link
-                                                        to={"/admin/articleThumb/" + artikel.id}
-                                                    >
-                                                        <Badge color="info" pill><i className="fas fa-upload"></i> Thumbnail</Badge>
-                                                    </Link>    
-                                                </td>
-                                                <td>{artikel.title}</td>
-                                                <td>{artikel.is_publish ? `Active` : `NotActive`}</td>
-                                                <td>
-                                                    <Link
-                                                        to={"/admin/article/" + artikel.id}
-                                                    >
-                                                        <Badge color="primary" pill><i className="fas fa-edit"></i> Edit</Badge>
-                                                </Link>
-                                                </td>
-                                            </tr>
-                                        ))}
-                                </tbody>
-                            </table>
-                        )}   
+                            {isLoading ? (
+                                <LoadingSpinner />
+                            ) : (
+                                    <div className="table-responsive">
+                                        <table className="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>Id</th>
+                                                    <th>Thumbnail</th>
+                                                    <th>title</th>
+                                                    <th>Active</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {article &&
+                                                    article.map((artikel, i) => (
+                                                        <tr>
+                                                            <td>{i + 1}</td>
+                                                            <td>{artikel.id}</td>
+                                                            <td>
+                                                                {artikel.thumbnail ? (
+                                                                    <div>
+                                                                        <img
+                                                                            src={
+                                                                                process.env.REACT_APP_API + "/uploads/news/thumbnail/" +
+                                                                                artikel.thumbnail
+                                                                            }
+                                                                            width="100"
+                                                                            alt={artikel.title}
+                                                                        /><br />
+                                                                    </div>
+                                                                ) : (
+                                                                        <div>
+                                                                            No Image <br />
+                                                                        </div>
+                                                                    )}
+                                                                <Link
+                                                                    to={"/admin/articleThumb/" + artikel.id}
+                                                                >
+                                                                    <Badge color="info" pill><i className="fas fa-upload"></i> Thumbnail</Badge>
+                                                                </Link>
+                                                            </td>
+                                                            <td>{artikel.title}</td>
+                                                            <td>{artikel.is_publish ? `Active` : `NotActive`}</td>
+                                                            <td>
+                                                                <Link
+                                                                    to={"/admin/article/" + artikel.id}
+                                                                >
+                                                                    <Badge color="primary" pill><i className="fas fa-edit"></i> Edit</Badge>
+                                                                </Link>
+                                                            </td>
+                                                        </tr>
+                                                    ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                )}
                         </Col>
                     </Row>
                     <Row>
@@ -194,7 +196,7 @@ const AdminArticle = () => {
                         <h4>Unauthorized</h4>
                     </div>
                 )}
-        
+
         </Container>
     );
 }

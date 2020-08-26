@@ -98,7 +98,7 @@ const Media = (props) => {
             <hr />
             <Row>
                 <Col>
-                    <Table hover>
+                    <Table hover responsive>
                         <thead>
                             <tr>
                                 <th>#</th>

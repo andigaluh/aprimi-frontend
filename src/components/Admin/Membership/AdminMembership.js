@@ -112,7 +112,7 @@ const AdminMembership = () => {
               {isLoading ? (
                 <LoadingSpinner />
               ) : (
-                    <Table hover>
+                    <Table hover responsive>
                       <thead>
                         <tr>
                           <th>No</th>
