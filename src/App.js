@@ -54,6 +54,7 @@ const App = () => {
                 <Route path="/activation-user" component={ActivationUser} />
                 <Route path="/forget-password" component={ForgetPassword} />
                 <Route path="/reset-password/:id" component={ResetPassword} />
+                
             </Switch>
             <Footer />
             </UserContext.Provider>

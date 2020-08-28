@@ -14,6 +14,7 @@ import ArticleByUser from "./Article/ArticleByUser";
 import AddArticleByUser from "./Article/AddArticleByUser";
 import EditArticleByUser from "./Article/EditArticleByUser";
 import Media from "./Media/Media"
+import Calendar from "./Agenda/Calendar";
 
 const BoardUser = (props) => {
   const { userLogin } = useContext(UserContext)
@@ -54,7 +55,7 @@ const BoardUser = (props) => {
                     <Route path={"/user/TrainingCertificationHistory"} component={TrainingCertificationHistory} />
                     <Route path={"/user/TrainingCertificationConfirm/:id/:title"} component={TrainingCertficationConfirm} />
                     <Route path={"/user/contact"} component={Contact} />
-                    <Route path={"/user/agenda"} component={Agenda} />
+                    <Route path={"/user/agenda"} component={Calendar} />
                     {isKomite && (
                       <div>
                         <Route path={"/user/article"} component={ArticleByUser} />

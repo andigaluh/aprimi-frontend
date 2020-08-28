@@ -1,5 +1,5 @@
 'use strict'
-console.clear();
+//console.clear();
 const cursor = document.querySelector('.cursor');
 const cursorFollower = document.querySelector('.cursor2');
 
