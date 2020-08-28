@@ -5,6 +5,10 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "../../../App.css";
+import {
+    Container, Row, Col, Card, Button, CardImg, CardTitle, CardText, CardDeck,
+    CardSubtitle, CardBody
+} from "reactstrap"
 
 
 const HomeLogo = () => {
@@ -28,52 +32,27 @@ const HomeLogo = () => {
 
     return (
         < div className="sponsor wrap-bg-small wrap-bg-dark" >
-            <div className="container">
+            <Container>
+                <Row>
+                    <Col>
+                        <div className="text-center">
+                            <span>PARTNER COMPANIES</span>
+                        </div>
+                    </Col>
+                </Row>
 
-                <div className="text-center">
-                    <span>PARTNER COMPANIES</span>
-                </div>
-
-                <div className=" carousel-slider sponsor-slider">
-
-                    <div className="item">
-                        <img src="/assets/images/content/students/1.svg" alt="Logo" />
-                    </div>
-
-                    <div className="item">
-                        <img src="/assets/images/content/students/2.svg" alt="Logo" />
-                    </div>
-
-                    <div className="item">
-                        <img src="/assets/images/content/students/3.svg" alt="Logo" />
-                    </div>
-
-                    <div className="item">
-                        <img src="/assets/images/content/students/4.svg" alt="Logo" />
-                    </div>
-
-                    <div className="item">
-                        <img src="/assets/images/content/students/5.svg" alt="Logo" />
-                    </div>
-
-                    <div className="item">
-                        <img src="/assets/images/content/students/6.svg" alt="Logo" />
-                    </div>
-
-                    <div className="item">
-                        <img src="/assets/images/content/students/4.svg" alt="Logo" />
-                    </div>
-
-                    <div className="item">
-                        <img src="/assets/images/content/students/5.svg" alt="Logo" />
-                    </div>
-
-                    <div className="item">
-                        <img src="/assets/images/content/students/6.svg" alt="Logo" />
-                    </div>
-
-                </div>
-            </div>
+                <Row>
+                    <Col>
+                        <CardDeck className="text-center">
+                            {logo && logo.map((item) => (
+                                <Card className="card-logo">
+                                    <CardImg className="card-img-logo" center width="100%" src={process.env.REACT_APP_API + "/uploads/logo/" + item.image} alt={item.title} />
+                                </Card>
+                            ))}
+                        </CardDeck>
+                    </Col>
+                </Row>
+            </Container>
         </div>
 
     );

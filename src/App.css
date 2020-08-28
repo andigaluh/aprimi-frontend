@@ -7,16 +7,16 @@
 }
 
 .text-carousel-centered {
- position: absolute;
- top: 50%;
- left: 20%;
- -webkit-transform: translate(-50%, -50%);
- transform: translate(-50%, -50%);
- color: white;
- font-size: 46px;
- -webkit-transition: all 300ms ease;
- transition: all 300ms ease;
- text-transform: uppercase;
+  position: absolute;
+  top: 50%;
+  left: 20%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 46px;
+  -webkit-transition: all 300ms ease;
+  transition: all 300ms ease;
+  text-transform: uppercase;
 }
 
 .img-logo {
@@ -90,4 +90,14 @@
 
 .box-comitee h5 {
   font-size: 12pt;
+}
+
+.card-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-img-logo {
+  padding: 10px 10px
 }
