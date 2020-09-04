@@ -1,10 +1,10 @@
 import React from "react"
-import {useParams} from 'react-router-dom'
-
+import { useParams } from 'react-router-dom'
+//http://202.159.121.198:8080/uploads/carousel/dscf1321-2000x1333.jpg
 const AboutTopic = (props) => {
     let { topicId } = useParams()
     window.scrollTo(0, 500)
-    return(
+    return (
         <div>
             {(topicId === 'committee') ? (
                 <div id="members" className="wrap-bg wrap-bg-dark">
@@ -23,8 +23,9 @@ const AboutTopic = (props) => {
                         <div className="row ">
                             <div className="col-sm-3">
                                 <article className="item">
-                                    <a href="http://aprimi.org/assets/theme/img/committee/250x250/adityo2_250.jpg" className="fancybox"
-                                        data-fancybox-group="images_gallery"><img src="http://aprimi.org/assets/theme/img/committee/250x250/adityo2_250.jpg" alt="Image 1" /></a>
+                                    <a href={process.env.REACT_APP_API + "/uploads/committee/adityo2_250.jpg"} className="fancybox" data-fancybox-group="images_gallery">
+                                        <img src={process.env.REACT_APP_API + "/uploads/committee/adityo2_250.jpg"} alt="Adityo Nugroho, GRP, CCP" />
+                                    </a>
                                     <div className="teacher-content">
                                         <div className="teacher-social">
                                             <i className="teacher-icon fa fa-share-alt social-first"></i>
@@ -48,8 +49,8 @@ const AboutTopic = (props) => {
                             </div>
                             <div className="col-sm-3">
                                 <article className="item">
-                                    <a href="http://aprimi.org/assets/theme/img/committee/250x250/aditia1_250.jpg" className="fancybox"
-                                        data-fancybox-group="images_gallery"><img src="http://aprimi.org/assets/theme/img/committee/250x250/aditia1_250.jpg" alt="Image 2" /></a>
+                                    <a href={process.env.REACT_APP_API + "/uploads/committee/aditia1_250.jpg"} className="fancybox"
+                                        data-fancybox-group="images_gallery"><img src={process.env.REACT_APP_API + "/uploads/committee/aditia1_250.jpg"} alt="M. Aditia Eka Putra, ST" /></a>
                                     <div className="teacher-content">
                                         <div className="teacher-social">
                                             <i className="teacher-icon fa fa-share-alt social-first"></i>
@@ -70,11 +71,11 @@ const AboutTopic = (props) => {
                                     <h5>M. Aditia Eka Putra, ST</h5>
                                     <span>V. Chairman & Operation</span>
                                 </article>
-                </div>
+                            </div>
                             <div className="col-sm-3">
                                 <article className="item">
-                                    <a href="http://aprimi.org/assets/theme/img/committee/250x250/sigit.jpg" className="fancybox"
-                                        data-fancybox-group="images_gallery"><img src="http://aprimi.org/assets/theme/img/committee/250x250/sigit.jpg" alt="Image 3" /></a>
+                                    <a href={process.env.REACT_APP_API + "/uploads/committee/sigit.jpg"} className="fancybox"
+                                        data-fancybox-group="images_gallery"><img src={process.env.REACT_APP_API + "/uploads/committee/sigit.jpg"} alt="Sigit N. Hadiawan, MBA, GRP, CCP, GPHR" /></a>
                                     <div className="teacher-content">
                                         <div className="teacher-social">
                                             <i className="teacher-icon fa fa-share-alt social-first"></i>
@@ -98,8 +99,8 @@ const AboutTopic = (props) => {
                             </div>
                             <div className="col-sm-3">
                                 <article className="item">
-                                <a href="http://aprimi.org/assets/theme/img/committee/250x250/03.jpg" className="fancybox"
-                                        data-fancybox-group="images_gallery"><img src="http://aprimi.org/assets/theme/img/committee/250x250/03.jpg" alt="Image 4" /></a>
+                                    <a href={process.env.REACT_APP_API + "/uploads/committee/03.jpg"} className="fancybox"
+                                        data-fancybox-group="images_gallery"><img src={process.env.REACT_APP_API + "/uploads/committee/03.jpg"} alt="N. Bayu Atmaji, GRP, CCP" /></a>
                                     <div className="teacher-content">
                                         <div className="teacher-social">
                                             <i className="teacher-icon fa fa-share-alt social-first"></i>
@@ -123,8 +124,8 @@ const AboutTopic = (props) => {
                             </div>
                             <div className="col-sm-3">
                                 <article className="item">
-                                    <a href="http://aprimi.org/assets/theme/img/committee/250x250/annalia3_250.jpg" className="fancybox"
-                                        data-fancybox-group="images_gallery"><img src="http://aprimi.org/assets/theme/img/committee/250x250/annalia3_250.jpg" alt="Image 1" /></a>
+                                    <a href={process.env.REACT_APP_API + "/uploads/committee/annalia3_250.jpg"} className="fancybox"
+                                        data-fancybox-group="images_gallery"><img src={process.env.REACT_APP_API + "/uploads/committee/annalia3_250.jpg"} alt="Annalia D. Budi, S.Sos, M.Psi" /></a>
                                     <div className="teacher-content">
                                         <div className="teacher-social">
                                             <i className="teacher-icon fa fa-share-alt social-first"></i>
@@ -148,8 +149,8 @@ const AboutTopic = (props) => {
                             </div>
                             <div className="col-sm-3">
                                 <article className="item">
-                                    <a href="http://aprimi.org/assets/theme/img/committee/250x250/angela_250.jpg" className="fancybox"
-                                        data-fancybox-group="images_gallery"><img src="http://aprimi.org/assets/theme/img/committee/250x250/angela_250.jpg" alt="Image 1" /></a>
+                                    <a href={process.env.REACT_APP_API + "/uploads/committee/angela_250.jpg"} className="fancybox"
+                                        data-fancybox-group="images_gallery"><img src={process.env.REACT_APP_API + "/uploads/committee/angela_250.jpg"} alt="Angela Lisje" /></a>
                                     <div className="teacher-content">
                                         <div className="teacher-social">
                                             <i className="teacher-icon fa fa-share-alt social-first"></i>
@@ -173,8 +174,8 @@ const AboutTopic = (props) => {
                             </div>
                             <div className="col-sm-3">
                                 <article className="item">
-                                    <a href="http://aprimi.org/assets/theme/img/committee/250x250/yoga2_250.jpg" className="fancybox"
-                                        data-fancybox-group="images_gallery"><img src="http://aprimi.org/assets/theme/img/committee/250x250/yoga2_250.jpg" alt="Image 1" /></a>
+                                    <a href={process.env.REACT_APP_API + "/uploads/committee/yoga2_250.jpg"} className="fancybox"
+                                        data-fancybox-group="images_gallery"><img src={process.env.REACT_APP_API + "/uploads/committee/yoga2_250.jpg"} alt="Alwin Yogaswara Gunawan, GRP, CCP" /></a>
                                     <div className="teacher-content">
                                         <div className="teacher-social">
                                             <i className="teacher-icon fa fa-share-alt social-first"></i>
@@ -198,8 +199,8 @@ const AboutTopic = (props) => {
                             </div>
                             <div className="col-sm-3">
                                 <article className="item">
-                                    <a href="http://aprimi.org/assets/theme/img/committee/250x250/suryantoro_250.jpg" className="fancybox"
-                                        data-fancybox-group="images_gallery"><img src="http://aprimi.org/assets/theme/img/committee/250x250/suryantoro_250.jpg" alt="Image 1" /></a>
+                                    <a href={process.env.REACT_APP_API + "/uploads/committee/suryantoro_250.jpg"} className="fancybox"
+                                        data-fancybox-group="images_gallery"><img src={process.env.REACT_APP_API + "/uploads/committee/suryantoro_250.jpg"} alt="Suryantoro" /></a>
                                     <div className="teacher-content">
                                         <div className="teacher-social">
                                             <i className="teacher-icon fa fa-share-alt social-first"></i>
@@ -225,8 +226,8 @@ const AboutTopic = (props) => {
 
                             <div className="col-sm-3">
                                 <article className="item">
-                                    <a href="http://aprimi.org/assets/theme/img/committee/250x250/andria2_250.jpg" className="fancybox"
-                                        data-fancybox-group="images_gallery"><img src="http://aprimi.org/assets/theme/img/committee/250x250/andria2_250.jpg" alt="Image 1" /></a>
+                                    <a href={process.env.REACT_APP_API + "/uploads/committee/andria2_250.jpg"} className="fancybox"
+                                        data-fancybox-group="images_gallery"><img src={process.env.REACT_APP_API + "/uploads/committee/andria2_250.jpg"} alt="Andria Rahmawati, SMB, Assoc. CIPD" /></a>
                                     <div className="teacher-content">
                                         <div className="teacher-social">
                                             <i className="teacher-icon fa fa-share-alt social-first"></i>
@@ -252,7 +253,7 @@ const AboutTopic = (props) => {
                             <div className="col-sm-3">
                                 <article className="item">
                                     <a href="/assets/images/content/team/1.jpg" className="fancybox"
-                                        data-fancybox-group="images_gallery"><img src="/assets/images/content/team/1.jpg" alt="Image 1" /></a>
+                                        data-fancybox-group="images_gallery"><img src="/assets/images/content/team/1.jpg" alt="Ratna Kusumaningtyas, ST, GRP" /></a>
                                     <div className="teacher-content">
                                         <div className="teacher-social">
                                             <i className="teacher-icon fa fa-share-alt social-first"></i>
@@ -278,8 +279,8 @@ const AboutTopic = (props) => {
 
                             <div className="col-sm-3">
                                 <article className="item">
-                                    <a href="http://aprimi.org/assets/theme/img/committee/250x250/angdi1_250.jpg" className="fancybox"
-                                        data-fancybox-group="images_gallery"><img src="http://aprimi.org/assets/theme/img/committee/250x250/angdi1_250.jpg" alt="Image 1" /></a>
+                                    <a href={process.env.REACT_APP_API + "/uploads/committee/angdi1_250.jpg"} className="fancybox"
+                                        data-fancybox-group="images_gallery"><img src={process.env.REACT_APP_API + "/uploads/committee/angdi1_250.jpg"} alt="Angdisatyara Ramadhana, SE" /></a>
                                     <div className="teacher-content">
                                         <div className="teacher-social">
                                             <i className="teacher-icon fa fa-share-alt social-first"></i>
@@ -305,8 +306,8 @@ const AboutTopic = (props) => {
 
                             <div className="col-sm-3">
                                 <article className="item">
-                                    <a href="http://aprimi.org/assets/theme/img/committee/250x250/dianfebrianti_250.jpg" className="fancybox"
-                                        data-fancybox-group="images_gallery"><img src="http://aprimi.org/assets/theme/img/committee/250x250/dianfebrianti_250.jpg" alt="Image 1" /></a>
+                                    <a href={process.env.REACT_APP_API + "/uploads/committee/dianfebrianti_250.jpg"} className="fancybox"
+                                        data-fancybox-group="images_gallery"><img src={process.env.REACT_APP_API + "/uploads/committee/dianfebrianti_250.jpg"} alt="Dian Febrianti, ST, GRP, CCP" /></a>
                                     <div className="teacher-content">
                                         <div className="teacher-social">
                                             <i className="teacher-icon fa fa-share-alt social-first"></i>
@@ -332,8 +333,8 @@ const AboutTopic = (props) => {
 
                             <div className="col-sm-3">
                                 <article className="item">
-                                    <a href="http://aprimi.org/assets/theme/img/committee/250x250/basaria2_250.jpg" className="fancybox"
-                                        data-fancybox-group="images_gallery"><img src="http://aprimi.org/assets/theme/img/committee/250x250/basaria2_250.jpg" alt="Image 1" /></a>
+                                    <a href={process.env.REACT_APP_API + "/uploads/committee/basaria2_250.jpg"} className="fancybox"
+                                        data-fancybox-group="images_gallery"><img src={process.env.REACT_APP_API + "/uploads/committee/basaria2_250.jpg"} alt="Basaria Pakpahan, M. Bus, GRP, HRMP" /></a>
                                     <div className="teacher-content">
                                         <div className="teacher-social">
                                             <i className="teacher-icon fa fa-share-alt social-first"></i>
@@ -358,8 +359,8 @@ const AboutTopic = (props) => {
 
                             <div className="col-sm-3">
                                 <article className="item">
-                                    <a href="http://aprimi.org/assets/theme/img/committee/250x250/ardhian1_250.jpg" className="fancybox"
-                                        data-fancybox-group="images_gallery"><img src="http://aprimi.org/assets/theme/img/committee/250x250/ardhian1_250.jpg" alt="Image 1" /></a>
+                                    <a href={process.env.REACT_APP_API + "/uploads/committee/ardhian1_250.jpg"} className="fancybox"
+                                        data-fancybox-group="images_gallery"><img src={process.env.REACT_APP_API + "/uploads/committee/ardhian1_250.jpg"} alt="Ardhian Pratama, SE, CHRP, GRP, CCP" /></a>
                                     <div className="teacher-content">
                                         <div className="teacher-social">
                                             <i className="teacher-icon fa fa-share-alt social-first"></i>
@@ -384,8 +385,8 @@ const AboutTopic = (props) => {
 
                             <div className="col-sm-3">
                                 <article className="item">
-                                    <a href="http://aprimi.org/assets/theme/img/committee/250x250/aprabowo2_250.jpg" className="fancybox"
-                                        data-fancybox-group="images_gallery"><img src="http://aprimi.org/assets/theme/img/committee/250x250/aprabowo2_250.jpg" alt="Image 1" /></a>
+                                    <a href={process.env.REACT_APP_API + "/uploads/committee/aprabowo2_250.jpg"} className="fancybox"
+                                        data-fancybox-group="images_gallery"><img src={process.env.REACT_APP_API + "/uploads/committee/aprabowo2_250.jpg"} alt="Agus Prabowo, ST, MM" /></a>
                                     <div className="teacher-content">
                                         <div className="teacher-social">
                                             <i className="teacher-icon fa fa-share-alt social-first"></i>
@@ -407,22 +408,22 @@ const AboutTopic = (props) => {
                                     <span>IT & Communication</span>
                                 </article>
                             </div>
-                        
-                        
+
+
                         </div>
                     </div>
                 </div>
             ) : (
-                <div>
-                    <div className="about-title">
-                        <h4>{props.title}</h4>
-                    </div >
-                    <div className="about-content">
-                        <p dangerouslySetInnerHTML={{ __html: props.content }}></p>
+                    <div>
+                        <div className="about-title">
+                            <h4>{props.title}</h4>
+                        </div >
+                        <div className="about-content">
+                            <p dangerouslySetInnerHTML={{ __html: props.content }}></p>
+                        </div>
                     </div>
-                </div>
-            )}
-            
+                )}
+
         </div >
     )
 }
