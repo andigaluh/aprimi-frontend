@@ -183,8 +183,9 @@ const Membership = () => {
                 <Form onSubmit={handleRegister} ref={form}>
                   {!successful && (
                     <div>
-                      <h4>Please fill in</h4>
+                      <h4>Membership Registration Form</h4>
                       <hr />
+                      <p>Please fill in form below and submit it. after submit please download the pdf file, signed it and you can upload it on this link</p>
                       <FormGroup>
                         <Label for="name">Company Name</Label>
                         <Input

@@ -6,7 +6,7 @@ function LoginHeader(props) {
         <div className="container">
           <div className="row">
             <div className="lernen_banner_title">
-              <h1>Login</h1>
+              <h1>User Login</h1>
             </div>
           </div>
         </div>

@@ -1229,7 +1229,7 @@ select:focus {
     transition: .3s;
     background:#fff;
     position:absolute;
-    max-width: 1200px;
+    /* max-width: 1200px; */
     left: 0;
     right: 0;
     margin: 0px auto;

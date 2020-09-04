@@ -6,7 +6,7 @@ const RegisterHeader = (props) => {
         <div className="container">
           <div className="row">
             <div className="lernen_banner_title">
-              <h1>Registration</h1>
+              <h1>User Registration</h1>
             </div>
           </div>
         </div>
