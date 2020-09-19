@@ -121,6 +121,7 @@ const AdminMembership = () => {
                           <th>Contact Person</th>
                           <th>Email</th>
                           <th>Active</th>
+                          <th>Date confirmation</th>
                           <th>Action</th>
                         </tr>
                       </thead>
@@ -134,6 +135,7 @@ const AdminMembership = () => {
                               <td>{perusahaan.contact_person_name}</td>
                               <td>{perusahaan.contact_person_email}</td>
                               <td>{perusahaan.is_active ? `Active` : `NotActive`}</td>
+                              <td>{perusahaan.confirmation_date}</td>
                               <td>
                                 <Link
                                   to={"/admin/membership/" + perusahaan.id}

@@ -20,6 +20,7 @@ import TrainingRegistration from "./components/Public/TrainingCertification/Trai
 import ActivationUser from "./components/Public/Login/ActivationUser";
 import ForgetPassword from "./components/Public/Login/ForgetPassword";
 import ResetPassword from "./components/Public/Login/ResetPassword";
+import MembershipConfirmation from "./components/Public/Membership/MembershipConfirmation";
 
 const App = () => {
     const [userLogin, setUserLogin] = useState({})
@@ -51,6 +52,7 @@ const App = () => {
                 <Route path="/mod" component={BoardModerator} />
                 <Route path="/admin" component={BoardAdmin} />
                 <Route path="/membership" component={Membership} />
+                <Route path="/membership-confirmation" component={MembershipConfirmation} />
                 <Route path="/activation-user" component={ActivationUser} />
                 <Route path="/forget-password" component={ForgetPassword} />
                 <Route path="/reset-password/:id" component={ResetPassword} />

@@ -27,7 +27,7 @@ const HomeServices = () => {
                 <div className="bar"></div>
                 <p>
                   We can help you create positive and permanent changes in your
-                  life. Let’s Create Something new and awesome Togeather.
+                  life. Let’s create something new and awesome together.
                 </p>
               </div>
             </div>

@@ -11,6 +11,7 @@ const FooterAboutUs = () => {
                 <ul>
                     <li><Link to={"/about"}>About us</Link></li>
                     <li><Link to={"/about/committee"}>Committee</Link></li>
+                    <li><Link to={"/membership-confirmation"}>Membership Confirmation</Link></li>
                 </ul>
             </div>
         </div>

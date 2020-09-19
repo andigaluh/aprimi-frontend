@@ -74,6 +74,10 @@
 
 /* 1.1. ========================= Page Styles ========================= */
 
+.color-blue {
+    color: blue !important;
+    text-decoration:underline !important;
+}
 html {
 font-family: 'Quicksand', sans-serif;
     -webkit-text-size-adjust: 100%;

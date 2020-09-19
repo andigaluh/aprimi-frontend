@@ -26,7 +26,7 @@ const HomeEvent = () => {
           <div className="row justify-content-center text-center">
             <div className="col-lg-8">
               <div className="section-title with-p">
-                <h2>See what’s happing in our Event</h2>
+                <h2>See what’s happening in our Event</h2>
                 <div className="bar"></div>
                 <p>
                   Check out our latest Event. We have articles on a range of

@@ -42,6 +42,19 @@ const remove = (id) => {
   });
 };
 
+const findMembership = (id) => {
+  return http.get(`/membership/findMembership/${id}`);
+};
+
+const upload = (id, file, onUploadProgress) => {
+  let formData = new FormData();
+
+  formData.append("file", file);
+  formData.append("id", id);
+
+  return http.post("/membership/upload", formData);
+};
+
 export default {
   getAll,
   findByName,
@@ -49,5 +62,7 @@ export default {
   get,
   update,
   remove,
-  getAllForPublic
+  getAllForPublic,
+  findMembership,
+  upload
 };
