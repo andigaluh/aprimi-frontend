@@ -3,6 +3,7 @@ import MembershipHeader from './MembershipHeader'
 import { Container, Row, Col, FormGroup, Label, Alert } from "reactstrap"
 import './MembershipConfirmation.css'
 import CompanyServices from '../../../services/CompanyServices'
+import { Link } from 'react-router-dom'
 
 function MembershipConfirmation(props) {
     const InitialMembershipConfirmation = {
@@ -17,6 +18,7 @@ function MembershipConfirmation(props) {
     const [messageColor, setMessageColor] = useState("danger");
     const [isLoading, setIsLoading] = useState(false)
     const [isUpload, setIsUpload] = useState(false);
+    const [companyName, setCompanyName] = useState("");
 
     const handleInputChange = (event) => {
         const { name, value, files } = event.target;
@@ -67,9 +69,11 @@ function MembershipConfirmation(props) {
                 if(!responseData) {
                     setMessage(`ID Registration not found, please try again`)
                     setMessageColor("danger");
+                    
                 } else {
                     setMessage("")
                     setIsUpload(true)
+                    setCompanyName(responseData.name);
                 }
                 
             },
@@ -78,6 +82,12 @@ function MembershipConfirmation(props) {
             }
         )
         
+    }
+
+    const batal = () => {
+        setMessage("");
+        setIsUpload(false);
+        setcurrentMembershipConfirmation(InitialMembershipConfirmation);
     }
 
     return (
@@ -141,6 +151,17 @@ function MembershipConfirmation(props) {
                             {isUpload && (
                                 <div>
                                     <FormGroup>
+                                        <Label for="company_name">Company Name</Label>
+                                        <input 
+                                            type="text"
+                                            name="name"
+                                            id="name"
+                                            value={companyName}
+                                            disabled="true"
+                                            className="form-control"
+                                        />
+                                    </FormGroup>
+                                    <FormGroup>
                                         <label className="btn-custom btn-default">
                                             <input type="file" onChange={handleInputChange} name="name" id="name" />
                                         </label>
@@ -148,7 +169,7 @@ function MembershipConfirmation(props) {
 
                                     <FormGroup className="formgroup__button">
                                         <button
-                                            className="btn-custom btn-success"
+                                            className="btn-custom btn-success mr-2"
                                             disabled={!selectedFiles}
                                             onClick={upload}
                                         >
@@ -158,6 +179,10 @@ function MembershipConfirmation(props) {
                                                     <span>Upload</span>
                                                 )}
                                         </button>
+                                        
+                                        <button className="btn-custom btn-danger mr-2" onClick={batal}>
+                                            Cancel
+                                        </button>   
                                     </FormGroup>
                                 </div>
                             )}
