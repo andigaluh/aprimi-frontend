@@ -58,7 +58,9 @@ const Register = (props) => {
   const [password, setPassword] = useState("");
   const [successful, setSuccessful] = useState(false);
   const [message, setMessage] = useState("");
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
+  const [title, setTitle] = useState("");
+  const [phone, setPhone] = useState("");
 
   const onChangeUsername = (e) => {
     const username = e.target.value;
@@ -73,6 +75,16 @@ const Register = (props) => {
   const onChangePassword = (e) => {
     const password = e.target.value;
     setPassword(password);
+  };
+
+  const onChangeTitle = (e) => {
+    const title = e.target.value;
+    setTitle(title);
+  };
+
+  const onChangePhone = (e) => {
+    const phone = e.target.value;
+    setPhone(phone);
   };
 
   const handleRegister = (e) => {
@@ -90,6 +102,8 @@ const Register = (props) => {
         company_id: 1,
         name: username,
         email: email,
+        title: title,
+        phone: phone,
         password: password,
         roles: ["user"]
       }
@@ -146,7 +160,7 @@ const Register = (props) => {
                     <h4>Please fill in</h4>
                     <hr />
                     <FormGroup>
-                      <Label for="username">Username</Label>
+                      <Label for="username">Name</Label>
                       <Input
                         type="text"
                         className="form-control"
@@ -154,6 +168,18 @@ const Register = (props) => {
                         value={username}
                         onChange={onChangeUsername}
                         validations={[required, vusername]}
+                      />
+                    </FormGroup>
+
+                    <FormGroup>
+                      <Label for="title">Title / Position</Label>
+                      <Input
+                        type="text"
+                        className="form-control"
+                        name="title"
+                        value={title}
+                        onChange={onChangeTitle}
+                        validations={[required]}
                       />
                     </FormGroup>
 
@@ -166,6 +192,18 @@ const Register = (props) => {
                         value={email}
                         onChange={onChangeEmail}
                         validations={[required, validEmail]}
+                      />
+                    </FormGroup>
+
+                    <FormGroup>
+                      <Label for="phone">Mobile / Phone</Label>
+                      <Input
+                        type="text"
+                        className="form-control"
+                        name="phone"
+                        value={phone}
+                        onChange={onChangePhone}
+                        validations={[required]}
                       />
                     </FormGroup>
 

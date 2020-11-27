@@ -54,7 +54,9 @@ const EditProfile = () => {
     const [currentCompany, setCurrentCompany] = useState([]);
     const [userId, setUserId] = useState(userLogin.id);
     const [username, setUsername] = useState("");
+    const [title, setTitle] = useState("");
     const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
     const [companyId, setCompanyId] = useState(1);
     const [successful, setSuccessful] = useState(false);
     const [message, setMessage] = useState("");
@@ -70,7 +72,9 @@ const EditProfile = () => {
       UserService.getByMe().then(
         (response) => {
           setUsername(response.data.name)
+          setTitle(response.data.title)
           setEmail(response.data.email)
+          setPhone(response.data.phone)
           setCompanyId(response.data.company_id);
           setUserId(response.data.id)
         },
@@ -113,9 +117,19 @@ const EditProfile = () => {
       setUsername(username);
     };
 
+    const onChangeTitle = (e) => {
+      const title = e.target.value;
+      setTitle(title);
+    };
+
     const onChangeEmail = (e) => {
       const email = e.target.value;
       setEmail(email);
+    };
+
+    const onChangePhone = (e) => {
+      const phone = e.target.value;
+      setPhone(phone);
     };
 
     const onChangeCompanyId = (e) => {
@@ -137,7 +151,9 @@ const EditProfile = () => {
         
         var data = {
           name: username,
+          title,
           email,
+          phone,
           company_id: companyId,
         };
 
@@ -147,13 +163,17 @@ const EditProfile = () => {
               setMessage(response.data.message);
               setSuccessful(true);
               setUsername(username)
+              setTitle(title)
+              setPhone(phone)
               setEmail(email)
               setCompanyId(companyId);
-              setUserLogin({name: username, email: email, id: userId, roles: roles, accessToken: accessToken})
+              setUserLogin({name: username, email: email, id: userId, roles: roles, accessToken: accessToken, title: title, phone: phone})
               localStorage.setItem("user", JSON.stringify({
                 id: userId,
                 name: username,
                 email: email,
+                title: title,
+                phone: phone,
                 roles: roles,
                 accessToken: accessToken
               }));
@@ -194,28 +214,6 @@ const EditProfile = () => {
             <ValidForm onSubmit={handleUpdate} ref={form}>
               {!successful && (
                 <div>
-                  <FormGroup>
-                    <Label for="username">Name</Label>
-                    <ValidInput
-                      type="text"
-                      name="username"
-                      value={username}
-                      className="form-control"
-                      onChange={onChangeUsername}
-                      validations={[required, vusername]}
-                    />
-                  </FormGroup>
-                  <FormGroup>
-                    <Label for="email">Email</Label>
-                    <ValidInput
-                      type="text"
-                      name="email"
-                      value={email}
-                      className="form-control"
-                      onChange={onChangeEmail}
-                      validations={[required, validEmail]}
-                    />
-                  </FormGroup>
 
                   <FormGroup>
                     <Label for="company_id">Company</Label>
@@ -235,6 +233,55 @@ const EditProfile = () => {
                       )}
                     </ValidSelect>
                   </FormGroup>
+                  <FormGroup>
+                    <Label for="username">Name</Label>
+                    <ValidInput
+                      type="text"
+                      name="username"
+                      value={username}
+                      className="form-control"
+                      onChange={onChangeUsername}
+                      validations={[required, vusername]}
+                    />
+                  </FormGroup>
+
+                  <FormGroup>
+                    <Label for="title">Title/Position</Label>
+                    <ValidInput
+                      type="text"
+                      name="title"
+                      value={title}
+                      className="form-control"
+                      onChange={onChangeTitle}
+                      validations={[required]}
+                    />
+                  </FormGroup>
+
+                  <FormGroup>
+                    <Label for="email">Email</Label>
+                    <ValidInput
+                      type="text"
+                      name="email"
+                      value={email}
+                      className="form-control"
+                      onChange={onChangeEmail}
+                      validations={[required, validEmail]}
+                    />
+                  </FormGroup>
+
+                  <FormGroup>
+                    <Label for="phone">Mobile/Phone</Label>
+                    <ValidInput
+                      type="text"
+                      name="phone"
+                      value={phone}
+                      className="form-control"
+                      onChange={onChangePhone}
+                      validations={[required]}
+                    />
+                  </FormGroup>
+
+                  
 
                   <FormGroup className="text-right">
                     <button className="color-two button">Update</button>

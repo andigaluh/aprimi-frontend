@@ -52,10 +52,17 @@ const TrainingCertificationItem = (props) => {
                             <p>{props.headline}</p>
                         </div>
                         <div className="btn-section">
-                            {currentAuth.id && (
+                            {/* {currentAuth.id && (
                                 <Link to={"/trainingcertification/registration/" + props.id + "/" + props.title.split(/[&\\#,+()$~%.'":*?<>{}\s]/g).join('-').toLowerCase()} className="button-light">
                                     <i className="fas fa-arrow-right"></i>Book Ticket
                                 </Link>
+                            )} */}
+                            {(currentAuth.id) ? (
+                                <Link to={"/trainingcertification/meeting/" + props.id + "/" + props.title.split(/[&\\#,+()$~%.'":*?<>{}\s]/g).join('-').toLowerCase()} className="button-light">
+                                    <i className="fas fa-arrow-right"></i>Book Ticket
+                                </Link>
+                            ) : (
+                                <Link to={"/login"} className="button-light"><i className="fas fa-arrow-right"></i>Login to register</Link>
                             )}
                                 
                         </div>

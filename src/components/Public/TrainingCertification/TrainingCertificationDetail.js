@@ -6,6 +6,7 @@ import {
 import EventService from "../../../services/EventServices"
 import AuthService from "../../../services/auth.service"
 import ItemRegistration from "./TrainingCertificationRegistration"
+import ItemMeeting from "./TrainingCertificationMeeting"
 import TrainingCertificationDetailItem from "./TrainingCertificationDetailItem";
 import TrainingCertificationBanner from "./TrainingCertificationBanner";
 import { Link } from "react-router-dom" 
@@ -56,15 +57,28 @@ const TrainingCertificationDetail = () => {
                                 />
 
                             ) : (
-                                    <TrainingCertificationDetailItem
-                                        headline={itemDetail.headline}
-                                        createdUser={createdUser.name}
-                                        date_event={itemDetail.date_event}
-                                        location={itemDetail.location}
-                                        content={itemDetail.content}
-                                        id={itemDetail.id}
-                                        currentAuthId={currentAuth.id}
-                                    />
+                                    ((eventType === "meeting") && (currentAuth.id)) ? (
+                                        <ItemMeeting
+                                            headline={itemDetail.headline}
+                                            createdUser={createdUser.name}
+                                            date_event={itemDetail.date_event}
+                                            location={itemDetail.location}
+                                            id={itemDetail.id}
+                                        />
+                                    ) : (
+                                        <TrainingCertificationDetailItem
+                                            headline={itemDetail.headline}
+                                            createdUser={createdUser.name}
+                                            date_event={itemDetail.date_event}
+                                            location={itemDetail.location}
+                                            content={itemDetail.content}
+                                            id={itemDetail.id}
+                                            event_category_id={itemDetail.event_category_id}
+                                            currentAuthId={currentAuth.id}
+                                        />
+                                    )
+
+                                    
                                 )}
 
                         </div>
@@ -73,7 +87,7 @@ const TrainingCertificationDetail = () => {
                                 <div class="services_image services_bg3 hoverblack">
                                     <div class="opac">
                                         <h3>Coaching Courses</h3>
-                                        <p>Open a beautiful store & increase your conversion rates. Deploy a conversion rate optimization.</p>
+                                    <p>Open a beautiful store & increase your conversion rates. Deploy a conversion rate optimization.</p>
                                         <Link to={"/contact"} className="color-one btn-custom">
                                             Get in Touch <i class="fas fa-arrow-right"></i>
                                         </Link>

@@ -28,12 +28,23 @@ const TrainingCertificationDetailItem = (props) => {
                 </div>
             </div>
             <div dangerouslySetInnerHTML={{ __html: props.content }}></div>
-            {(props.currentAuthId) && (
+            {(props.currentAuthId) ? (
                 <div className="text-right">
-                    <Link to={`/trainingcertification/registration/${eventId}/${eventTitle}`}>
+                    {(props.event_category_id === 3) ? (
+                        <Link to={`/trainingcertification/meeting/${eventId}/${eventTitle}`}>
                         <button className="color-two button">Book Ticket</button>
                     </Link>
+                    ) : (
+                        <Link to={`/trainingcertification/registration/${eventId}/${eventTitle}`}>
+                        <button className="color-two button">Book Ticket</button>
+                    </Link>
+                    )}
+                    
                 </div>
+            ) : (
+                <Link to={`/login`}>
+                        <button className="color-two button">Login to register</button>
+                </Link>
             )}
         </div>
     );
