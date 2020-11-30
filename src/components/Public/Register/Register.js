@@ -7,7 +7,8 @@ import { isEmail } from "validator";
 import AuthService from "../../../services/auth.service";
 import RegisterHeader from "./RegisterHeader";
 import { Container, Row, Col, FormGroup, Label } from 'reactstrap'
-import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom';
+import queryString from 'query-string';
 
 const required = (value) => {
   if (!value) {
@@ -50,6 +51,7 @@ const vpassword = (value) => {
 };
 
 const Register = (props) => {
+  let params = queryString.parse(props.location.search)
   const form = useRef();
   const checkBtn = useRef();
 
@@ -61,6 +63,10 @@ const Register = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [title, setTitle] = useState("");
   const [phone, setPhone] = useState("");
+  const [ref, setRef] = useState(params.ref);
+  console.log(ref);
+  
+  let status = 0;
 
   const onChangeUsername = (e) => {
     const username = e.target.value;
@@ -97,7 +103,10 @@ const Register = (props) => {
     form.current.validateAll();
 
     if (checkBtn.current.context._errors.length === 0) {
-      console.log("process")
+      if (ref) {
+        status = 1;
+      }
+
       var data = {
         company_id: 1,
         name: username,
@@ -105,13 +114,20 @@ const Register = (props) => {
         title: title,
         phone: phone,
         password: password,
-        roles: ["user"]
+        roles: ["user"],
+        status: status
       }
       AuthService.register(data).then(
         (response) => {
-          setMessage(response.data.message);
-          setSuccessful(true);
-          setIsLoading(false);
+          if (ref) {
+            props.history.push("/login?ref=" + ref + "&reg=1")
+          } else {
+            setMessage(response.data.message);
+            setSuccessful(true);
+            setIsLoading(false);
+          }
+
+          
         },
         (error) => {
           const resMessage =

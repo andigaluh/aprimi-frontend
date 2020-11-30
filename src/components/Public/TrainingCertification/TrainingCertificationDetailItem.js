@@ -42,9 +42,10 @@ const TrainingCertificationDetailItem = (props) => {
                     
                 </div>
             ) : (
-                <Link to={`/login`}>
+                <Link to={`/login?ref=trainingcertification/meeting/${eventId}/${eventTitle}`}>
                         <button className="color-two button">Login to register</button>
                 </Link>
+
             )}
         </div>
     );

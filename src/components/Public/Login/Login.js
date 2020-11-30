@@ -5,7 +5,8 @@ import CheckButton from "react-validation/build/button";
 import AuthService from "../../../services/auth.service";
 import LoginHeader from "./LoginHeader";
 import { Container, Row, Col, FormGroup, Label } from "reactstrap"
-import {Link} from "react-router-dom"
+import {Link} from "react-router-dom";
+import queryString from 'query-string';
 
 const required = (value) => {
   if (!value) {
@@ -18,6 +19,7 @@ const required = (value) => {
 };
 
 const Login = (props) => {
+  let params = queryString.parse(props.location.search)
   const form = useRef();
   const checkBtn = useRef();
 
@@ -25,6 +27,8 @@ const Login = (props) => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [ref, setRef] = useState(params.ref);
+  const [reg, setReg] = useState(params.reg);
   
 
   const onChangeUsername = (e) => {
@@ -49,9 +53,14 @@ const Login = (props) => {
       AuthService.login(email, password).then(
         () => {
           setTimeout(() => {
-            props.history.push("/user");
+            if (!params.ref) {
+              props.history.push("/user");
+            } else {
+              props.history.push(params.ref)
+            }
+            
             window.location.reload();
-          }, 1500);
+          }, 500);
           
         },
         (error) => {
@@ -86,6 +95,15 @@ const Login = (props) => {
                 <div className="alert alert-danger" role="alert">
                   {message}
                 </div>
+              )}
+              {(ref) && (reg) && (
+                
+                  <div className="alert alert-success" role="alert">
+                    <p>
+                      Your registration successfully submitted.<br/> 
+                      Please Login. 
+                    </p>
+                </div>               
               )}
 
               <Form
@@ -131,13 +149,25 @@ const Login = (props) => {
                 <FormGroup className="text-center">
                   <p>
                     Did not have an account ?{" "}
-                    <Link to={"/register"} className="text-info">
-                      REGISTER HERE
-                    </Link>
+                    {(!ref) ? (
+                      <Link to={"/register"} className="text-info">
+                        REGISTER HERE
+                      </Link>
+                    ) : (
+                      <Link to={"/register?ref=" + ref} className="text-info">
+                        REGISTER HERE
+                      </Link>
+                    )}
+                    
                   </p>
                   <p>
                     Forget Password ? {" "}
-                    <Link to={"/forget-password"} className="text-info">CLICK HERE</Link>
+                    {(!ref) ? (
+                      <Link to={"/forget-password"} className="text-info">CLICK HERE</Link>
+                    ) : (
+                      <Link to={"/forget-password?" + ref} className="text-info">CLICK HERE</Link>
+                    )}
+                    
                   </p>
                 </FormGroup>
                 <CheckButton style={{ display: "none" }} ref={checkBtn} />
