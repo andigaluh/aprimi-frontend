@@ -12,7 +12,7 @@ const TrainingCertificationDetailItem = (props) => {
         <div className="blog-content">
             <div className="section-title">
                 <div>
-                    <h3>{props.headline}</h3>
+                    <h3><div dangerouslySetInnerHTML={{ __html: props.headline }}></div></h3>
                 </div>
                 <div className="course-viewer">
                     <ul>
@@ -29,7 +29,7 @@ const TrainingCertificationDetailItem = (props) => {
             </div>
             <div dangerouslySetInnerHTML={{ __html: props.content }}></div>
             {(props.currentAuthId) ? (
-                <div className="text-right">
+                <div className="text-center">
                     {(props.event_category_id === 3) ? (
                         <Link to={`/trainingcertification/meeting/${eventId}/${eventTitle}`}>
                         <button className="color-two button">Book Ticket</button>

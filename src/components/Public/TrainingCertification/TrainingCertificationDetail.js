@@ -45,7 +45,7 @@ const TrainingCertificationDetail = () => {
             <div id="blog-detail" className="wrap-bg wrap-bg ">
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-12 col-lg-8">
+                        <div className="col-md-12 col-lg-12">
                             {((eventType === "registration") && (currentAuth.id)) ? (
 
                                 <ItemRegistration
@@ -82,19 +82,19 @@ const TrainingCertificationDetail = () => {
                                 )}
 
                         </div>
-                        <div class="col-md-12 col-lg-4">
+                        {/* <div class="col-md-12 col-lg-4">
                             <div class="relative sidebar-services mt-25">
                                 <div class="services_image services_bg3 hoverblack">
                                     <div class="opac">
                                         <h3>Coaching Courses</h3>
-                                    <p>Open a beautiful store & increase your conversion rates. Deploy a conversion rate optimization.</p>
+                                        <p>Open a beautiful store & increase your conversion rates. Deploy a conversion rate optimization.</p>
                                         <Link to={"/contact"} className="color-one btn-custom">
                                             Get in Touch <i class="fas fa-arrow-right"></i>
                                         </Link>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

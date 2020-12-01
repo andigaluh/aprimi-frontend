@@ -49,7 +49,7 @@ const TrainingCertificationItem = (props) => {
                             <li><i className="fas fa-calendar-alt"></i> {moment(props.date_event).format("D MMM, YYYY")}</li>
                             <li><i className="fas fa-search-location"></i> {props.location}</li>
                             </ul>
-                            <p>{props.headline}</p>
+                            <p><div dangerouslySetInnerHTML={{ __html: props.headline }}></div></p>
                         </div>
                         <div className="btn-section">
                             {/* {currentAuth.id && (

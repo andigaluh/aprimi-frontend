@@ -152,7 +152,7 @@ const TrainingCertificationMeeting = (props) => {
         <div className="blog-content" id="top-container">
                 <div className="section-title">
                     <div>
-                        <h3>{props.headline}</h3>
+                        <h3><div dangerouslySetInnerHTML={{ __html: props.headline }}></div></h3>
                     </div>
                     <div className="course-viewer">
                         <ul>
