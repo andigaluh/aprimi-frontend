@@ -51,7 +51,7 @@ const ArticleDetail = () => {
       <div id="blog-detail" className="wrap-bg">
         <div className="container">
           <div className="row">
-            <div className="col-md-12 col-lg-8">
+            <div className="col-md-12 col-lg-12">
               <div className="blog-content">
                 <div className="section-title">
                   <div>
@@ -78,7 +78,7 @@ const ArticleDetail = () => {
                 ></div>
               </div>
             </div>
-            <div className="col-md-12 col-lg-4">
+            {/* <div className="col-md-12 col-lg-4">
               <div class="relative sidebar-services mt-25">
                 <div class="services_image services_bg3 hoverblack">
                   <div class="opac">
@@ -123,7 +123,6 @@ const ArticleDetail = () => {
                   </li>
                 </ul>
               </div>
-
               <div class="detail-widgets widget-tag">
                 <h4 class="title">Tags Cloud</h4>
                 <ul>
@@ -150,7 +149,7 @@ const ArticleDetail = () => {
                   </li>
                 </ul>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
