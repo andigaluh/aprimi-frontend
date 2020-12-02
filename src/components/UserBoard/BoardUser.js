@@ -15,6 +15,7 @@ import AddArticleByUser from "./Article/AddArticleByUser";
 import EditArticleByUser from "./Article/EditArticleByUser";
 import Media from "./Media/Media"
 import Calendar from "./Agenda/Calendar";
+import TimelineCalendar from "./Agenda/TimelineCalendar";
 
 const BoardUser = (props) => {
   const { userLogin } = useContext(UserContext)
@@ -55,7 +56,9 @@ const BoardUser = (props) => {
                     <Route path={"/user/TrainingCertificationHistory"} component={TrainingCertificationHistory} />
                     <Route path={"/user/TrainingCertificationConfirm/:id/:title"} component={TrainingCertficationConfirm} />
                     <Route path={"/user/contact"} component={Contact} />
-                    <Route path={"/user/agenda"} component={Calendar} />
+                    {/* <Route path={"/user/agenda"} component={Calendar} /> */}
+                    {/* <Route path={"/user/agenda"} component={Agenda} /> */}
+                    <Route path={"/user/agenda"} component={TimelineCalendar} />
                     {isKomite && (
                       <div>
                         <Route path={"/user/article"} component={ArticleByUser} />
