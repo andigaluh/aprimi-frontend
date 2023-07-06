@@ -28,6 +28,49 @@ const AboutTopic = (props) => {
                     <a
                       href={
                         process.env.REACT_APP_API +
+                        "/uploads/committee/suryantoro_250.jpg"
+                      }
+                      className="fancybox"
+                      data-fancybox-group="images_gallery"
+                    >
+                      <img
+                        src={
+                          process.env.REACT_APP_API +
+                          "/uploads/committee/suryantoro_250.jpg"
+                        }
+                        alt="Suryantoro"
+                      />
+                    </a>
+                    <div className="teacher-content">
+                      <div className="teacher-social">
+                        <i className="teacher-icon fa fa-share-alt social-first"></i>
+                        <a href="#" className="teacher-icon social-link">
+                          <i className="fab fa-facebook"></i>
+                        </a>
+                        <a href="#" className="teacher-icon social-link">
+                          <i className="fab fa-twitter" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" className="teacher-icon social-link">
+                          <i className="fab fa-linkedin" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" className="teacher-icon social-link">
+                          <i
+                            className="fab fa-instagram"
+                            aria-hidden="true"
+                          ></i>
+                        </a>
+                      </div>
+                    </div>
+                    <h5>Suryantoro</h5>
+                    <span>Chartered MCIPD</span>
+                  </article>
+                </div>
+
+                <div className="col-sm-3">
+                  <article className="item">
+                    <a
+                      href={
+                        process.env.REACT_APP_API +
                         "/uploads/committee/yoga2_250.jpg"
                       }
                       className="fancybox"
@@ -65,7 +108,8 @@ const AboutTopic = (props) => {
                     <span>Vice Chairman & Operations</span>
                   </article>
                 </div>
-                <div className="col-sm-3">
+
+                {/* <div className="col-sm-3">
                   <article className="item">
                     <a
                       href={
@@ -107,6 +151,7 @@ const AboutTopic = (props) => {
                     <span>External Relations</span>
                   </article>
                 </div>
+                
                 <div className="col-sm-3">
                   <article className="item">
                     <a
@@ -148,7 +193,8 @@ const AboutTopic = (props) => {
                     <h5>M. Aditia Eka Putra, ST</h5>
                     <span>External RelationsS</span>
                   </article>
-                </div>
+                </div> */}
+
                 <div className="col-sm-3">
                   <article className="item">
                     <a
@@ -191,6 +237,7 @@ const AboutTopic = (props) => {
                     <span>Advisory</span>
                   </article>
                 </div>
+                
                 {/* <div className="col-sm-3">
                                 <article className="item">
                                     <a href={process.env.REACT_APP_API + "/uploads/committee/03.jpg"} className="fancybox"
@@ -369,91 +416,6 @@ const AboutTopic = (props) => {
                     <span>Vice Chairman & Operations</span>
                   </article>
                 </div> */}
-                <div className="col-sm-3">
-                  <article className="item">
-                    <a
-                      href={
-                        process.env.REACT_APP_API +
-                        "/uploads/committee/suryantoro_250.jpg"
-                      }
-                      className="fancybox"
-                      data-fancybox-group="images_gallery"
-                    >
-                      <img
-                        src={
-                          process.env.REACT_APP_API +
-                          "/uploads/committee/suryantoro_250.jpg"
-                        }
-                        alt="Suryantoro"
-                      />
-                    </a>
-                    <div className="teacher-content">
-                      <div className="teacher-social">
-                        <i className="teacher-icon fa fa-share-alt social-first"></i>
-                        <a href="#" className="teacher-icon social-link">
-                          <i className="fab fa-facebook"></i>
-                        </a>
-                        <a href="#" className="teacher-icon social-link">
-                          <i className="fab fa-twitter" aria-hidden="true"></i>
-                        </a>
-                        <a href="#" className="teacher-icon social-link">
-                          <i className="fab fa-linkedin" aria-hidden="true"></i>
-                        </a>
-                        <a href="#" className="teacher-icon social-link">
-                          <i
-                            className="fab fa-instagram"
-                            aria-hidden="true"
-                          ></i>
-                        </a>
-                      </div>
-                    </div>
-                    <h5>Suryantoro</h5>
-                    <span>Chartered MCIPD</span>
-                  </article>
-                </div>
-
-                <div className="col-sm-3">
-                  <article className="item">
-                    <a
-                      href={
-                        process.env.REACT_APP_API +
-                        "/uploads/committee/andria2_250.jpg"
-                      }
-                      className="fancybox"
-                      data-fancybox-group="images_gallery"
-                    >
-                      <img
-                        src={
-                          process.env.REACT_APP_API +
-                          "/uploads/committee/andria2_250.jpg"
-                        }
-                        alt="Andria Rahmawati, SMB, Assoc. CIPD"
-                      />
-                    </a>
-                    <div className="teacher-content">
-                      <div className="teacher-social">
-                        <i className="teacher-icon fa fa-share-alt social-first"></i>
-                        <a href="#" className="teacher-icon social-link">
-                          <i className="fab fa-facebook"></i>
-                        </a>
-                        <a href="#" className="teacher-icon social-link">
-                          <i className="fab fa-twitter" aria-hidden="true"></i>
-                        </a>
-                        <a href="#" className="teacher-icon social-link">
-                          <i className="fab fa-linkedin" aria-hidden="true"></i>
-                        </a>
-                        <a href="#" className="teacher-icon social-link">
-                          <i
-                            className="fab fa-instagram"
-                            aria-hidden="true"
-                          ></i>
-                        </a>
-                      </div>
-                    </div>
-                    <h5>Andria Rahmawati, SMB, Assoc. CIPD</h5>
-                    <span>Survey Coordinator</span>
-                  </article>
-                </div>
 
                 <div className="col-sm-3">
                   <article className="item">
@@ -607,6 +569,49 @@ const AboutTopic = (props) => {
                     </div>
                     <h5>Estie Nurina, S.Sos, M.M.</h5>
                     <span>Competency Development & Research</span>
+                  </article>
+                </div>
+
+                <div className="col-sm-3">
+                  <article className="item">
+                    <a
+                      href={
+                        process.env.REACT_APP_API +
+                        "/uploads/committee/andria2_250.jpg"
+                      }
+                      className="fancybox"
+                      data-fancybox-group="images_gallery"
+                    >
+                      <img
+                        src={
+                          process.env.REACT_APP_API +
+                          "/uploads/committee/andria2_250.jpg"
+                        }
+                        alt="Andria Rahmawati, SMB, Assoc. CIPD"
+                      />
+                    </a>
+                    <div className="teacher-content">
+                      <div className="teacher-social">
+                        <i className="teacher-icon fa fa-share-alt social-first"></i>
+                        <a href="#" className="teacher-icon social-link">
+                          <i className="fab fa-facebook"></i>
+                        </a>
+                        <a href="#" className="teacher-icon social-link">
+                          <i className="fab fa-twitter" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" className="teacher-icon social-link">
+                          <i className="fab fa-linkedin" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" className="teacher-icon social-link">
+                          <i
+                            className="fab fa-instagram"
+                            aria-hidden="true"
+                          ></i>
+                        </a>
+                      </div>
+                    </div>
+                    <h5>Andria Rahmawati, SMB, Assoc. CIPD</h5>
+                    <span>Survey Coordinator</span>
                   </article>
                 </div>
 
