@@ -61,8 +61,8 @@ const AboutTopic = (props) => {
                         </a>
                       </div>
                     </div>
-                    <h5>Suryantoro</h5>
-                    <span>Chartered MCIPD</span>
+                    <h5>Suryantoro, Chartered MCIPD</h5>
+                    <span>Chairman</span>
                   </article>
                 </div>
 
